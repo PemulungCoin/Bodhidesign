@@ -312,11 +312,19 @@ def index():
         with open(css_rules_file) as f:
             css_rules = json.load(f)
 
+    # Load text contents
+    tc_path = os.path.join(BASE_DIR, "db", "editor_text_contents.json")
+    text_contents = {}
+    if os.path.exists(tc_path):
+        with open(tc_path) as f:
+            text_contents = json.load(f)
+
     return render_template(tpl, s=s, courses=courses, modules=modules,
                            instructors=instructors, testimonials=testimonials,
                            faqs=faqs, audiences=audiences, portfolios=portfolios,
                            images=images, layout_data=json.dumps(layout_data),
-                           editor_mode=editor_mode, css_rules=json.dumps(css_rules))
+                           editor_mode=editor_mode, css_rules=json.dumps(css_rules),
+                           text_contents=json.dumps(text_contents))
 
 @app.route("/v2")
 def index_v2():
@@ -345,10 +353,18 @@ def index_v2():
         with open(css_rules_file) as f:
             css_rules = json.load(f)
 
+    # Load text contents
+    tc_path = os.path.join(BASE_DIR, "db", "editor_text_contents.json")
+    text_contents = {}
+    if os.path.exists(tc_path):
+        with open(tc_path) as f:
+            text_contents = json.load(f)
+
     return render_template("index_v2.html", s=s, courses=courses, modules=modules,
                            instructors=instructors, testimonials=testimonials,
                            faqs=faqs, audiences=audiences, portfolios=portfolios,
-                           images=images, editor_mode=editor_mode, css_rules=json.dumps(css_rules))
+                           images=images, editor_mode=editor_mode, css_rules=json.dumps(css_rules),
+                           text_contents=json.dumps(text_contents))
 
 # ─── Chatbot API ──────────────────────────────────────────────────────
 @app.route("/api/chat", methods=["POST"])
@@ -808,6 +824,13 @@ def api_save_editor_css():
     with open(css_rules_path, "w") as f:
         json.dump(css_rules_for_page, f, indent=2)
 
+    # Save text contents separately
+    text_contents = data.get("textContents", {})
+    if text_contents:
+        tc_path = os.path.join(BASE_DIR, "db", "editor_text_contents.json")
+        with open(tc_path, "w") as f:
+            json.dump(text_contents, f, indent=2)
+
     return jsonify({"ok": True, "rules_count": len(css_rules_for_page)})
 
 
@@ -815,16 +838,22 @@ def api_save_editor_css():
 def api_load_editor_css():
     """Load saved editor rules"""
     rules_path = os.path.join(BASE_DIR, "db", "editor_rules.json")
+    rules = {}
     if os.path.exists(rules_path):
         with open(rules_path) as f:
             rules = json.load(f)
-        return jsonify({"ok": True, "data": rules, "rules": rules})
-    return jsonify({"ok": True, "data": {}, "rules": {}})
+    # Also load text contents
+    tc_path = os.path.join(BASE_DIR, "db", "editor_text_contents.json")
+    text_contents = {}
+    if os.path.exists(tc_path):
+        with open(tc_path) as f:
+            text_contents = json.load(f)
+    return jsonify({"ok": True, "data": rules, "rules": rules, "textContents": text_contents})
 
 @app.route("/api/reset-editor-css", methods=["POST"])
 def api_reset_editor_css():
     """Reset editor CSS"""
-    for f in ["editor_rules.json", "editor_css_rules.json", "editor_layouts.json"]:
+    for f in ["editor_rules.json", "editor_css_rules.json", "editor_layouts.json", "editor_text_contents.json"]:
         p = os.path.join(BASE_DIR, "db", f)
         if os.path.exists(p):
             os.remove(p)

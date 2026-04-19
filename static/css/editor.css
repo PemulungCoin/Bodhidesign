@@ -65,6 +65,48 @@
   box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.25) !important;
 }
 
+/* ═══ DELETED BUTTON ═══ */
+#eb-deleted {
+  background: #450a0a;
+  border-color: #991b1b;
+  color: #fca5a5;
+}
+#eb-deleted:hover {
+  background: #7f1d1d;
+}
+
+/* ═══ DELETED ELEMENTS (visible in edit mode) ═══ */
+.editor-on .editor-deleted-visible {
+  outline: 3px dashed #ef4444 !important;
+  opacity: 0.6 !important;
+  background: rgba(239, 68, 68, 0.12) !important;
+  position: relative !important;
+}
+.editor-on .editor-deleted-visible::before {
+  content: '🗑️ TERHAPUS';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  background: #ef4444;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 3px;
+  z-index: 99997;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.editor-on .editor-deleted-visible:hover {
+  outline: 3px solid #ef4444 !important;
+  opacity: 0.8 !important;
+  background: rgba(239, 68, 68, 0.2) !important;
+}
+.editor-on .editor-deleted-visible.editor-selected {
+  outline: 3px solid #ef4444 !important;
+  box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.25) !important;
+}
+
 /* ═══ BOTTOM BAR ═══ */
 #editor-bar {
   position: fixed;

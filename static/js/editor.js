@@ -12,6 +12,7 @@
     var selectedEl = null;
     var savedData = {};     // { selector: { prop: val } }
     var hiddenSelectors = {}; // { selector: true } — track hidden elements
+    var deletedSelectors = {}; // { selector: true } — track permanently deleted elements
     var history = [];
     var historyIdx = -1;
 
@@ -22,10 +23,13 @@
     var dragOrigTx = 0, dragOrigTy = 0;
 
     // ─── INIT ───
+    var _inited = false;
     document.addEventListener('DOMContentLoaded', init);
     if (document.readyState !== 'loading') init();
 
     function init() {
+        if (_inited) return;
+        _inited = true;
         createBar();
         createPanel();
         loadSaved();
@@ -40,6 +44,7 @@
         bar.innerHTML =
             '<button id="eb-edit">✏️ Edit</button>' +
             '<button id="eb-hidden">🙈 Tersembunyi (<span id="hidden-count">0</span>)</button>' +
+            '<button id="eb-deleted">🗑️ Terhapus (<span id="deleted-count">0</span>)</button>' +
             '<button id="eb-undo">↩️</button>' +
             '<button id="eb-redo">↪️</button>' +
             '<button class="save-btn" id="eb-save">💾 Simpan</button>' +
@@ -49,6 +54,7 @@
 
         document.getElementById('eb-edit').onclick = toggleEdit;
         document.getElementById('eb-hidden').onclick = showHiddenPanel;
+        document.getElementById('eb-deleted').onclick = showDeletedPanel;
         document.getElementById('eb-save').onclick = saveLayout;
         document.getElementById('eb-reset').onclick = resetLayout;
         document.getElementById('eb-undo').onclick = undo;
@@ -268,7 +274,8 @@
         html += '<div class="prop-row-title">⚡ Aksi</div>';
         html += '<div style="display:flex;gap:6px;padding:4px 14px;">';
         html += '<button class="action" id="pp-hide" style="flex:1;background:#7f1d1d;border-color:#dc2626;color:#f87171;">🙈 Sembunyikan</button>';
-        html += '<button class="action" id="pp-reset-pos" style="flex:1;">↩️ Reset Posisi</button>';
+        html += '<button class="action" id="pp-delete" style="flex:1;background:#450a0a;border-color:#991b1b;color:#fca5a5;">🗑️ Hapus</button>';
+        html += '<button class="action" id="pp-reset-pos" style="flex:1;">↩️ Reset</button>';
         html += '</div>';
 
         form.innerHTML = html;
@@ -427,6 +434,21 @@
             };
         }
 
+        // Delete button (permanent)
+        var deleteBtn = document.getElementById('pp-delete');
+        if (deleteBtn) {
+            deleteBtn.onclick = function() {
+                var target = self.closest('[data-edit]') || self;
+                var selDel = getSelector(target);
+                if (!confirm('Hapus permanen elemen ini?\n\n(' + selDel + ')\n\nKlik "Terhapus" di bar bawah untuk restore.')) return;
+                deletedSelectors[selDel] = true;
+                target.remove();
+                updateHiddenCount();
+                deselect();
+                status('🗑️ Dihapus — klik "Terhapus" untuk restore');
+            };
+        }
+
         // Reset position button
         var resetBtn = document.getElementById('pp-reset-pos');
         if (resetBtn) {
@@ -510,9 +532,57 @@
         });
     }
 
+    // ─── DELETED ELEMENTS PANEL ───
+    function showDeletedPanel() {
+        var old = document.getElementById('deleted-panel');
+        if (old) old.remove();
+
+        var panel = document.createElement('div');
+        panel.id = 'deleted-panel';
+        panel.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:400px;max-height:70vh;background:#110f1f;border:1px solid #2a2745;border-radius:12px;z-index:100000;overflow:hidden;font-family:Inter,system-ui,sans-serif;color:#e2e8f0;box-shadow:0 20px 60px rgba(0,0,0,0.5);';
+
+        var keys = Object.keys(deletedSelectors);
+        var html = '<div style="padding:16px 20px;background:#0f0d1a;border-bottom:1px solid #2a2745;display:flex;justify-content:space-between;align-items:center;">';
+        html += '<strong style="color:#f87171;">🗑️ Elemen Terhapus (' + keys.length + ')</strong>';
+        html += '<button id="dp-close" style="background:none;border:none;color:#94a3b8;font-size:18px;cursor:pointer;">✕</button>';
+        html += '</div><div style="padding:12px;overflow-y:auto;max-height:50vh;">';
+
+        if (keys.length === 0) {
+            html += '<div style="text-align:center;padding:30px;color:#555;">Tidak ada elemen terhapus</div>';
+        } else {
+            keys.forEach(function(sel) {
+                html += '<div style="display:flex;align-items:center;gap:8px;padding:8px;border-bottom:1px solid #1a1a2e;">';
+                html += '<span style="flex:1;font-size:12px;color:#94a3b8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + esc(sel) + '</span>';
+                html += '<button class="dp-restore" data-sel="' + esc(sel) + '" style="background:#065f46;border:1px solid #059669;color:#34d399;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;">♻️ Restore</button>';
+                html += '</div>';
+            });
+        }
+
+        html += '</div>';
+        panel.innerHTML = html;
+        document.body.appendChild(panel);
+
+        document.getElementById('dp-close').onclick = function() { panel.remove(); };
+
+        panel.querySelectorAll('.dp-restore').forEach(function(btn) {
+            btn.onclick = function() {
+                var sel = this.dataset.sel;
+                delete deletedSelectors[sel];
+                updateHiddenCount();
+                this.closest('div').remove();
+                status('♻️ Direstore: ' + sel + ' — Save & refresh');
+                if (Object.keys(deletedSelectors).length === 0) {
+                    panel.querySelector('div[style]').textContent = 'Tidak ada elemen terhapus';
+                }
+            };
+        });
+    }
+
     function updateHiddenCount() {
         var el = document.getElementById('hidden-count');
         if (el) el.textContent = Object.keys(hiddenSelectors).length;
+        var dl = document.getElementById('deleted-count');
+        if (dl) dl.textContent = Object.keys(deletedSelectors).length;
     }
 
     // ─── SHOW/HIDDEN ELEMENTS IN EDIT MODE ───
@@ -525,11 +595,24 @@
                 });
             } catch(e) {}
         });
+        // Show deleted elements with red indicator
+        Object.keys(deletedSelectors).forEach(function(sel) {
+            try {
+                document.querySelectorAll(sel).forEach(function(el) {
+                    el.style.removeProperty('display');
+                    el.classList.add('editor-deleted-visible');
+                });
+            } catch(e) {}
+        });
     }
 
     function hideHiddenAfterEdit() {
         document.querySelectorAll('.editor-hidden-visible').forEach(function(el) {
             el.classList.remove('editor-hidden-visible');
+            el.style.setProperty('display', 'none', 'important');
+        });
+        document.querySelectorAll('.editor-deleted-visible').forEach(function(el) {
+            el.classList.remove('editor-deleted-visible');
             el.style.setProperty('display', 'none', 'important');
         });
     }
@@ -585,11 +668,17 @@
         // Build CSS from savedData
         var cssLines = [];
         var rules = [];
+        var textContents = {}; // { selector: text } — saved separately from CSS
         for (var sel in savedData) {
             var props = savedData[sel];
             var cssParts = [];
             for (var p in props) {
                 var v = props[p];
+                if (p === 'content') {
+                    // Text content — save separately, not as CSS
+                    textContents[sel] = v;
+                    continue;
+                }
                 if (v !== '' && v !== null && v !== undefined) {
                     cssParts.push(p + ': ' + v + ' !important');
                 }
@@ -606,12 +695,18 @@
             rules.push({ selector: hSel, css: 'display: none !important' });
         }
 
+        // Add deleted elements to CSS (display:none on normal page)
+        for (var dSel in deletedSelectors) {
+            cssLines.push(dSel + ' { display: none !important; }');
+            rules.push({ selector: dSel, css: 'display: none !important; /* deleted */' });
+        }
+
         var cssText = cssLines.join('\n');
 
         fetch('/api/save-editor-css', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ css: cssText, rules: rules })
+            body: JSON.stringify({ css: cssText, rules: rules, textContents: textContents })
         })
         .then(function(r) { return r.json(); })
         .then(function(data) {
@@ -630,6 +725,17 @@
                 if (Array.isArray(data.rules)) {
                     data.rules.forEach(function(rule) {
                         if (rule.selector && rule.css) {
+                            // Check if marked as deleted
+                            if (rule.css.indexOf('/* deleted */') >= 0) {
+                                deletedSelectors[rule.selector] = true;
+                                // Hide on page load (element still in DOM)
+                                try {
+                                    document.querySelectorAll(rule.selector).forEach(function(el) {
+                                        el.style.setProperty('display', 'none', 'important');
+                                    });
+                                } catch(e) {}
+                                return;
+                            }
                             if (!savedData[rule.selector]) savedData[rule.selector] = {};
                             // Parse CSS string into properties
                             rule.css.split(';').forEach(function(part) {
@@ -650,6 +756,17 @@
                     // Object format: { selector: "css" }
                     for (var sel in data.rules) {
                         var cssStr = data.rules[sel];
+                        // Check if marked as deleted
+                        if (cssStr.indexOf('/* deleted */') >= 0) {
+                            deletedSelectors[sel] = true;
+                            // Hide on page load
+                            try {
+                                document.querySelectorAll(sel).forEach(function(el) {
+                                    el.style.setProperty('display', 'none', 'important');
+                                });
+                            } catch(e) {}
+                            continue;
+                        }
                         if (!savedData[sel]) savedData[sel] = {};
                         cssStr.split(';').forEach(function(part) {
                             var kv = part.split(':');
@@ -677,6 +794,20 @@
                     } catch(e) {}
                 }
 
+                // Apply text contents
+                if (data.textContents) {
+                    for (var tcSel in data.textContents) {
+                        try {
+                            document.querySelectorAll(tcSel).forEach(function(el) {
+                                el.textContent = data.textContents[tcSel];
+                            });
+                        } catch(e) {}
+                        // Also save to savedData so editor panel shows correct text
+                        if (!savedData[tcSel]) savedData[tcSel] = {};
+                        savedData[tcSel]['content'] = data.textContents[tcSel];
+                    }
+                }
+
                 updateHiddenCount();
             }
         })
@@ -689,6 +820,7 @@
         .then(function() {
             savedData = {};
             hiddenSelectors = {};
+            deletedSelectors = {};
             updateHiddenCount();
             location.reload();
         });
@@ -698,7 +830,7 @@
     function saveHistory() {
         historyIdx++;
         history = history.slice(0, historyIdx);
-        history.push(JSON.stringify({ saved: savedData, hidden: hiddenSelectors }));
+        history.push(JSON.stringify({ saved: savedData, hidden: hiddenSelectors, deleted: deletedSelectors }));
     }
 
     function undo() {
@@ -717,6 +849,7 @@
         var snap = JSON.parse(history[historyIdx] || '{}');
         savedData = snap.saved || {};
         hiddenSelectors = snap.hidden || {};
+        deletedSelectors = snap.deleted || {};
         updateHiddenCount();
         // Re-apply
         document.querySelectorAll('[style]').forEach(function(el) {

@@ -411,7 +411,6 @@
     <script src="/static/js/main.js"></script>
     {% if editor_mode %}
     <link rel="stylesheet" href="/static/css/editor.css">
-    <script src="/static/js/editor.js"></script>
     {% endif %}
     <script>
     // Lead form submission
@@ -516,6 +515,17 @@
                 });
             } catch(e) {}
         });
+    }
+    // Apply text contents
+    var tc = {{ text_contents|safe }};
+    if (tc) {
+        for (var sel in tc) {
+            try {
+                document.querySelectorAll(sel).forEach(function(el) {
+                    el.textContent = tc[sel];
+                });
+            } catch(e) {}
+        }
     }
 })();
 </script>
