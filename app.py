@@ -788,16 +788,18 @@ def api_save_editor_css():
     rules_data = data.get("data", {})
     rules_list = data.get("rules", [])
 
-    # If rules list format (from editor.html), convert to CSS
-    if rules_list and not css_text:
-        css_lines = []
-        for r in rules_list:
-            sel = r.get("selector", "")
-            css = r.get("css", "")
-            if sel and css:
-                css_lines.append(f"{sel} {{ {css} }}")
-        css_text = "\n".join(css_lines)
-        rules_data = {r["selector"]: r["css"] for r in rules_list if r.get("selector")}
+    # Convert rules array to rules_data dict (always, not just when no css_text)
+    if rules_list:
+        if not rules_data:
+            rules_data = {r["selector"]: r["css"] for r in rules_list if r.get("selector")}
+        if not css_text:
+            css_lines = []
+            for r in rules_list:
+                sel = r.get("selector", "")
+                css = r.get("css", "")
+                if sel and css:
+                    css_lines.append(f"{sel} {{ {css} }}")
+            css_text = "\n".join(css_lines)
 
     # Save rules JSON
     rules_path = os.path.join(BASE_DIR, "db", "editor_rules.json")
@@ -842,6 +844,20 @@ def api_load_editor_css():
     if os.path.exists(rules_path):
         with open(rules_path) as f:
             rules = json.load(f)
+
+    # If rules.json is empty, try parsing from editor_overrides.css
+    if not rules:
+        css_path = os.path.join(BASE_DIR, "static", "css", "editor_overrides.css")
+        if os.path.exists(css_path):
+            import re
+            with open(css_path) as f:
+                css_content = f.read()
+            for match in re.finditer(r'([^\{]+)\{([^}]+)\}', css_content):
+                sel = match.group(1).strip()
+                props = match.group(2).strip()
+                if sel and not sel.startswith('/*'):
+                    rules[sel] = props
+
     # Also load text contents
     tc_path = os.path.join(BASE_DIR, "db", "editor_text_contents.json")
     text_contents = {}

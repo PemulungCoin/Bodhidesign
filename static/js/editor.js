@@ -703,6 +703,12 @@
 
         var cssText = cssLines.join('\n');
 
+        // Don't overwrite with empty data
+        if (!cssText.trim() && Object.keys(textContents).length === 0) {
+            status('ℹ️ Tidak ada perubahan');
+            return;
+        }
+
         fetch('/api/save-editor-css', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
