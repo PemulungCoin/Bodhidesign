@@ -1,37 +1,71 @@
 /* ═══════════════════════════════════════
-   Editor CSS — Clean & Simple
+   BODHI Editor CSS v3
+   - Drag & drop support
+   - Hidden elements visible in edit mode
    ═══════════════════════════════════════ */
 
-/* Editor-on mode */
+/* Editable elements — dashed outline */
 .editor-on [data-edit] {
   outline: 2px dashed rgba(167, 139, 250, 0.4) !important;
   outline-offset: 2px;
   cursor: pointer !important;
-  transition: outline 0.15s;
+  transition: outline 0.15s, box-shadow 0.15s;
 }
 .editor-on [data-edit]:hover {
   outline: 2px solid #a78bfa !important;
   background: rgba(167, 139, 250, 0.08) !important;
 }
+
+/* Selected element */
+.editor-on .editor-selected,
 .editor-on [data-edit].editor-selected {
   outline: 3px solid #a78bfa !important;
-  box-shadow: 0 0 0 6px rgba(167, 139, 250, 0.15);
-}
-.editor-on [data-edit].editor-hidden-visible {
-  outline: 3px dashed #f59e0b !important;
-  opacity: 0.7 !important;
-  background: rgba(245, 158, 11, 0.15) !important;
-}
-.editor-on [data-edit].editor-hidden-visible:hover {
-  outline: 3px solid #f59e0b !important;
-  background: rgba(245, 158, 11, 0.25) !important;
-}
-.editor-on [data-edit].editor-hidden-visible.editor-selected {
-  outline: 3px solid #f59e0b !important;
-  box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.2);
+  box-shadow: 0 0 0 6px rgba(167, 139, 250, 0.2) !important;
 }
 
-/* Bar */
+/* Dragging state */
+.editor-on .editor-dragging {
+  outline: 3px solid #22c55e !important;
+  box-shadow: 0 0 0 8px rgba(34, 197, 94, 0.25) !important;
+  z-index: 9999;
+  cursor: grabbing !important;
+  transition: none !important;
+}
+
+/* Hidden elements — visible in edit mode with yellow outline */
+.editor-on .editor-hidden-visible {
+  display: block !important;
+  outline: 3px dashed #f59e0b !important;
+  opacity: 0.6 !important;
+  background: rgba(245, 158, 11, 0.12) !important;
+  position: relative !important;
+}
+.editor-on .editor-hidden-visible::before {
+  content: '🙈 TERSEMBUNYI';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  background: #f59e0b;
+  color: #000;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 3px;
+  z-index: 99997;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.editor-on .editor-hidden-visible:hover {
+  outline: 3px solid #f59e0b !important;
+  opacity: 0.8 !important;
+  background: rgba(245, 158, 11, 0.2) !important;
+}
+.editor-on .editor-hidden-visible.editor-selected {
+  outline: 3px solid #f59e0b !important;
+  box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.25) !important;
+}
+
+/* ═══ BOTTOM BAR ═══ */
 #editor-bar {
   position: fixed;
   bottom: 0;
@@ -58,6 +92,7 @@
   cursor: pointer;
   font-size: 12px;
   transition: all 0.15s;
+  white-space: nowrap;
 }
 #editor-bar button:hover { background: #2d2a5e; }
 #editor-bar button.active {
@@ -75,23 +110,21 @@
   font-size: 12px;
 }
 
-/* Panel */
+/* ═══ SIDE PANEL ═══ */
 #props-panel {
   position: fixed;
   top: 0;
-  right: -300px;
+  right: 0;
   width: 280px;
   height: 100vh;
   background: #110f1f;
   border-left: 1px solid #2a2745;
   z-index: 99998;
-  transition: right 0.25s ease;
   overflow-y: auto;
   font-family: Inter, system-ui, sans-serif;
   font-size: 12px;
   color: #e2e8f0;
 }
-#props-panel.open { right: 0; }
 
 #props-header {
   padding: 14px 16px;
@@ -105,8 +138,12 @@
   z-index: 1;
 }
 
+#props-body {
+  padding: 8px 0;
+}
+
 .prop-row {
-  padding: 6px 14px;
+  padding: 4px 14px;
 }
 .prop-row label {
   display: flex;
@@ -114,7 +151,7 @@
   gap: 8px;
 }
 .prop-row label > span:first-child {
-  width: 75px;
+  width: 70px;
   flex-shrink: 0;
   color: #94a3b8;
   font-size: 11px;
@@ -125,25 +162,11 @@
   height: 4px;
 }
 .prop-row .val-display {
-  width: 50px;
+  width: 45px;
   text-align: right;
   font-size: 11px;
   color: #a78bfa;
   font-variant-numeric: tabular-nums;
-}
-.prop-row input[type="color"] {
-  width: 28px;
-  height: 28px;
-  border: 2px solid #3b3670;
-  border-radius: 6px;
-  cursor: pointer;
-  background: none;
-  padding: 0;
-}
-.prop-row .color-hex {
-  font-size: 11px;
-  color: #94a3b8;
-  font-family: monospace;
 }
 
 .prop-row-title {
@@ -155,6 +178,7 @@
   letter-spacing: 0.5px;
 }
 
+/* Action buttons */
 .action {
   flex: 1;
   padding: 6px 10px;
@@ -168,10 +192,8 @@
   transition: all 0.15s;
 }
 .action:hover { background: #2d2a5e; }
-.btn-delete { border-color: #dc2626; color: #f87171; }
-.btn-delete:hover { background: #7f1d1d; }
 
-/* Body offset when editor */
+/* Body offset when editor active */
 body.editor-on {
   padding-bottom: 50px;
   padding-right: 290px;

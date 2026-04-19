@@ -337,6 +337,7 @@ def index_v2():
     for inst in instructors:
         try: inst["achievements"] = json.loads(inst["achievements"])
         except: inst["achievements"] = []
+    editor_mode = request.args.get("edit") == "1"
     # Load CSS editor rules
     css_rules_file = os.path.join(BASE_DIR, "db", "editor_css_rules.json")
     css_rules = []
@@ -347,7 +348,7 @@ def index_v2():
     return render_template("index_v2.html", s=s, courses=courses, modules=modules,
                            instructors=instructors, testimonials=testimonials,
                            faqs=faqs, audiences=audiences, portfolios=portfolios,
-                           images=images, css_rules=json.dumps(css_rules))
+                           images=images, editor_mode=editor_mode, css_rules=json.dumps(css_rules))
 
 # ─── Chatbot API ──────────────────────────────────────────────────────
 @app.route("/api/chat", methods=["POST"])

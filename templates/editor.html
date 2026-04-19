@@ -164,6 +164,11 @@
                             <input type="number" id="prop-tx-num" min="-500" max="500" value="0" style="width:60px;display:inline">
                         </div>
                         <div class="prop-group">
+                            <label>↕ Geser Vertikal (px)</label>
+                            <input type="range" id="prop-ty" min="-500" max="500" value="0" style="width:100%">
+                            <input type="number" id="prop-ty-num" min="-500" max="500" value="0" style="width:60px;display:inline">
+                        </div>
+                        <div class="prop-group">
                             <label>↕ Padding (px)</label>
                             <input type="number" id="prop-pad" min="0" max="100">
                         </div>
@@ -188,7 +193,10 @@
                             <label>Opacity</label>
                             <input type="number" id="prop-opacity" min="0" max="100" step="5" placeholder="0-100">
                         </div>
-                        <button class="btn btn-danger" id="btn-delete">🗑️ Hapus Elemen</button>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                            <button class="btn btn-primary" id="btn-hide" style="flex:1;background:#92400e;">🙈 Sembunyikan</button>
+                            <button class="btn btn-danger" id="btn-delete" style="flex:1;">🗑️ Hapus</button>
+                        </div>
                     </div>
                 </div>
 
@@ -316,21 +324,27 @@
             `;
             frameDoc.head.appendChild(style);
 
-            // Also load saved CSS
+            // Load saved overrides (NOT editor UI css)
             const link = frameDoc.createElement('link');
             link.rel = 'stylesheet';
-            link.href = '/static/css/editor.css?' + Date.now();
+            link.href = '/static/css/editor_overrides.css?' + Date.now();
             frameDoc.head.appendChild(link);
         }
 
         // ENABLE/DISABLE EDIT MODE
         function enableEdit() {
             if (!frameDoc) return;
-            setStatus('✏️ Edit mode ON — klik elemen untuk edit');
+            setStatus('✏️ Edit mode ON — klik elemen, drag untuk geser');
+
+            // Remove editor_overrides.css so we can control hidden elements via JS
+            frameDoc.querySelectorAll('link[href*="editor_overrides"]').forEach(function(l) { l.remove(); });
 
             frameDoc.body.addEventListener('mouseover', onMouseOver);
             frameDoc.body.addEventListener('mouseout', onMouseOut);
             frameDoc.body.addEventListener('click', onClick, true);
+
+            // Show hidden elements
+            showHiddenInFrame();
 
             // Mark sections
             document.querySelectorAll('#section-list .section-item').forEach((item, i) => {
@@ -362,6 +376,54 @@
             // Remove labels
             frameDoc.querySelectorAll('.bodhi-section-label').forEach(l => l.remove());
             frameDoc.querySelectorAll('.bodhi-hover').forEach(el => el.classList.remove('bodhi-hover'));
+            // Re-hide hidden elements
+            hideHiddenInFrame();
+        }
+
+        function showHiddenInFrame() {
+            if (!frameDoc) return;
+            // Find elements with display:none from saved rules and show them with indicator
+            frameDoc.querySelectorAll('[style*="display: none"], [style*="display:none"]').forEach(function(el) {
+                el.style.removeProperty('display');
+                el.classList.add('bodhi-hidden-visible');
+            });
+            // Also add style for hidden-visible indicator
+            var style = frameDoc.getElementById('bodhi-hidden-style');
+            if (!style) {
+                style = frameDoc.createElement('style');
+                style.id = 'bodhi-hidden-style';
+                style.textContent = `
+                    .bodhi-hidden-visible {
+                        outline: 3px dashed #f59e0b !important;
+                        opacity: 0.6 !important;
+                        background: rgba(245, 158, 11, 0.12) !important;
+                        position: relative !important;
+                    }
+                    .bodhi-hidden-visible::before {
+                        content: '🙈 TERSEMBUNYI';
+                        position: absolute;
+                        top: -20px;
+                        left: 0;
+                        background: #f59e0b;
+                        color: #000;
+                        font-size: 10px;
+                        font-weight: 700;
+                        padding: 2px 8px;
+                        border-radius: 3px;
+                        z-index: 99997;
+                        pointer-events: none;
+                    }
+                `;
+                frameDoc.head.appendChild(style);
+            }
+        }
+
+        function hideHiddenInFrame() {
+            if (!frameDoc) return;
+            frameDoc.querySelectorAll('.bodhi-hidden-visible').forEach(function(el) {
+                el.classList.remove('bodhi-hidden-visible');
+                el.style.setProperty('display', 'none', 'important');
+            });
         }
 
         function onMouseOver(e) {
@@ -425,11 +487,15 @@
             document.getElementById('prop-width').value = el.style.width || '';
             document.getElementById('prop-radius').value = parseInt(cs.borderRadius) || '';
             document.getElementById('prop-opacity').value = Math.round(parseFloat(cs.opacity) * 100);
-            // Read translateX from inline style (not computed)
-            const tx = (el.style.transform || '').match(/translateX\(([^)]+)\)/);
+            // Read translateX/Y from inline style (not computed)
+            const tx = (el.style.transform || '').match(/translateX\\(([^)]+)\\)/);
+            const ty = (el.style.transform || '').match(/translateY\\(([^)]+)\\)/);
             const txVal = tx ? parseInt(tx[1]) : 0;
+            const tyVal = ty ? parseInt(ty[1]) : 0;
             document.getElementById('prop-tx').value = txVal;
             document.getElementById('prop-tx-num').value = txVal;
+            document.getElementById('prop-ty').value = tyVal;
+            document.getElementById('prop-ty-num').value = tyVal;
         }
 
         function getElementLabel(el) {
@@ -454,7 +520,7 @@
 
         // BIND PROPS
         function bindProps() {
-            const fields = ['prop-text','prop-fontsize','prop-weight','prop-color','prop-bg','prop-mt','prop-mb','prop-ml','prop-mr','prop-pad','prop-align','prop-width','prop-radius','prop-opacity','prop-tx','prop-tx-num'];
+            const fields = ['prop-text','prop-fontsize','prop-weight','prop-color','prop-bg','prop-mt','prop-mb','prop-ml','prop-mr','prop-pad','prop-align','prop-width','prop-radius','prop-opacity','prop-tx','prop-tx-num','prop-ty','prop-ty-num'];
             fields.forEach(id => {
                 const el = document.getElementById(id);
                 el.addEventListener('input', () => applyProps());
@@ -468,6 +534,16 @@
                 selectedEl = null;
                 showNoSelect();
                 setStatus('🗑️ Elemen dihapus');
+            });
+
+            document.getElementById('btn-hide').addEventListener('click', () => {
+                if (!selectedEl) return;
+                // Find closest data-edit element or use selected element
+                var target = selectedEl.closest('[data-edit]') || selectedEl;
+                var sel = getSelector(target);
+                target.style.setProperty('display', 'none', 'important');
+                deselect();
+                setStatus('🙈 Disembunyikan — simpan untuk melihat hasil');
             });
         }
 
@@ -517,13 +593,23 @@
             const op = document.getElementById('prop-opacity').value;
             s.opacity = op ? (op / 100) : '';
 
-            // translateX — sync range + number
+            // translateX/Y — sync range + number
             const txRange = document.getElementById('prop-tx');
             const txNum = document.getElementById('prop-tx-num');
             if (document.activeElement === txRange) txNum.value = txRange.value;
             if (document.activeElement === txNum) txRange.value = txNum.value;
             const txVal = parseInt(txRange.value) || 0;
-            s.transform = txVal !== 0 ? `translateX(${txVal}px)` : '';
+
+            const tyRange = document.getElementById('prop-ty');
+            const tyNum = document.getElementById('prop-ty-num');
+            if (document.activeElement === tyRange) tyNum.value = tyRange.value;
+            if (document.activeElement === tyNum) tyRange.value = tyNum.value;
+            const tyVal = parseInt(tyRange.value) || 0;
+
+            var parts = [];
+            if (txVal !== 0) parts.push('translateX(' + txVal + 'px)');
+            if (tyVal !== 0) parts.push('translateY(' + tyVal + 'px)');
+            s.transform = parts.join(' ');
         }
 
         // SECTIONS
