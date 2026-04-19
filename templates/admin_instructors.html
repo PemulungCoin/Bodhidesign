@@ -1,0 +1,57 @@
+{% extends "admin_base.html" %}
+{% block title %}Pengajar{% endblock %}
+{% block content %}
+<div class="page-header"><h1>👨‍🏫 Kelola Pengajar</h1></div>
+<div class="panel">
+    <h2>Tambah Pengajar</h2>
+    <form method="POST" enctype="multipart/form-data"><input type="hidden" name="action" value="add">
+        <div class="form-row"><div class="form-group"><label>Nama</label><input name="name" required></div><div class="form-group"><label>Jabatan</label><input name="title"></div></div>
+        <div class="form-group"><label>Bio</label><textarea name="bio" rows="3"></textarea></div>
+        <div class="form-group"><label>Achievements (JSON array, satu per baris)</label><textarea name="achievements" rows="3" placeholder='["4+ tahun pengalaman","20+ proyek"]'></textarea></div>
+        <div class="form-row">
+            <div class="form-group"><label>LinkedIn URL</label><input name="linkedin"></div>
+            <div class="form-group"><label>📸 Foto Pengajar</label><input type="file" name="photo_file" accept="image/*" style="padding:12px"></div>
+        </div>
+        <button class="btn btn-primary">➕ Tambah</button>
+    </form>
+</div>
+<hr class="section-divider">
+<div class="panel">
+    <h2>Daftar Pengajar ({{ instructors|length }})</h2>
+    {% if instructors %}
+    <table>
+        <thead><tr><th>Foto</th><th>Nama</th><th>Jabatan</th><th>LinkedIn</th><th>Aksi</th></tr></thead>
+        <tbody>
+        {% for inst in instructors %}
+        <tr>
+            <td>{% if inst.image %}<img src="/static/uploads/instructors/{{ inst.image }}" style="width:48px;height:48px;border-radius:50%;object-fit:cover">{% else %}<div style="width:48px;height:48px;border-radius:50%;background:#0D9488;display:flex;align-items:center;justify-content:center;font-size:1.2rem">👤</div>{% endif %}</td>
+            <td><strong>{{ inst.name }}</strong></td><td>{{ inst.title }}</td><td>{% if inst.linkedin %}<a href="{{ inst.linkedin }}" target="_blank" style="color:#5EEAD4">🔗</a>{% endif %}</td>
+        <td class="actions">
+            <button class="btn btn-secondary btn-sm" onclick="toggleEdit({{ inst.id }})">✏️</button>
+            <form method="GET" class="inline-form" onsubmit="return confirm('Hapus?')"><input type="hidden" name="delete" value="{{ inst.id }}"><button class="btn btn-danger btn-sm">🗑️</button></form>
+        </td></tr>
+        <tr id="edit-{{ inst.id }}" style="display:none"><td colspan="5">
+            <form method="POST" enctype="multipart/form-data" style="padding:16px;background:rgba(13,148,136,.05);border-radius:8px">
+                <input type="hidden" name="action" value="edit"><input type="hidden" name="id" value="{{ inst.id }}">
+                <div class="form-row"><div class="form-group"><label>Nama</label><input name="name" value="{{ inst.name }}"></div><div class="form-group"><label>Jabatan</label><input name="title" value="{{ inst.title }}"></div></div>
+                <div class="form-group"><label>Bio</label><textarea name="bio" rows="2">{{ inst.bio }}</textarea></div>
+                <div class="form-group"><label>Achievements JSON</label><textarea name="achievements" rows="2">{{ inst.achievements if inst.achievements is string else inst.achievements|tojson }}</textarea></div>
+                <div class="form-row">
+                    <div class="form-group"><label>LinkedIn</label><input name="linkedin" value="{{ inst.linkedin }}"></div>
+                    <div class="form-group">
+                        <label>📸 Ganti Foto</label>
+                        <input type="file" name="photo_file" accept="image/*" style="padding:12px">
+                        {% if inst.image %}<div style="margin-top:8px"><img src="/static/uploads/instructors/{{ inst.image }}" style="height:60px;border-radius:8px;object-fit:cover"><br><small style="color:#64748B">Foto saat ini: {{ inst.image }}</small></div>{% endif %}
+                        <input type="hidden" name="image" value="{{ inst.image }}">
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-sm">💾 Simpan</button>
+            </form>
+        </td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}<p class="empty">Belum ada pengajar.</p>{% endif %}
+</div>
+<script>function toggleEdit(id){const r=document.getElementById('edit-'+id);r.style.display=r.style.display==='none'?'table-row':'none';}</script>
+{% endblock %}

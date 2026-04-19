@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BODHI Editor</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #1a1a2e; color: #eee; height: 100vh; overflow: hidden; }
+
+        /* LAYOUT */
+        .editor-wrap { display: flex; height: 100vh; }
+        .sidebar { width: 300px; background: #16213e; border-right: 1px solid #0f3460; display: flex; flex-direction: column; flex-shrink: 0; }
+        .preview-area { flex: 1; background: #111; position: relative; }
+
+        /* SIDEBAR */
+        .sidebar-header { padding: 16px; background: #0f3460; border-bottom: 1px solid #1a1a5e; }
+        .sidebar-header h2 { font-size: 16px; color: #e94560; }
+        .sidebar-header small { color: #888; font-size: 11px; }
+
+        .sidebar-tabs { display: flex; border-bottom: 1px solid #0f3460; }
+        .sidebar-tabs button { flex: 1; padding: 10px; background: none; border: none; color: #888; cursor: pointer; font-size: 12px; border-bottom: 2px solid transparent; }
+        .sidebar-tabs button.active { color: #e94560; border-bottom-color: #e94560; }
+        .sidebar-tabs button:hover { color: #eee; }
+
+        .sidebar-content { flex: 1; overflow-y: auto; padding: 12px; }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /* PROPERTIES */
+        .prop-group { margin-bottom: 12px; }
+        .prop-group label { display: block; font-size: 11px; color: #888; margin-bottom: 4px; text-transform: uppercase; }
+        .prop-group input[type="text"],
+        .prop-group input[type="number"],
+        .prop-group textarea,
+        .prop-group select {
+            width: 100%; padding: 8px; background: #1a1a2e; border: 1px solid #0f3460;
+            color: #eee; border-radius: 4px; font-size: 13px;
+        }
+        .prop-group textarea { resize: vertical; min-height: 60px; }
+        .prop-row { display: flex; gap: 8px; }
+        .prop-row .prop-group { flex: 1; }
+
+        .btn { padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; width: 100%; margin-top: 4px; }
+        .btn-danger { background: #e94560; color: white; }
+        .btn-primary { background: #0f3460; color: white; }
+        .btn-success { background: #2ecc71; color: white; }
+        .btn:hover { opacity: 0.85; }
+
+        /* SECTION LIST */
+        .section-item { padding: 10px; background: #1a1a2e; border: 1px solid #0f3460; border-radius: 4px; margin-bottom: 6px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .section-item:hover { border-color: #e94560; }
+        .section-item .num { background: #0f3460; color: #e94560; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+        .section-item .name { flex: 1; font-size: 13px; }
+        .section-item .arrows { display: flex; gap: 2px; }
+        .section-item .arrows button { background: none; border: 1px solid #0f3460; color: #888; cursor: pointer; border-radius: 3px; width: 24px; height: 24px; font-size: 11px; }
+        .section-item .arrows button:hover { border-color: #e94560; color: #e94560; }
+
+        /* ADD ELEMENT */
+        .add-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .add-btn { padding: 16px 8px; background: #1a1a2e; border: 1px solid #0f3460; border-radius: 6px; color: #eee; cursor: pointer; text-align: center; font-size: 12px; }
+        .add-btn:hover { border-color: #e94560; background: #0f3460; }
+        .add-btn .icon { font-size: 24px; display: block; margin-bottom: 6px; }
+
+        /* NO SELECTION MESSAGE */
+        .no-select { text-align: center; padding: 40px 20px; color: #555; }
+        .no-select .icon { font-size: 48px; margin-bottom: 12px; }
+
+        /* IFRAME */
+        .preview-area iframe { width: 100%; height: 100%; border: none; background: white; }
+
+        /* TOOLBAR */
+        .toolbar { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: center; z-index: 100; pointer-events: none; }
+        .toolbar > * { pointer-events: auto; }
+        .toolbar-left, .toolbar-right { display: flex; gap: 6px; }
+        .toolbar-btn { padding: 8px 14px; background: rgba(15,52,96,0.95); border: 1px solid #1a1a5e; color: #eee; border-radius: 6px; cursor: pointer; font-size: 12px; backdrop-filter: blur(10px); }
+        .toolbar-btn:hover { background: #e94560; }
+        .toolbar-btn.active { background: #e94560; }
+        .status { padding: 8px 14px; background: rgba(15,52,96,0.95); border-radius: 6px; font-size: 11px; color: #888; backdrop-filter: blur(10px); }
+
+        /* HIDDEN */
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="editor-wrap">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>🎨 BODHI Editor</h2>
+                <small>Klik elemen di preview untuk edit</small>
+            </div>
+            <div class="sidebar-tabs">
+                <button class="active" data-tab="props">Properties</button>
+                <button data-tab="sections">Sections</button>
+                <button data-tab="add">+ Add</button>
+            </div>
+            <div class="sidebar-content">
+                <!-- PROPERTIES TAB -->
+                <div class="tab-panel active" id="tab-props">
+                    <div id="no-select-msg" class="no-select">
+                        <div class="icon">👆</div>
+                        <p>Klik elemen di preview untuk mulai edit</p>
+                    </div>
+                    <div id="props-form" class="hidden">
+                        <div class="prop-group">
+                            <label>Elemen</label>
+                            <input type="text" id="prop-tag" readonly style="background:#111;color:#e94560;">
+                        </div>
+                        <div class="prop-group">
+                            <label>Teks</label>
+                            <textarea id="prop-text"></textarea>
+                        </div>
+                        <div class="prop-row">
+                            <div class="prop-group">
+                                <label>Font Size (px)</label>
+                                <input type="number" id="prop-fontsize" min="8" max="120">
+                            </div>
+                            <div class="prop-group">
+                                <label>Font Weight</label>
+                                <select id="prop-weight">
+                                    <option value="">Default</option>
+                                    <option value="300">Light</option>
+                                    <option value="400">Normal</option>
+                                    <option value="600">Semi Bold</option>
+                                    <option value="700">Bold</option>
+                                    <option value="800">Extra Bold</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="prop-row">
+                            <div class="prop-group">
+                                <label>Warna Teks</label>
+                                <input type="color" id="prop-color" style="height:36px;width:100%;border:none;background:none;">
+                            </div>
+                            <div class="prop-group">
+                                <label>Warna Background</label>
+                                <input type="color" id="prop-bg" style="height:36px;width:100%;border:none;background:none;">
+                            </div>
+                        </div>
+                        <div class="prop-row">
+                            <div class="prop-group">
+                                <label>Margin Top (px)</label>
+                                <input type="number" id="prop-mt" min="-100" max="200">
+                            </div>
+                            <div class="prop-group">
+                                <label>Margin Bottom (px)</label>
+                                <input type="number" id="prop-mb" min="-100" max="200">
+                            </div>
+                        </div>
+                        <div class="prop-row">
+                            <div class="prop-group">
+                                <label>⬅ Margin Kiri (px)</label>
+                                <input type="number" id="prop-ml" min="-500" max="1000">
+                            </div>
+                            <div class="prop-group">
+                                <label>Margin Kanan (px) ➡</label>
+                                <input type="number" id="prop-mr" min="-200" max="500">
+                            </div>
+                        </div>
+                        <div class="prop-group">
+                            <label>↔ Geser Horizontal (px)</label>
+                            <input type="range" id="prop-tx" min="-500" max="500" value="0" style="width:100%">
+                            <input type="number" id="prop-tx-num" min="-500" max="500" value="0" style="width:60px;display:inline">
+                        </div>
+                        <div class="prop-group">
+                            <label>↕ Padding (px)</label>
+                            <input type="number" id="prop-pad" min="0" max="100">
+                        </div>
+                        <div class="prop-group">
+                            <label>Text Align</label>
+                            <select id="prop-align">
+                                <option value="">Default</option>
+                                <option value="left">Kiri</option>
+                                <option value="center">Tengah</option>
+                                <option value="right">Kanan</option>
+                            </select>
+                        </div>
+                        <div class="prop-group">
+                            <label>Width</label>
+                            <input type="text" id="prop-width" placeholder="contoh: 100%, 300px">
+                        </div>
+                        <div class="prop-group">
+                            <label>Border Radius (px)</label>
+                            <input type="number" id="prop-radius" min="0" max="100">
+                        </div>
+                        <div class="prop-group">
+                            <label>Opacity</label>
+                            <input type="number" id="prop-opacity" min="0" max="100" step="5" placeholder="0-100">
+                        </div>
+                        <button class="btn btn-danger" id="btn-delete">🗑️ Hapus Elemen</button>
+                    </div>
+                </div>
+
+                <!-- SECTIONS TAB -->
+                <div class="tab-panel" id="tab-sections">
+                    <div id="section-list"></div>
+                </div>
+
+                <!-- ADD TAB -->
+                <div class="tab-panel" id="tab-add">
+                    <div class="prop-group">
+                        <label>Target Section</label>
+                        <select id="add-target"></select>
+                    </div>
+                    <div class="add-grid">
+                        <div class="add-btn" data-type="heading"><span class="icon">📝</span>Heading</div>
+                        <div class="add-btn" data-type="text"><span class="icon">📄</span>Paragraf</div>
+                        <div class="add-btn" data-type="image"><span class="icon">🖼️</span>Gambar</div>
+                        <div class="add-btn" data-type="button"><span class="icon">🔘</span>Tombol</div>
+                        <div class="add-btn" data-type="spacer"><span class="icon">↕️</span>Spacer</div>
+                        <div class="add-btn" data-type="divider"><span class="icon">➖</span>Divider</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PREVIEW -->
+        <div class="preview-area">
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <button class="toolbar-btn" id="btn-theme">🔄 Theme: v2</button>
+                    <button class="toolbar-btn" id="btn-edit">✏️ Edit Mode: OFF</button>
+                </div>
+                <div class="toolbar-right">
+                    <button class="toolbar-btn" id="btn-undo">↩️ Undo</button>
+                    <button class="toolbar-btn" id="btn-redo">↪️ Redo</button>
+                    <button class="toolbar-btn" id="btn-reset">🔄 Reset</button>
+                    <button class="toolbar-btn" id="btn-save">💾 Save</button>
+                </div>
+            </div>
+            <iframe id="preview-frame" src="/?theme=v2"></iframe>
+            <div class="status" id="status" style="position:absolute;bottom:10px;left:10px;">Ready</div>
+        </div>
+    </div>
+
+    <script>
+    (() => {
+        // STATE
+        let currentTheme = 'v2';
+        let editMode = false;
+        let selectedEl = null;
+        let history = [];
+        let historyIdx = -1;
+        let frameDoc = null;
+        let frameWin = null;
+
+        // ELEMENTS
+        const iframe = document.getElementById('preview-frame');
+        const statusEl = document.getElementById('status');
+
+        // INIT
+        function init() {
+            iframe.onload = () => {
+                frameDoc = iframe.contentDocument || iframe.contentWindow.document;
+                frameWin = iframe.contentWindow;
+                injectEditorStyles();
+                loadSavedLayout();
+                buildSectionList();
+                buildAddTargets();
+                setStatus('✅ Preview loaded — ' + currentTheme);
+            };
+            bindTabs();
+            bindToolbar();
+            bindProps();
+            bindAdd();
+        }
+
+        // STATUS
+        function setStatus(msg) { statusEl.textContent = msg; }
+
+        // TABS
+        function bindTabs() {
+            document.querySelectorAll('.sidebar-tabs button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.sidebar-tabs button').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+                });
+            });
+        }
+
+        // TOOLBAR
+        function bindToolbar() {
+            document.getElementById('btn-theme').addEventListener('click', () => {
+                currentTheme = currentTheme === 'v2' ? 'v1' : 'v2';
+                document.getElementById('btn-theme').textContent = '🔄 Theme: ' + currentTheme;
+                iframe.src = '/?theme=' + currentTheme;
+                selectedEl = null;
+                showNoSelect();
+            });
+
+            document.getElementById('btn-edit').addEventListener('click', () => {
+                editMode = !editMode;
+                document.getElementById('btn-edit').textContent = '✏️ Edit Mode: ' + (editMode ? 'ON' : 'OFF');
+                document.getElementById('btn-edit').classList.toggle('active', editMode);
+                if (editMode) enableEdit() else disableEdit();
+            });
+
+            document.getElementById('btn-save').addEventListener('click', saveLayout);
+            document.getElementById('btn-reset').addEventListener('click', resetLayout);
+            document.getElementById('btn-undo').addEventListener('click', undo);
+            document.getElementById('btn-redo').addEventListener('click', redo);
+        }
+
+        // INJECT EDITOR STYLES INTO IFRAME
+        function injectEditorStyles() {
+            if (!frameDoc) return;
+            const style = frameDoc.createElement('style');
+            style.id = 'bodhi-editor-styles';
+            style.textContent = `
+                .bodhi-hover { outline: 2px dashed #e94560 !important; outline-offset: 2px; cursor: pointer !important; }
+                .bodhi-selected { outline: 2px solid #e94560 !important; outline-offset: 2px; box-shadow: 0 0 0 4px rgba(233,69,96,0.2) !important; }
+                .bodhi-section-label { position: absolute; top: 4px; left: 4px; background: rgba(233,69,96,0.9); color: white; font-size: 10px; padding: 2px 8px; border-radius: 3px; z-index: 9999; font-family: sans-serif; pointer-events: none; }
+            `;
+            frameDoc.head.appendChild(style);
+
+            // Also load saved CSS
+            const link = frameDoc.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = '/static/css/editor.css?' + Date.now();
+            frameDoc.head.appendChild(link);
+        }
+
+        // ENABLE/DISABLE EDIT MODE
+        function enableEdit() {
+            if (!frameDoc) return;
+            setStatus('✏️ Edit mode ON — klik elemen untuk edit');
+
+            frameDoc.body.addEventListener('mouseover', onMouseOver);
+            frameDoc.body.addEventListener('mouseout', onMouseOut);
+            frameDoc.body.addEventListener('click', onClick, true);
+
+            // Mark sections
+            document.querySelectorAll('#section-list .section-item').forEach((item, i) => {
+                const section = frameDoc.querySelector(item.dataset.selector);
+                if (section) {
+                    section.style.position = 'relative';
+                    const label = frameDoc.createElement('div');
+                    label.className = 'bodhi-section-label';
+                    label.textContent = item.dataset.name;
+                    section.appendChild(label);
+                }
+            });
+
+            // Auto-add data-edit to elements that don't have it
+            frameDoc.querySelectorAll('h1, h2, h3, h4, p, a.btn, button, img, span, li').forEach((el, i) => {
+                if (!el.hasAttribute('data-edit') && !el.classList.contains('bodhi-section-label')) {
+                    el.setAttribute('data-edit', 'el-' + i);
+                }
+            });
+        }
+
+        function disableEdit() {
+            if (!frameDoc) return;
+            setStatus('Edit mode OFF');
+            frameDoc.body.removeEventListener('mouseover', onMouseOver);
+            frameDoc.body.removeEventListener('mouseout', onMouseOut);
+            frameDoc.body.removeEventListener('click', onClick, true);
+            deselect();
+            // Remove labels
+            frameDoc.querySelectorAll('.bodhi-section-label').forEach(l => l.remove());
+            frameDoc.querySelectorAll('.bodhi-hover').forEach(el => el.classList.remove('bodhi-hover'));
+        }
+
+        function onMouseOver(e) {
+            if (!editMode) return;
+            const el = e.target;
+            if (el === frameDoc.body || el === frameDoc.documentElement) return;
+            if (el.classList.contains('bodhi-section-label')) return;
+            el.classList.add('bodhi-hover');
+        }
+
+        function onMouseOut(e) {
+            e.target.classList.remove('bodhi-hover');
+        }
+
+        function onClick(e) {
+            if (!editMode) return;
+            e.preventDefault();
+            e.stopPropagation();
+            const el = e.target;
+            if (el === frameDoc.body || el === frameDoc.documentElement) return;
+            if (el.classList.contains('bodhi-section-label')) return;
+
+            deselect();
+            selectedEl = el;
+            el.classList.add('bodhi-selected');
+            el.classList.remove('bodhi-hover');
+            showProps(el);
+        }
+
+        function deselect() {
+            if (selectedEl) {
+                selectedEl.classList.remove('bodhi-selected');
+            }
+            selectedEl = null;
+            showNoSelect();
+        }
+
+        // PROPERTIES
+        function showNoSelect() {
+            document.getElementById('no-select-msg').classList.remove('hidden');
+            document.getElementById('props-form').classList.add('hidden');
+        }
+
+        function showProps(el) {
+            document.getElementById('no-select-msg').classList.add('hidden');
+            document.getElementById('props-form').classList.remove('hidden');
+
+            const cs = frameWin.getComputedStyle(el);
+            document.getElementById('prop-tag').value = getElementLabel(el);
+            document.getElementById('prop-text').value = getTextContent(el);
+            document.getElementById('prop-fontsize').value = parseInt(cs.fontSize) || '';
+            document.getElementById('prop-weight').value = cs.fontWeight || '';
+            document.getElementById('prop-color').value = rgbToHex(cs.color);
+            document.getElementById('prop-bg').value = rgbToHex(cs.backgroundColor);
+            document.getElementById('prop-mt').value = parseInt(cs.marginTop) || '';
+            document.getElementById('prop-mb').value = parseInt(cs.marginBottom) || '';
+            document.getElementById('prop-ml').value = parseInt(cs.marginLeft) || '';
+            document.getElementById('prop-mr').value = parseInt(cs.marginRight) || '';
+            document.getElementById('prop-pad').value = parseInt(cs.padding) || parseInt(cs.paddingTop) || '';
+            document.getElementById('prop-align').value = cs.textAlign || '';
+            document.getElementById('prop-width').value = el.style.width || '';
+            document.getElementById('prop-radius').value = parseInt(cs.borderRadius) || '';
+            document.getElementById('prop-opacity').value = Math.round(parseFloat(cs.opacity) * 100);
+            // Read translateX from inline style (not computed)
+            const tx = (el.style.transform || '').match(/translateX\(([^)]+)\)/);
+            const txVal = tx ? parseInt(tx[1]) : 0;
+            document.getElementById('prop-tx').value = txVal;
+            document.getElementById('prop-tx-num').value = txVal;
+        }
+
+        function getElementLabel(el) {
+            let label = el.tagName.toLowerCase();
+            if (el.className) label += '.' + el.className.split(' ')[0];
+            if (el.id) label += '#' + el.id;
+            return label;
+        }
+
+        function getTextContent(el) {
+            if (['INPUT','IMG','BR','HR','VIDEO','IFRAME'].includes(el.tagName)) return '';
+            if (el.children.length > 1) return '';
+            return el.textContent.trim();
+        }
+
+        function rgbToHex(rgb) {
+            if (!rgb || rgb === 'rgba(0, 0, 0, 0)' || rgb === 'transparent') return '#ffffff';
+            const m = rgb.match(/\d+/g);
+            if (!m || m.length < 3) return '#ffffff';
+            return '#' + m.slice(0,3).map(x => parseInt(x).toString(16).padStart(2,'0')).join('');
+        }
+
+        // BIND PROPS
+        function bindProps() {
+            const fields = ['prop-text','prop-fontsize','prop-weight','prop-color','prop-bg','prop-mt','prop-mb','prop-ml','prop-mr','prop-pad','prop-align','prop-width','prop-radius','prop-opacity','prop-tx','prop-tx-num'];
+            fields.forEach(id => {
+                const el = document.getElementById(id);
+                el.addEventListener('input', () => applyProps());
+                el.addEventListener('change', () => applyProps());
+            });
+
+            document.getElementById('btn-delete').addEventListener('click', () => {
+                if (!selectedEl) return;
+                if (!confirm('Hapus elemen ini?')) return;
+                selectedEl.remove();
+                selectedEl = null;
+                showNoSelect();
+                setStatus('🗑️ Elemen dihapus');
+            });
+        }
+
+        function applyProps() {
+            if (!selectedEl) return;
+            const s = selectedEl.style;
+
+            // Text content
+            const text = document.getElementById('prop-text').value;
+            if (text && selectedEl.children.length <= 1) {
+                selectedEl.textContent = text;
+            }
+
+            // Style properties
+            const fs = document.getElementById('prop-fontsize').value;
+            s.fontSize = fs ? fs + 'px' : '';
+
+            const fw = document.getElementById('prop-weight').value;
+            s.fontWeight = fw || '';
+
+            s.color = document.getElementById('prop-color').value;
+            s.backgroundColor = document.getElementById('prop-bg').value;
+
+            const mt = document.getElementById('prop-mt').value;
+            s.marginTop = mt ? mt + 'px' : '';
+
+            const mb = document.getElementById('prop-mb').value;
+            s.marginBottom = mb ? mb + 'px' : '';
+
+            const ml = document.getElementById('prop-ml').value;
+            s.marginLeft = ml ? ml + 'px' : '';
+
+            const mr = document.getElementById('prop-mr').value;
+            s.marginRight = mr ? mr + 'px' : '';
+
+            const pad = document.getElementById('prop-pad').value;
+            if (pad) s.padding = pad + 'px';
+
+            const align = document.getElementById('prop-align').value;
+            s.textAlign = align || '';
+
+            s.width = document.getElementById('prop-width').value || '';
+
+            const rad = document.getElementById('prop-radius').value;
+            s.borderRadius = rad ? rad + 'px' : '';
+
+            const op = document.getElementById('prop-opacity').value;
+            s.opacity = op ? (op / 100) : '';
+
+            // translateX — sync range + number
+            const txRange = document.getElementById('prop-tx');
+            const txNum = document.getElementById('prop-tx-num');
+            if (document.activeElement === txRange) txNum.value = txRange.value;
+            if (document.activeElement === txNum) txRange.value = txNum.value;
+            const txVal = parseInt(txRange.value) || 0;
+            s.transform = txVal !== 0 ? `translateX(${txVal}px)` : '';
+        }
+
+        // SECTIONS
+        function buildSectionList() {
+            const sections = getSections();
+            const list = document.getElementById('section-list');
+            list.innerHTML = '';
+            sections.forEach((sec, i) => {
+                const div = document.createElement('div');
+                div.className = 'section-item';
+                div.dataset.selector = sec.selector;
+                div.dataset.name = sec.name;
+                div.innerHTML = `
+                    <span class="num">${i + 1}</span>
+                    <span class="name">${sec.name}</span>
+                    <span class="arrows">
+                        <button onclick="window._editor.moveSection(${i},-1)" title="Naik">▲</button>
+                        <button onclick="window._editor.moveSection(${i},1)" title="Turun">▼</button>
+                    </span>
+                `;
+                div.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'BUTTON') return;
+                    scrollToSection(sec.selector);
+                });
+                list.appendChild(div);
+            });
+        }
+
+        function getSections() {
+            if (currentTheme === 'v2') {
+                return [
+                    { name: 'Hero', selector: '#hero, .hero-section, [class*="hero"]' },
+                    { name: 'Audience', selector: '#audience, [class*="audience"]' },
+                    { name: 'Instructors', selector: '#instructors, [class*="instructor"]' },
+                    { name: 'Courses', selector: '#courses, [class*="courses"]' },
+                    { name: 'Modules', selector: '#modules, [class*="modules"]' },
+                    { name: 'Portfolio', selector: '#portfolio, [class*="portfolio"]' },
+                    { name: 'Stats', selector: '.stats-bar, [class*="stats"]' },
+                    { name: 'Testimonials', selector: '#testimonials, [class*="testimonial"]' },
+                    { name: 'CTA', selector: '#cta, [class*="cta"]' },
+                    { name: 'Contact', selector: '#contact, [class*="contact"]' },
+                    { name: 'FAQ', selector: '#faq, [class*="faq"]' },
+                ];
+            }
+            return [
+                { name: 'Hero', selector: 'header, .hero-section, [class*="hero"]' },
+                { name: 'Audience', selector: '.target-audience, [class*="audience"]' },
+                { name: 'Instructors', selector: '.instructors, [class*="instructor"]' },
+                { name: 'Courses', selector: '.courses, [class*="course"]' },
+                { name: 'Modules', selector: '.modules, [class*="module"]' },
+                { name: 'Portfolio', selector: '.portfolio, [class*="portfolio"]' },
+                { name: 'Testimonials', selector: '.testimonials, [class*="testimonial"]' },
+                { name: 'CTA', selector: '.cta, [class*="cta"]' },
+                { name: 'Contact', selector: '.contact, [class*="contact"]' },
+                { name: 'FAQ', selector: '.faq, [class*="faq"]' },
+            ];
+        }
+
+        function scrollToSection(selector) {
+            if (!frameDoc) return;
+            const el = frameDoc.querySelector(selector.split(',')[0].trim());
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // ADD ELEMENTS
+        function buildAddTargets() {
+            const select = document.getElementById('add-target');
+            select.innerHTML = '';
+            getSections().forEach(sec => {
+                const opt = document.createElement('option');
+                opt.value = sec.selector;
+                opt.textContent = sec.name;
+                select.appendChild(opt);
+            });
+        }
+
+        function bindAdd() {
+            document.querySelectorAll('.add-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const type = btn.dataset.type;
+                    const targetSelector = document.getElementById('add-target').value;
+                    addElement(type, targetSelector);
+                });
+            });
+        }
+
+        function addElement(type, selector) {
+            if (!frameDoc) return;
+            const section = frameDoc.querySelector(selector.split(',')[0].trim());
+            if (!section) { setStatus('❌ Section tidak ditemukan'); return; }
+
+            let el;
+            switch(type) {
+                case 'heading':
+                    el = frameDoc.createElement('h2');
+                    el.textContent = 'Judul Baru';
+                    el.style.textAlign = 'center';
+                    el.style.margin = '20px 0';
+                    break;
+                case 'text':
+                    el = frameDoc.createElement('p');
+                    el.textContent = 'Tulis deskripsi di sini...';
+                    el.style.textAlign = 'center';
+                    break;
+                case 'image':
+                    el = frameDoc.createElement('img');
+                    el.src = 'https://placehold.co/400x300/e94560/white?text=Image';
+                    el.style.maxWidth = '100%';
+                    el.style.borderRadius = '8px';
+                    break;
+                case 'button':
+                    el = frameDoc.createElement('a');
+                    el.textContent = 'Klik Di Sini';
+                    el.href = '#';
+                    el.style.display = 'inline-block';
+                    el.style.padding = '12px 24px';
+                    el.style.background = '#e94560';
+                    el.style.color = 'white';
+                    el.style.borderRadius = '6px';
+                    el.style.textDecoration = 'none';
+                    el.style.margin = '10px auto';
+                    break;
+                case 'spacer':
+                    el = frameDoc.createElement('div');
+                    el.style.height = '40px';
+                    break;
+                case 'divider':
+                    el = frameDoc.createElement('hr');
+                    el.style.border = 'none';
+                    el.style.borderTop = '1px solid #ddd';
+                    el.style.margin = '20px 0';
+                    break;
+            }
+            if (el) {
+                el.dataset.editorAdded = 'true';
+                section.appendChild(el);
+                setStatus('✅ ' + type + ' ditambahkan ke ' + selector);
+            }
+        }
+
+        // SAVE
+        function saveLayout() {
+            if (!frameDoc) return;
+            const rules = [];
+
+            // Collect inline styles from edited elements
+            frameDoc.querySelectorAll('[style]').forEach(el => {
+                if (el.style.length === 0) return;
+                if (el.classList.contains('bodhi-section-label')) return;
+                if (el.id === 'bodhi-editor-styles') return;
+
+                const sel = getSelector(el);
+                const css = el.style.cssText;
+                if (css && sel) {
+                    rules.push({ selector: sel, css: css });
+                }
+            });
+
+            fetch('/api/save-editor-css', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ rules: rules, theme: currentTheme })
+            })
+            .then(r => r.json())
+            .then(data => {
+                setStatus('💾 Disimpan! ' + (data.rules_count || 0) + ' rules');
+                history.push(JSON.stringify(rules));
+                historyIdx = history.length - 1;
+            })
+            .catch(e => setStatus('❌ Error: ' + e.message));
+        }
+
+        function getSelector(el) {
+            // Prefer data-edit attribute (works across ALL themes)
+            if (el.hasAttribute('data-edit')) return '[data-edit="' + el.getAttribute('data-edit') + '"]';
+            if (el.id) return '#' + el.id;
+            // Fallback: unique class-based selector
+            if (el.className && typeof el.className === 'string') {
+                const cls = el.className.split(' ').filter(c => c && !c.startsWith('bodhi-'))[0];
+                if (cls) return '.' + cls;
+            }
+            return el.tagName.toLowerCase();
+        }
+
+        // RESET
+        function resetLayout() {
+            if (!confirm('Reset semua perubahan?')) return;
+            fetch('/api/reset-editor-css', { method: 'POST' })
+            .then(r => r.json())
+            .then(() => {
+                iframe.src = '/?theme=' + currentTheme + '&' + Date.now();
+                setStatus('🔄 Reset!');
+            });
+        }
+
+        // LOAD SAVED LAYOUT
+        function loadSavedLayout() {
+            if (!frameDoc) return;
+            fetch('/api/load-editor-css')
+            .then(r => r.json())
+            .then(data => {
+                if (data.rules && data.rules.length > 0) {
+                    data.rules.forEach(rule => {
+                        try {
+                            frameDoc.querySelectorAll(rule.selector).forEach(el => {
+                                el.style.cssText += ';' + rule.css;
+                            });
+                        } catch(e) {}
+                    });
+                    setStatus('📂 Loaded ' + data.rules.length + ' saved rules');
+                }
+            })
+            .catch(() => {});
+        }
+
+        // UNDO/REDO
+        function undo() {
+            if (historyIdx <= 0) return;
+            historyIdx--;
+            applyHistory();
+        }
+        function redo() {
+            if (historyIdx >= history.length - 1) return;
+            historyIdx++;
+            applyHistory();
+        }
+        function applyHistory() {
+            const rules = JSON.parse(history[historyIdx] || '[]');
+            iframe.src = '/?theme=' + currentTheme;
+            // Re-apply after load
+            setTimeout(() => {
+                rules.forEach(rule => {
+                    try {
+                        frameDoc.querySelectorAll(rule.selector).forEach(el => {
+                            el.style.cssText += ';' + rule.css;
+                        });
+                    } catch(e) {}
+                });
+            }, 500);
+        }
+
+        // SECTION MOVE
+        function moveSection(idx, dir) {
+            const list = document.getElementById('section-list');
+            const items = list.querySelectorAll('.section-item');
+            const target = idx + dir;
+            if (target < 0 || target >= items.length) return;
+
+            // Swap in DOM
+            if (dir === -1) {
+                list.insertBefore(items[idx], items[target]);
+            } else {
+                list.insertBefore(items[target], items[idx]);
+            }
+            setStatus('↕️ Section dipindah');
+        }
+
+        // EXPOSE
+        window._editor = { moveSection };
+
+        // KEYBOARD
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 's') { e.preventDefault(); saveLayout(); }
+            if (e.key === 'Escape') deselect();
+        });
+
+        // START
+        init();
+    })();
+    </script>
+</body>
+</html>

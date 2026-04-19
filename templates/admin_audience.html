@@ -1,0 +1,40 @@
+{% extends "admin_base.html" %}
+{% block title %}Target Audience{% endblock %}
+{% block content %}
+<div class="page-header"><h1>🎯 Target Audience</h1></div>
+<div class="panel">
+    <h2>Tambah Target Audience</h2>
+    <form method="POST"><input type="hidden" name="action" value="add">
+        <div class="form-row"><div class="form-group"><label>Judul</label><input name="title" required></div><div class="form-group"><label>Ikon (emoji)</label><input name="icon" value="👤"></div></div>
+        <div class="form-group"><label>Deskripsi</label><textarea name="description" rows="3"></textarea></div>
+        <button class="btn btn-primary">➕ Tambah</button>
+    </form>
+</div>
+<hr class="section-divider">
+<div class="panel">
+    <h2>Daftar ({{ audiences|length }})</h2>
+    {% if audiences %}
+    <table>
+        <thead><tr><th>Ikon</th><th>Judul</th><th>Deskripsi</th><th>Aksi</th></tr></thead>
+        <tbody>
+        {% for a in audiences %}
+        <tr><td>{{ a.icon }}</td><td><strong>{{ a.title }}</strong></td><td>{{ a.description[:80] }}{% if a.description|length>80 %}...{% endif %}</td>
+        <td class="actions">
+            <button class="btn btn-secondary btn-sm" onclick="toggleEdit({{ a.id }})">✏️</button>
+            <form method="GET" class="inline-form" onsubmit="return confirm('Hapus?')"><input type="hidden" name="delete" value="{{ a.id }}"><button class="btn btn-danger btn-sm">🗑️</button></form>
+        </td></tr>
+        <tr id="edit-{{ a.id }}" style="display:none"><td colspan="4">
+            <form method="POST" style="padding:16px;background:rgba(13,148,136,.05);border-radius:8px">
+                <input type="hidden" name="action" value="edit"><input type="hidden" name="id" value="{{ a.id }}">
+                <div class="form-row"><div class="form-group"><label>Judul</label><input name="title" value="{{ a.title }}"></div><div class="form-group"><label>Ikon</label><input name="icon" value="{{ a.icon }}"></div></div>
+                <div class="form-group"><label>Deskripsi</label><textarea name="description" rows="2">{{ a.description }}</textarea></div>
+                <button class="btn btn-primary btn-sm">💾 Simpan</button>
+            </form>
+        </td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}<p class="empty">Belum ada data.</p>{% endif %}
+</div>
+<script>function toggleEdit(id){const r=document.getElementById('edit-'+id);r.style.display=r.style.display==='none'?'table-row':'none';}</script>
+{% endblock %}

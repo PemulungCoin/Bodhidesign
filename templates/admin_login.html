@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Admin — Atelier Desain</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Inter',sans-serif; min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#0C1222,#1E293B); }
+        .login-box { background:#1E293B; border:1px solid rgba(255,255,255,.1); border-radius:20px; padding:48px; width:100%; max-width:400px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,.3); }
+        .login-box h1 { font-size:1.5rem; color:#F1F5F9; margin-bottom:8px; }
+        .login-box p { color:#94A3B8; font-size:.9rem; margin-bottom:32px; }
+        .login-box input { width:100%; padding:14px 16px; border-radius:12px; border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.05); color:#F1F5F9; font-size:1rem; font-family:inherit; margin-bottom:16px; }
+        .login-box input:focus { outline:none; border-color:#0D9488; box-shadow:0 0 0 3px rgba(13,148,136,.2); }
+        .login-box button { width:100%; padding:14px; border-radius:12px; border:none; background:#0D9488; color:#fff; font-size:1rem; font-weight:600; cursor:pointer; transition:.3s; }
+        .login-box button:hover { background:#0F766E; }
+        .flash { padding:12px; border-radius:8px; margin-bottom:16px; font-size:.9rem; }
+        .flash.error { background:rgba(239,68,68,.15); color:#EF4444; border:1px solid rgba(239,68,68,.2); }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-box">
+        <h1>🏠 Admin Panel</h1>
+        <p>Atelier Desain Academy</p>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for cat, msg in messages %}
+        <div class="flash {{ cat }}">{{ msg }}</div>
+        {% endfor %}
+        {% endwith %}
+        <form method="POST">
+            <input type="password" name="password" placeholder="Masukkan password admin" required autofocus>
+            <button type="submit">Masuk →</button>
+        </form>
+    </div>
+</body>
+</html>

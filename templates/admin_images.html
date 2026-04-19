@@ -1,0 +1,47 @@
+{% extends "admin_base.html" %}
+{% block title %}Gambar{% endblock %}
+{% block content %}
+<div class="page-header"><h1>🖼️ Kelola Gambar</h1></div>
+<div class="panel">
+    <h2>Upload Gambar</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="action" value="upload">
+        <div class="form-row">
+            <div class="form-group"><label>Kategori</label>
+                <select name="category">
+                    <option value="general">General</option>
+                    <option value="hero">Hero</option>
+                    <option value="instructor">Instructor</option>
+                    <option value="portfolio">Portfolio</option>
+                    <option value="certificate">Certificate</option>
+                    <option value="gallery">Gallery</option>
+                </select>
+            </div>
+            <div class="form-group"><label>Pilih File (bisa multiple)</label><input type="file" name="files" multiple accept="image/*"></div>
+        </div>
+        <button class="btn btn-primary">📤 Upload</button>
+    </form>
+</div>
+<hr class="section-divider">
+{% if images %}
+{% for category, imgs in images.items() %}
+<div class="panel">
+    <h2>📁 {{ category|title }} ({{ imgs|length }})</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px">
+        {% for img in imgs %}
+        <div style="background:#0F172A;border-radius:12px;padding:12px;text-align:center;border:1px solid rgba(255,255,255,.06)">
+            <img src="/static/uploads/{{ category }}/{{ img.filename }}" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:8px">
+            <div style="font-size:.8rem;color:#94A3B8;margin-bottom:8px">{{ img.filename[:20] }}</div>
+            <form method="GET" onsubmit="return confirm('Hapus gambar ini?')">
+                <input type="hidden" name="delete" value="{{ img.id }}">
+                <button class="btn btn-danger btn-sm" style="width:100%">🗑️ Hapus</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<div class="panel"><p class="empty">Belum ada gambar. Upload gambar pertama di atas.</p></div>
+{% endif %}
+{% endblock %}

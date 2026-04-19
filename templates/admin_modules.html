@@ -1,0 +1,57 @@
+{% extends "admin_base.html" %}
+{% block title %}Modul{% endblock %}
+{% block content %}
+<div class="page-header"><h1>📖 Kelola Modul</h1></div>
+<div class="panel">
+    <h2>Tambah Modul Baru</h2>
+    <form method="POST">
+        <input type="hidden" name="action" value="add">
+        <div class="form-row">
+            <div class="form-group"><label>Kursus</label>
+                <select name="course_id">
+                    {% for c in courses %}<option value="{{ c.id }}">{{ c.title }}</option>{% endfor %}
+                </select>
+            </div>
+            <div class="form-group"><label>Durasi</label><input name="duration" placeholder="Minggu 1"></div>
+        </div>
+        <div class="form-group"><label>Judul Modul</label><input name="title" required></div>
+        <div class="form-group"><label>Deskripsi</label><textarea name="description" rows="2"></textarea></div>
+        <button class="btn btn-primary">➕ Tambah Modul</button>
+    </form>
+</div>
+<hr class="section-divider">
+<div class="panel">
+    <h2>Daftar Modul ({{ modules|length }})</h2>
+    {% if modules %}
+    <table>
+        <thead><tr><th>#</th><th>Kursus ID</th><th>Judul</th><th>Durasi</th><th>Aksi</th></tr></thead>
+        <tbody>
+        {% for m in modules %}
+        <tr>
+            <td>{{ loop.index }}</td><td>{{ m.course_id }}</td>
+            <td><strong>{{ m.title }}</strong><br><small style="color:#64748B">{{ m.description[:60] }}</small></td>
+            <td>{{ m.duration }}</td>
+            <td class="actions">
+                <button class="btn btn-secondary btn-sm" onclick="toggleEdit({{ m.id }})">✏️</button>
+                <form method="GET" class="inline-form" onsubmit="return confirm('Hapus?')"><input type="hidden" name="delete" value="{{ m.id }}"><button class="btn btn-danger btn-sm">🗑️</button></form>
+            </td>
+        </tr>
+        <tr id="edit-{{ m.id }}" style="display:none"><td colspan="5">
+            <form method="POST" style="padding:16px;background:rgba(13,148,136,.05);border-radius:8px">
+                <input type="hidden" name="action" value="edit"><input type="hidden" name="id" value="{{ m.id }}">
+                <div class="form-row">
+                    <div class="form-group"><label>Kursus</label><select name="course_id">{% for c in courses %}<option value="{{ c.id }}" {% if c.id==m.course_id %}selected{% endif %}>{{ c.title }}</option>{% endfor %}</select></div>
+                    <div class="form-group"><label>Durasi</label><input name="duration" value="{{ m.duration }}"></div>
+                </div>
+                <div class="form-group"><label>Judul</label><input name="title" value="{{ m.title }}"></div>
+                <div class="form-group"><label>Deskripsi</label><textarea name="description" rows="2">{{ m.description }}</textarea></div>
+                <button class="btn btn-primary btn-sm">💾 Simpan</button>
+            </form>
+        </td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}<p class="empty">Belum ada modul.</p>{% endif %}
+</div>
+<script>function toggleEdit(id){const r=document.getElementById('edit-'+id);r.style.display=r.style.display==='none'?'table-row':'none';}</script>
+{% endblock %}

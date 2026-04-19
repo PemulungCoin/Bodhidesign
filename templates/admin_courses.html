@@ -1,0 +1,89 @@
+{% extends "admin_base.html" %}
+{% block title %}Kursus{% endblock %}
+{% block content %}
+<div class="page-header"><h1>📚 Kelola Kursus</h1></div>
+
+<div class="panel">
+    <h2>Tambah Kursus Baru</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="action" value="add">
+        <div class="form-row">
+            <div class="form-group"><label>Judul</label><input name="title" required></div>
+            <div class="form-group"><label>Ikon (emoji)</label><input name="icon" value="🏠"></div>
+        </div>
+        <div class="form-group"><label>Deskripsi</label><textarea name="description" rows="3"></textarea></div>
+        <div class="form-row">
+            <div class="form-group"><label>Durasi</label><input name="duration" placeholder="3 Bulan"></div>
+            <div class="form-group"><label>Harga</label><input name="price" placeholder="Rp 4.500.000"></div>
+        </div>
+        <div class="form-group"><label>📸 Gambar Kursus</label><input type="file" name="image_file" accept="image/*" style="padding:12px"></div>
+        <div class="form-group"><label>Features (satu per baris)</label><textarea name="features" rows="4" placeholder='["Durasi 3 Bulan","Live session","Portofolio"]'></textarea></div>
+        <div class="form-group"><label><input type="checkbox" name="is_featured" value="1"> ⭐ Tandai sebagai Populer</label></div>
+        <button type="submit" class="btn btn-primary">➕ Tambah Kursus</button>
+    </form>
+</div>
+
+<hr class="section-divider">
+
+<div class="panel">
+    <h2>Daftar Kursus ({{ courses|length }})</h2>
+    {% if courses %}
+    <table>
+        <thead><tr><th>Gambar</th><th>Judul</th><th>Durasi</th><th>Harga</th><th>Populer</th><th>Aksi</th></tr></thead>
+        <tbody>
+        {% for c in courses %}
+        <tr>
+            <td>{% if c.image %}<img src="/static/uploads/courses/{{ c.image }}" style="width:64px;height:48px;object-fit:cover;border-radius:8px">{% else %}<span style="font-size:1.5rem">{{ c.icon }}</span>{% endif %}</td>
+            <td><strong>{{ c.title }}</strong><br><small style="color:#64748B">{{ c.description[:80] }}{% if c.description|length>80 %}...{% endif %}</small></td>
+            <td>{{ c.duration }}</td>
+            <td>{{ c.price }}</td>
+            <td>{% if c.is_featured %}<span class="badge badge-green">⭐ Ya</span>{% endif %}</td>
+            <td class="actions">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="toggleEdit({{ c.id }})">✏️</button>
+                <form method="GET" class="inline-form" onsubmit="return confirm('Hapus kursus ini?')">
+                    <input type="hidden" name="delete" value="{{ c.id }}">
+                    <button class="btn btn-danger btn-sm">🗑️</button>
+                </form>
+            </td>
+        </tr>
+        <tr id="edit-{{ c.id }}" style="display:none">
+            <td colspan="6">
+                <form method="POST" enctype="multipart/form-data" style="padding:16px;background:rgba(13,148,136,.05);border-radius:8px">
+                    <input type="hidden" name="action" value="edit">
+                    <input type="hidden" name="id" value="{{ c.id }}">
+                    <input type="hidden" name="image" value="{{ c.image }}">
+                    <div class="form-row">
+                        <div class="form-group"><label>Judul</label><input name="title" value="{{ c.title }}"></div>
+                        <div class="form-group"><label>Ikon</label><input name="icon" value="{{ c.icon }}"></div>
+                    </div>
+                    <div class="form-group"><label>Deskripsi</label><textarea name="description" rows="2">{{ c.description }}</textarea></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Durasi</label><input name="duration" value="{{ c.duration }}"></div>
+                        <div class="form-group"><label>Harga</label><input name="price" value="{{ c.price }}"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>📸 Ganti Gambar</label>
+                        <input type="file" name="image_file" accept="image/*" style="padding:12px">
+                        {% if c.image %}<div style="margin-top:8px"><img src="/static/uploads/courses/{{ c.image }}" style="height:60px;border-radius:8px;object-fit:cover"><br><small style="color:#64748B">Gambar saat ini: {{ c.image }}</small></div>{% endif %}
+                    </div>
+                    <div class="form-group"><label>Features JSON</label><textarea name="features" rows="2">{{ c.features if c.features is string else c.features | tojson }}</textarea></div>
+                    <div class="form-group"><label><input type="checkbox" name="is_featured" value="1" {% if c.is_featured %}checked{% endif %}> Populer</label></div>
+                    <button class="btn btn-primary btn-sm">💾 Simpan</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty">Belum ada kursus. Tambahkan kursus pertama di atas.</p>
+    {% endif %}
+</div>
+
+<script>
+function toggleEdit(id) {
+    const row = document.getElementById('edit-' + id);
+    row.style.display = row.style.display === 'none' ? 'table-row' : 'none';
+}
+</script>
+{% endblock %}

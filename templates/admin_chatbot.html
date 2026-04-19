@@ -1,0 +1,43 @@
+{% extends "admin_base.html" %}
+{% block title %}Chatbot{% endblock %}
+{% block content %}
+<div class="page-header"><h1>🤖 Kelola Chatbot</h1></div>
+<div class="panel">
+    <h2>Tambah Response</h2>
+    <form method="POST"><input type="hidden" name="action" value="add">
+        <div class="form-group"><label>Keywords (pisahkan dengan | )</label><input name="keywords" required placeholder="harga|biaya|berapa|price"></div>
+        <div class="form-group"><label>Response</label><textarea name="response" rows="3" required></textarea></div>
+        <button class="btn btn-primary">➕ Tambah</button>
+    </form>
+</div>
+<hr class="section-divider">
+<div class="panel">
+    <h2>Chatbot Responses ({{ responses|length }})</h2>
+    {% if responses %}
+    <table>
+        <thead><tr><th>Keywords</th><th>Response</th><th>Aksi</th></tr></thead>
+        <tbody>
+        {% for r in responses %}
+        <tr>
+            <td><code style="color:#5EEAD4;font-size:.85rem">{{ r.keywords }}</code></td>
+            <td>{{ r.response[:100] }}{% if r.response|length>100 %}...{% endif %}</td>
+            <td class="actions">
+                <button class="btn btn-secondary btn-sm" onclick="toggleEdit({{ r.id }})">✏️</button>
+                <form method="GET" class="inline-form" onsubmit="return confirm('Hapus?')"><input type="hidden" name="delete" value="{{ r.id }}"><button class="btn btn-danger btn-sm">🗑️</button></form>
+            </td>
+        </tr>
+        <tr id="edit-{{ r.id }}" style="display:none"><td colspan="3">
+            <form method="POST" style="padding:16px;background:rgba(13,148,136,.05);border-radius:8px">
+                <input type="hidden" name="action" value="edit"><input type="hidden" name="id" value="{{ r.id }}">
+                <div class="form-group"><label>Keywords</label><input name="keywords" value="{{ r.keywords }}"></div>
+                <div class="form-group"><label>Response</label><textarea name="response" rows="3">{{ r.response }}</textarea></div>
+                <button class="btn btn-primary btn-sm">💾 Simpan</button>
+            </form>
+        </td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}<p class="empty">Belum ada chatbot responses.</p>{% endif %}
+</div>
+<script>function toggleEdit(id){const r=document.getElementById('edit-'+id);r.style.display=r.style.display==='none'?'table-row':'none';}</script>
+{% endblock %}

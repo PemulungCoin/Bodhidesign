@@ -1,0 +1,24 @@
+{% extends "admin_base.html" %}
+{% block title %}Leads{% endblock %}
+{% block content %}
+<div class="page-header"><h1>📋 Leads ({{ leads|length }})</h1></div>
+<div class="panel">
+    {% if leads %}
+    <table>
+        <thead><tr><th>#</th><th>Nama</th><th>Phone</th><th>Email</th><th>Pesan</th><th>Tanggal</th></tr></thead>
+        <tbody>
+        {% for lead in leads %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td><strong>{{ lead.name }}</strong></td>
+            <td>{{ lead.phone }}</td>
+            <td>{{ lead.email }}</td>
+            <td>{{ lead.message[:80] }}{% if lead.message|length>80 %}...{% endif %}</td>
+            <td>{{ lead.created_at }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}<p class="empty">Belum ada leads. Leads muncul ketika pengunjung mengisi form di website.</p>{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "admin_base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>📊 Dashboard</h1>
+    <a href="/" class="btn btn-secondary" target="_blank">🌐 Lihat Website</a>
+</div>
+
+<div class="grid grid-4" style="margin-bottom:24px">
+    <div class="stat-card"><div class="num">{{ stats.courses }}</div><div class="label">Kursus</div></div>
+    <div class="stat-card"><div class="num">{{ stats.modules }}</div><div class="label">Modul</div></div>
+    <div class="stat-card"><div class="num">{{ stats.instructors }}</div><div class="label">Pengajar</div></div>
+    <div class="stat-card"><div class="num">{{ stats.leads }}</div><div class="label">Leads</div></div>
+</div>
+
+<div class="grid grid-4" style="margin-bottom:24px">
+    <div class="stat-card"><div class="num">{{ stats.testimonials }}</div><div class="label">Testimoni</div></div>
+    <div class="stat-card"><div class="num">{{ stats.faq }}</div><div class="label">FAQ</div></div>
+    <div class="stat-card"><div class="num">{{ stats.audience }}</div><div class="label">Target Audience</div></div>
+    <div class="stat-card"><div class="num">{{ stats.chatbot }}</div><div class="label">Chatbot Response</div></div>
+</div>
+
+<div class="panel">
+    <h2>📋 Leads Terbaru</h2>
+    {% if recent_leads %}
+    <table>
+        <thead><tr><th>Nama</th><th>Phone</th><th>Email</th><th>Pesan</th><th>Tanggal</th></tr></thead>
+        <tbody>
+        {% for lead in recent_leads %}
+        <tr>
+            <td><strong>{{ lead.name }}</strong></td>
+            <td>{{ lead.phone }}</td>
+            <td>{{ lead.email }}</td>
+            <td>{{ lead.message[:50] }}{% if lead.message|length > 50 %}...{% endif %}</td>
+            <td>{{ lead.created_at }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div style="margin-top:16px"><a href="/admin/leads" class="btn btn-secondary btn-sm">Lihat Semua Leads →</a></div>
+    {% else %}
+    <p class="empty">Belum ada leads. Leads akan muncul ketika pengunjung mengisi form di website.</p>
+    {% endif %}
+</div>
+
+<div class="panel">
+    <h2>🔗 Quick Links</h2>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="/admin/settings" class="btn btn-secondary">⚙️ Edit Settings</a>
+        <a href="/admin/courses" class="btn btn-secondary">📚 Kelola Kursus</a>
+        <a href="/admin/instructors" class="btn btn-secondary">👨‍🏫 Kelola Pengajar</a>
+        <a href="/admin/images" class="btn btn-secondary">🖼️ Kelola Gambar</a>
+        <a href="/admin/chatbot" class="btn btn-secondary">🤖 Chatbot Responses</a>
+        <a href="/set-theme/v1" class="btn btn-secondary">🎨 Theme V1</a>
+        <a href="/set-theme/v2" class="btn btn-secondary">🌊 Theme V2</a>
+    </div>
+</div>
+{% endblock %}

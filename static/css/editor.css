@@ -1,0 +1,178 @@
+/* ═══════════════════════════════════════
+   Editor CSS — Clean & Simple
+   ═══════════════════════════════════════ */
+
+/* Editor-on mode */
+.editor-on [data-edit] {
+  outline: 2px dashed rgba(167, 139, 250, 0.4) !important;
+  outline-offset: 2px;
+  cursor: pointer !important;
+  transition: outline 0.15s;
+}
+.editor-on [data-edit]:hover {
+  outline: 2px solid #a78bfa !important;
+  background: rgba(167, 139, 250, 0.08) !important;
+}
+.editor-on [data-edit].editor-selected {
+  outline: 3px solid #a78bfa !important;
+  box-shadow: 0 0 0 6px rgba(167, 139, 250, 0.15);
+}
+.editor-on [data-edit].editor-hidden-visible {
+  outline: 3px dashed #f59e0b !important;
+  opacity: 0.7 !important;
+  background: rgba(245, 158, 11, 0.15) !important;
+}
+.editor-on [data-edit].editor-hidden-visible:hover {
+  outline: 3px solid #f59e0b !important;
+  background: rgba(245, 158, 11, 0.25) !important;
+}
+.editor-on [data-edit].editor-hidden-visible.editor-selected {
+  outline: 3px solid #f59e0b !important;
+  box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.2);
+}
+
+/* Bar */
+#editor-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  background: #0f0d1a;
+  border-top: 1px solid #2a2745;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  z-index: 99999;
+  font-size: 13px;
+  font-family: Inter, system-ui, sans-serif;
+  color: #e2e8f0;
+}
+#editor-bar button {
+  background: #1e1b4b;
+  color: #e2e8f0;
+  border: 1px solid #3b3670;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.15s;
+}
+#editor-bar button:hover { background: #2d2a5e; }
+#editor-bar button.active {
+  background: #7c3aed;
+  border-color: #7c3aed;
+  color: #fff;
+}
+#editor-bar .save-btn { background: #065f46; border-color: #059669; }
+#editor-bar .save-btn:hover { background: #059669; }
+#editor-bar .reset-btn { background: #7f1d1d; border-color: #dc2626; }
+#editor-bar .reset-btn:hover { background: #dc2626; }
+#editor-bar .status {
+  margin-left: auto;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+/* Panel */
+#props-panel {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 280px;
+  height: 100vh;
+  background: #110f1f;
+  border-left: 1px solid #2a2745;
+  z-index: 99998;
+  transition: right 0.25s ease;
+  overflow-y: auto;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 12px;
+  color: #e2e8f0;
+}
+#props-panel.open { right: 0; }
+
+#props-header {
+  padding: 14px 16px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #a78bfa;
+  border-bottom: 1px solid #2a2745;
+  background: #0f0d1a;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.prop-row {
+  padding: 6px 14px;
+}
+.prop-row label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.prop-row label > span:first-child {
+  width: 75px;
+  flex-shrink: 0;
+  color: #94a3b8;
+  font-size: 11px;
+}
+.prop-row input[type="range"] {
+  flex: 1;
+  accent-color: #7c3aed;
+  height: 4px;
+}
+.prop-row .val-display {
+  width: 50px;
+  text-align: right;
+  font-size: 11px;
+  color: #a78bfa;
+  font-variant-numeric: tabular-nums;
+}
+.prop-row input[type="color"] {
+  width: 28px;
+  height: 28px;
+  border: 2px solid #3b3670;
+  border-radius: 6px;
+  cursor: pointer;
+  background: none;
+  padding: 0;
+}
+.prop-row .color-hex {
+  font-size: 11px;
+  color: #94a3b8;
+  font-family: monospace;
+}
+
+.prop-row-title {
+  padding: 10px 14px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #7c3aed;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.action {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid #3b3670;
+  border-radius: 6px;
+  background: #1e1b4b;
+  color: #e2e8f0;
+  cursor: pointer;
+  font-size: 11px;
+  text-align: center;
+  transition: all 0.15s;
+}
+.action:hover { background: #2d2a5e; }
+.btn-delete { border-color: #dc2626; color: #f87171; }
+.btn-delete:hover { background: #7f1d1d; }
+
+/* Body offset when editor */
+body.editor-on {
+  padding-bottom: 50px;
+  padding-right: 290px;
+}

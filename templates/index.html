@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ s.site_title }} — {{ s.site_subtitle }}</title>
+    <meta name="description" content="Kursus Interior Designer Profesional. Belajar SketchUp, Enscape, perencanaan ruang, dan cara bekerja dengan klien nyata. Dari nol hingga siap kerja.">
+    <link rel="stylesheet" href="/static/css/style.css">
+    {% if not editor_mode %}
+    <link rel="stylesheet" href="/static/css/editor_overrides.css">
+    {% endif %}
+    {% if editor_mode %}
+    <link rel="stylesheet" href="/static/css/editor.css">
+    <script src="/static/js/editor.js"></script>
+    {% endif %}
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="/" class="nav-logo">{% if s.logo %}<img src="/static/uploads/logos/{{ s.logo }}" alt="{{ s.site_title }}" class="nav-logo-img" data-edit="nav-logo">{% else %}🏠{% endif %}</a>
+            <button class="nav-toggle" id="navToggle">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#audience" class="nav-link">Untuk Siapa</a></li>
+                <li><a href="#courses" class="nav-link">Program</a></li>
+                <li><a href="#instructors" class="nav-link">Pengajar</a></li>
+                <li><a href="#modules" class="nav-link">Kurikulum</a></li>
+                <li><a href="#portfolio" class="nav-link">Portofolio</a></li>
+                <li><a href="#testimonials" class="nav-link">Ulasan</a></li>
+                <li><a href="#faq" class="nav-link">FAQ</a></li>
+                <li><a href="#contact" class="nav-cta">📱 Daftar</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="hero" data-edit="sec-hero">
+        <div class="container hero-content">
+            <!-- Brand Logo + Text -->
+            <div class="hero-brand">
+                <img src="/static/uploads/logos/{{ s.logo }}" alt="Logo" class="hero-logo" data-edit="hero-logo">
+                <div class="hero-brand-text" data-edit="hero-brand-text">
+                    <span>BODHI CREATIVE</span> <span class="brand-plus">+</span> <span>DESIGN</span>
+                </div>
+            </div>
+            <div class="hero-text">
+                <span class="hero-badge" data-edit="hero-badge">{{ s.hero_badge }}</span>
+                <h1 data-edit="hero-title">{{ s.hero_title }}</h1>
+                <p class="hero-subtitle" data-edit="hero-subtitle">{{ s.hero_subtitle }}</p>
+                <ul class="hero-features" data-edit="hero-features">
+                    <li>Durasi 3 Bulan</li>
+                    <li>Live session bareng mentor</li>
+                    <li>Mentoring 1-on-1 (Paket VIP)</li>
+                    <li>Komunitas siswa</li>
+                    <li>Portofolio profesional</li>
+                    <li>Pusat karier</li>
+                </ul>
+                <div class="hero-stats" data-edit="hero-stats">
+                    <div class="hero-stat">
+                        <strong>{{ s.hero_stat_students }}</strong>
+                        <span>Siswa</span>
+                    </div>
+                    <div class="hero-stat">
+                        <strong>{{ s.hero_stat_rating }}</strong>
+                        <span>Rating</span>
+                    </div>
+                    <div class="hero-stat">
+                        <strong>{{ s.hero_stat_practice }}</strong>
+                        <span>Praktik</span>
+                    </div>
+                </div>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn btn-primary btn-lg" data-edit="cta-button">{{ s.hero_cta }}</a>
+                    <a href="#modules" class="btn btn-outline btn-lg">📖 Lihat Kurikulum</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee" data-edit="marquee">
+        <div class="marquee-track">
+            <span>Kursus Online</span><span>•</span>
+            <span>Live Session</span><span>•</span>
+            <span>SketchUp</span><span>•</span>
+            <span>Enscape</span><span>•</span>
+            <span>Interior Design</span><span>•</span>
+            <span>Portofolio</span><span>•</span>
+            <span>Sertifikat</span><span>•</span>
+            <span>Kursus Online</span><span>•</span>
+            <span>Live Session</span><span>•</span>
+            <span>SketchUp</span><span>•</span>
+            <span>Enscape</span><span>•</span>
+            <span>Interior Design</span><span>•</span>
+            <span>Portofolio</span><span>•</span>
+            <span>Sertifikat</span><span>•</span>
+        </div>
+    </div>
+
+    <!-- Target Audience -->
+    <section class="section" id="audience" data-edit="sec-audience">
+        <div class="container">
+            <h2 class="section-title" data-edit="section-title">Kursus ini cocok buat siapa, sih?</h2>
+            <p class="section-subtitle" data-edit="section-subtitle">Dirancang untuk siapa saja yang ingin memulai atau meningkatkan karier di desain interior</p>
+            <div class="grid grid-2">
+                {% for a in audiences %}
+                <div class="card audience-card fade-in">
+                    <div class="audience-icon">{{ a.icon }}</div>
+                    <h3>{{ a.title }}</h3>
+                    <p>{{ a.description }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructors -->
+    <section class="section section-alt" id="instructors" data-edit="sec-instructors">
+        <div class="container">
+            <h2 class="section-title">Pengajar Kami</h2>
+            <p class="section-subtitle">Belajar dari praktisi industri dengan pengalaman puluhan tahun</p>
+            <div class="{% if instructors|length == 1 %}grid-center-single{% else %}grid grid-2{% endif %}">
+                {% for inst in instructors %}
+                <div class="card instructor-card fade-in" data-edit="instructor-card">
+                    <div class="instructor-avatar">
+                        {% if inst.image %}
+                        <img src="/static/uploads/instructors/{{ inst.image }}" alt="{{ inst.name }}" loading="lazy">
+                        {% else %}
+                        <div class="avatar-placeholder">{{ inst.name[0] }}</div>
+                        {% endif %}
+                    </div>
+                    <h3>{{ inst.name }}</h3>
+                    <p class="instructor-title">{{ inst.title }}</p>
+                    <p class="instructor-bio">{{ inst.bio }}</p>
+                    {% if inst.achievements %}
+                    <ul class="instructor-achievements">
+                        {% for ach in inst.achievements %}
+                        <li>{{ ach }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% if inst.linkedin %}
+                    <a href="{{ inst.linkedin }}" class="instructor-linkedin" target="_blank">
+                        🔗 LinkedIn
+                    </a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses -->
+    <section class="section" id="courses" data-edit="sec-courses">
+        <div class="container">
+            <h2 class="section-title">Program Kursus</h2>
+            <p class="section-subtitle">Pilih program yang sesuai dengan tujuan kariermu</p>
+            <div class="grid grid-2">
+                {% for course in courses %}
+                <div class="card course-card fade-in" data-edit="course-card">
+                    {% if course.is_featured %}<span class="featured-badge">⭐ Populer</span>{% endif %}
+                    <div class="card-icon">{{ course.icon }}</div>
+                    <h3>{{ course.title }}</h3>
+                    <p>{{ course.description }}</p>
+                    <div class="card-meta">
+                        <span>⏱️ {{ course.duration }}</span>
+                        <span class="card-price">{{ course.price }}</span>
+                    </div>
+                    {% if course.features %}
+                    <ul class="course-features">
+                        {% for f in course.features %}
+                        <li>{{ f }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <a href="#contact" class="btn btn-primary">Daftar Sekarang</a>
+                    <a href="https://wa.me/{{ s.whatsapp_number }}?text={{ 'Halo, saya ingin tanya tentang kursus ' | urlencode }}{{ course.title | urlencode }}" class="course-cta-link" target="_blank">📱 Hubungi Kami</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Curriculum / Modules -->
+    <section class="section section-alt" id="modules" data-edit="sec-modules">
+        <div class="container">
+            <h2 class="section-title">Modul Pembelajaran</h2>
+            <p class="section-subtitle">Kurikulum lengkap yang dirancang bersama praktisi industri</p>
+            <div class="accordion">
+                {% for mod in modules %}
+                <div class="accordion-item fade-in">
+                    <button class="accordion-header">
+                        <span class="accordion-number">{{ loop.index }}</span>
+                        <span class="accordion-title">{{ mod.title }}</span>
+                        <span class="accordion-duration">{{ mod.duration }}</span>
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <p>{{ mod.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio & Certificate -->
+    <section class="section" id="portfolio" data-edit="sec-portfolio">
+        <div class="container certificate-section">
+            <h2 class="section-title">Portofolio & Sertifikat</h2>
+            <p class="section-subtitle">Kamu akan menambahkan 2+ project ke dalam portofolio profesional</p>
+
+            <div class="portfolio-grid">
+                {% for p in portfolios %}
+                <div class="portfolio-item fade-in">
+                    <h4>{{ p.title }}</h4>
+                    <p>{{ p.description }}</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="certificate-preview fade-in">
+                <h3>🎓 Contoh Sertifikat</h3>
+                <p class="cert-muted">Sertifikat digital yang bisa ditambahkan ke LinkedIn dan portofolio</p>
+                <div class="cert-dashed-box">
+                    <strong class="cert-primary">{{ s.site_title }}</strong><br>
+                    <span class="cert-secondary">Sertifikat Kelulusan</span><br><br>
+                    <strong class="cert-heading">Interior Designer Profesional</strong><br>
+                    <span class="cert-muted-sm">Program Kursus Profesional Eksklusif</span>
+                </div>
+                <h4 class="cert-skills-heading">Skill yang dikuasai:</h4>
+                <div class="certificate-skills">
+                    <span class="skill-tag">Studio Perancangan</span>
+                    <span class="skill-tag">AutoCAD 2D</span>
+                    <span class="skill-tag">SketchUp 3D</span>
+                    <span class="skill-tag">3ds Max</span>
+                    <span class="skill-tag">Enscape Rendering</span>
+                    <span class="skill-tag">Zonasi & Tata Ruang</span>
+                    <span class="skill-tag">Gambar Teknis</span>
+                    <span class="skill-tag">Material & Furniture</span>
+                    <span class="skill-tag">RAB & Budgeting</span>
+                    <span class="skill-tag">PKL & Proyek Nyata</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="section section-alt" data-edit="stats-section">
+        <div class="container">
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-number" data-edit="stat-number">{{ s.hero_stat_rating }}</span>
+                    <span class="stat-label">Rating dari Siswa</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">{{ s.hero_stat_practice }}</span>
+                    <span class="stat-label">Materi Praktik</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">{{ s.hero_stat_students }}</span>
+                    <span class="stat-label">Jumlah Siswa</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section" id="testimonials" data-edit="sec-testimonials">
+        <div class="container">
+            <h2 class="section-title">Ulasan dari Siswa</h2>
+            <p class="section-subtitle">Apa kata alumni yang sudah menyelesaikan kursus</p>
+            <div class="grid grid-2">
+                {% for t in testimonials %}
+                <div class="card testimonial-card fade-in" data-edit="testimonial-card">
+                    <div class="testimonial-stars">
+                        {% for i in range(t.rating) %}⭐{% endfor %}
+                    </div>
+                    <p class="testimonial-text">"{{ t.text }}"</p>
+                    <div class="testimonial-author">
+                        <strong>{{ t.name }}</strong>
+                        <span>{{ t.role }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA + Countdown -->
+    <section class="section cta-section" id="cta" data-edit="sec-cta">
+        <div class="container cta-content">
+            <h2 data-edit="cta-title">Tingkatkan Skill-Mu Sekarang</h2>
+            <p>Sisa slot terbatas — jangan sampai kehabisan!</p>
+            <div class="countdown" id="countdown"></div>
+            <div class="cert-margin-slot">
+                <strong>📦 Sisa slot: {{ s.promo_slots }} places</strong>
+            </div>
+            <a href="#contact" class="btn btn-primary btn-lg">{{ s.hero_cta }}</a>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="section section-alt" id="contact" data-edit="sec-contact">
+        <div class="container contact-section">
+            <h2 class="section-title">{{ s.promo_text }}</h2>
+            <p class="section-subtitle">Hubungi kami melalui WhatsApp dengan mengisi data lengkap di bawah ini.</p>
+
+            <form class="contact-form fade-in" id="leadForm">
+                <div class="form-group">
+                    <label>Nama *</label>
+                    <input type="text" name="name" required placeholder="Nama lengkap">
+                </div>
+                <div class="form-group">
+                    <label>No. WhatsApp *</label>
+                    <input type="tel" name="phone" required placeholder="08xxxxxxxxxx">
+                </div>
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" name="email" required placeholder="email@domain.com">
+                </div>
+                <div class="form-group">
+                    <label>Pesan (opsional)</label>
+                    <textarea name="message" rows="3" placeholder="Tulis pertanyaan atau informasi tambahan..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full-width">
+                    📱 Kirim & Daftar via WhatsApp
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq" data-edit="sec-faq">
+        <div class="container">
+            <h2 class="section-title">Pertanyaan Umum</h2>
+            <p class="section-subtitle">Temukan jawaban atas pertanyaan yang sering diajukan</p>
+            <div class="accordion">
+                {% for f in faqs %}
+                <div class="accordion-item fade-in">
+                    <button class="accordion-header">
+                        <span class="accordion-title">{{ f.question }}</span>
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <p>{{ f.answer }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" data-edit="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>{% if s.logo %}<img src="/static/uploads/logos/{{ s.logo }}" alt="{{ s.site_title }}" class="nav-logo-img" style="display:inline;vertical-align:middle;margin-bottom:4px">{% else %}🏠{% endif %} {{ s.site_title }}</h3>
+                    <p>{{ s.footer_about }}</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Menu</h4>
+                    <a href="#audience">Untuk Siapa</a>
+                    <a href="#courses">Program</a>
+                    <a href="#instructors">Pengajar</a>
+                    <a href="#modules">Kurikulum</a>
+                    <a href="#portfolio">Portofolio</a>
+                    <a href="#testimonials">Ulasan</a>
+                    <a href="#faq">FAQ</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Kontak</h4>
+                    <p>📧 {{ s.email }}</p>
+                    <p>📱 {{ s.phone }}</p>
+                    <p>📍 {{ s.address }}</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 {{ s.site_title }}. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chat Widget -->
+    <button class="chat-bubble" id="chat-bubble" title="Chat dengan kami">
+        💬
+        <span class="badge">1</span>
+    </button>
+    <div class="chat-panel" id="chat-panel">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <p class="chat-header-title">Asisten {{ s.site_title }}</p>
+                <p class="chat-header-subtitle">Siap membantu Anda</p>
+            </div>
+            <button class="chat-header-close" id="chat-close">✕</button>
+        </div>
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="chat-typing" id="chat-typing" style="display:none">
+            <span></span><span></span><span></span>
+        </div>
+        <a href="#" class="chat-whatsapp" id="chat-whatsapp" target="_blank">📱 Hubungi via WhatsApp</a>
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" id="chat-input" placeholder="Ketik pertanyaan...">
+            <button class="chat-send" id="chat-send">➤</button>
+        </div>
+    </div>
+    <input type="hidden" id="chat-welcome" value="{{ s.chatbot_welcome }}">
+
+    <script src="/static/js/main.js"></script>
+    {% if editor_mode %}
+    <link rel="stylesheet" href="/static/css/editor.css">
+    <script src="/static/js/editor.js"></script>
+    {% endif %}
+    <script>
+    // Lead form submission
+    document.getElementById('leadForm')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(this));
+
+        fetch('/api/lead', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then(r => r.json()).then(res => {
+            // Open WhatsApp
+            const waNumber = '{{ s.whatsapp_number }}';
+            const msg = encodeURIComponent(`Halo! Saya ${data.name}, ingin daftar kursus Interior Design.\nEmail: ${data.email}\n${data.message || ''}`);
+            window.open(`https://wa.me/${waNumber}?text=${msg}`, '_blank');
+
+            this.reset();
+            alert('Terima kasih! Data tersimpan. Anda akan diarahkan ke WhatsApp.');
+        });
+    });
+    </script>
+
+    <!-- Visual Editor Layout Application -->
+    <script>
+    (function() {
+        var layout = {{ layout_data | default('{}') | safe }};
+        if (!layout || Object.keys(layout).length === 0) return;
+
+        // Apply section reordering (editor format: sectionOrder array)
+        if (layout.sectionOrder && layout.sectionOrder.length > 0) {
+            var parent = null;
+            layout.sectionOrder.forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el && el.parentElement) {
+                    if (!parent) parent = el.parentElement;
+                    parent.appendChild(el);
+                }
+            });
+        }
+
+        // Apply element styles (editor format: elements keyed by section-id)
+        if (layout.elements) {
+            Object.keys(layout.elements).forEach(function(key) {
+                var el = document.querySelector('[data-section-id="' + key + '"]') ||
+                         document.getElementById(key);
+                if (!el) return;
+                var styles = layout.elements[key];
+
+                if (styles.marginTop) el.style.marginTop = styles.marginTop;
+                if (styles.marginLeft) el.style.marginLeft = styles.marginLeft;
+                if (styles.fontSize) el.style.fontSize = styles.fontSize;
+                if (styles.fontWeight) el.style.fontWeight = styles.fontWeight;
+                if (styles.color) el.style.color = styles.color;
+                if (styles.textAlign) el.style.textAlign = styles.textAlign;
+                if (styles.width) el.style.width = styles.width;
+                if (styles.height) el.style.height = styles.height;
+                if (styles.text && el.classList.contains('editable-text')) {
+                    el.textContent = styles.text;
+                }
+                if (styles.src && el.tagName === 'IMG') {
+                    el.src = styles.src;
+                }
+            });
+
+            // Also apply by index for elements without data-section-id
+            var editableIndex = 0;
+            document.querySelectorAll('.hero img, .hero h1, .hero h2, .hero-subtitle, .hero-badge').forEach(function(el) {
+                var key = 'editable-' + (el.tagName === 'IMG' ? 'img' : 'text') + '-' + editableIndex++;
+                var styles = layout.elements[key];
+                if (!styles) return;
+                if (styles.marginTop) el.style.marginTop = styles.marginTop;
+                if (styles.marginLeft) el.style.marginLeft = styles.marginLeft;
+                if (styles.fontSize) el.style.fontSize = styles.fontSize;
+                if (styles.fontWeight) el.style.fontWeight = styles.fontWeight;
+                if (styles.color) el.style.color = styles.color;
+                if (styles.textAlign) el.style.textAlign = styles.textAlign;
+                if (styles.width) el.style.width = styles.width;
+                if (styles.height) el.style.height = styles.height;
+                if (styles.text) el.textContent = styles.text;
+                if (styles.src && el.tagName === 'IMG') el.src = styles.src;
+            });
+        }
+
+        // Apply brand text
+        if (layout.brandText) {
+            var brandEl = document.querySelector('.hero-brand-text');
+            if (brandEl) brandEl.textContent = layout.brandText;
+        }
+    })();
+    </script>
+
+<script>
+// Apply editor CSS rules from server
+(function() {
+    var rules = {{ css_rules|safe }};
+    if (rules && rules.length > 0) {
+        rules.forEach(function(rule) {
+            try {
+                document.querySelectorAll(rule.selector).forEach(function(el) {
+                    el.style.cssText += ';' + rule.css;
+                });
+            } catch(e) {}
+        });
+    }
+})();
+</script>
+
+</body>
+</html>

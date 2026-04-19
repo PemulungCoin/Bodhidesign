@@ -1,0 +1,42 @@
+{% extends "admin_base.html" %}
+{% block title %}Testimoni{% endblock %}
+{% block content %}
+<div class="page-header"><h1>💬 Kelola Testimoni</h1></div>
+<div class="panel">
+    <h2>Tambah Testimoni</h2>
+    <form method="POST"><input type="hidden" name="action" value="add">
+        <div class="form-row"><div class="form-group"><label>Nama</label><input name="name" required></div><div class="form-group"><label>Role</label><input name="role"></div></div>
+        <div class="form-group"><label>Testimoni</label><textarea name="text" rows="3"></textarea></div>
+        <div class="form-row"><div class="form-group"><label>Rating (1-5)</label><input name="rating" type="number" min="1" max="5" value="5"></div><div class="form-group"><label>Image</label><input name="image"></div></div>
+        <button class="btn btn-primary">➕ Tambah</button>
+    </form>
+</div>
+<hr class="section-divider">
+<div class="panel">
+    <h2>Daftar Testimoni ({{ testimonials|length }})</h2>
+    {% if testimonials %}
+    <table>
+        <thead><tr><th>Nama</th><th>Role</th><th>Rating</th><th>Testimoni</th><th>Aksi</th></tr></thead>
+        <tbody>
+        {% for t in testimonials %}
+        <tr><td><strong>{{ t.name }}</strong></td><td>{{ t.role }}</td><td>{% for i in range(t.rating) %}⭐{% endfor %}</td><td>{{ t.text[:60] }}{% if t.text|length>60 %}...{% endif %}</td>
+        <td class="actions">
+            <button class="btn btn-secondary btn-sm" onclick="toggleEdit({{ t.id }})">✏️</button>
+            <form method="GET" class="inline-form" onsubmit="return confirm('Hapus?')"><input type="hidden" name="delete" value="{{ t.id }}"><button class="btn btn-danger btn-sm">🗑️</button></form>
+        </td></tr>
+        <tr id="edit-{{ t.id }}" style="display:none"><td colspan="5">
+            <form method="POST" style="padding:16px;background:rgba(13,148,136,.05);border-radius:8px">
+                <input type="hidden" name="action" value="edit"><input type="hidden" name="id" value="{{ t.id }}">
+                <div class="form-row"><div class="form-group"><label>Nama</label><input name="name" value="{{ t.name }}"></div><div class="form-group"><label>Role</label><input name="role" value="{{ t.role }}"></div></div>
+                <div class="form-group"><label>Testimoni</label><textarea name="text" rows="2">{{ t.text }}</textarea></div>
+                <div class="form-row"><div class="form-group"><label>Rating</label><input name="rating" type="number" min="1" max="5" value="{{ t.rating }}"></div><div class="form-group"><label>Image</label><input name="image" value="{{ t.image }}"></div></div>
+                <button class="btn btn-primary btn-sm">💾 Simpan</button>
+            </form>
+        </td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}<p class="empty">Belum ada testimoni.</p>{% endif %}
+</div>
+<script>function toggleEdit(id){const r=document.getElementById('edit-'+id);r.style.display=r.style.display==='none'?'table-row':'none';}</script>
+{% endblock %}

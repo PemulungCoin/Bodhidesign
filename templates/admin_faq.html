@@ -1,0 +1,40 @@
+{% extends "admin_base.html" %}
+{% block title %}FAQ{% endblock %}
+{% block content %}
+<div class="page-header"><h1>❓ Kelola FAQ</h1></div>
+<div class="panel">
+    <h2>Tambah FAQ</h2>
+    <form method="POST"><input type="hidden" name="action" value="add">
+        <div class="form-group"><label>Pertanyaan</label><input name="question" required></div>
+        <div class="form-group"><label>Jawaban</label><textarea name="answer" rows="3"></textarea></div>
+        <button class="btn btn-primary">➕ Tambah</button>
+    </form>
+</div>
+<hr class="section-divider">
+<div class="panel">
+    <h2>Daftar FAQ ({{ faqs|length }})</h2>
+    {% if faqs %}
+    <table>
+        <thead><tr><th>#</th><th>Pertanyaan</th><th>Jawaban</th><th>Aksi</th></tr></thead>
+        <tbody>
+        {% for f in faqs %}
+        <tr><td>{{ loop.index }}</td><td><strong>{{ f.question }}</strong></td><td>{{ f.answer[:80] }}{% if f.answer|length>80 %}...{% endif %}</td>
+        <td class="actions">
+            <button class="btn btn-secondary btn-sm" onclick="toggleEdit({{ f.id }})">✏️</button>
+            <form method="GET" class="inline-form" onsubmit="return confirm('Hapus?')"><input type="hidden" name="delete" value="{{ f.id }}"><button class="btn btn-danger btn-sm">🗑️</button></form>
+        </td></tr>
+        <tr id="edit-{{ f.id }}" style="display:none"><td colspan="4">
+            <form method="POST" style="padding:16px;background:rgba(13,148,136,.05);border-radius:8px">
+                <input type="hidden" name="action" value="edit"><input type="hidden" name="id" value="{{ f.id }}">
+                <div class="form-group"><label>Pertanyaan</label><input name="question" value="{{ f.question }}"></div>
+                <div class="form-group"><label>Jawaban</label><textarea name="answer" rows="2">{{ f.answer }}</textarea></div>
+                <button class="btn btn-primary btn-sm">💾 Simpan</button>
+            </form>
+        </td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}<p class="empty">Belum ada FAQ.</p>{% endif %}
+</div>
+<script>function toggleEdit(id){const r=document.getElementById('edit-'+id);r.style.display=r.style.display==='none'?'table-row':'none';}</script>
+{% endblock %}
