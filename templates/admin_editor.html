@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Editor — BODHI Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:#0a0a12;color:#e2e8f0;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+
+    /* ── TOP ADMIN BAR ── */
+    .admin-topbar{
+        height:48px;background:#10101e;border-bottom:1px solid rgba(167,139,250,.1);
+        display:flex;align-items:center;padding:0 16px;gap:12px;flex-shrink:0;z-index:200;
+    }
+    .atb-brand{display:flex;align-items:center;gap:8px;color:#a78bfa;font-weight:800;font-size:13px;text-decoration:none}
+    .atb-brand-icon{width:26px;height:26px;background:linear-gradient(135deg,#7c3aed,#a78bfa);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px}
+    .atb-sep{width:1px;height:24px;background:rgba(255,255,255,.08)}
+    .atb-title{font-size:13px;font-weight:700;color:#f1f5f9}
+    .atb-badge{font-size:10px;background:rgba(16,185,129,.15);color:#10b981;padding:2px 8px;border-radius:20px;font-weight:600}
+    .atb-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+    .atb-btn{padding:5px 12px;border-radius:6px;font-size:11px;font-weight:600;border:none;cursor:pointer;transition:.15s;text-decoration:none;display:inline-flex;align-items:center;gap:5px}
+    .atb-btn-outline{background:transparent;border:1px solid rgba(255,255,255,.1);color:#94a3b8}
+    .atb-btn-outline:hover{border-color:rgba(167,139,250,.4);color:#a78bfa}
+    .atb-btn-primary{background:#7c3aed;color:#fff}
+    .atb-btn-primary:hover{background:#6d28d9}
+    .atb-btn-success{background:rgba(16,185,129,.15);color:#10b981;border:1px solid rgba(16,185,129,.2)}
+    .atb-btn-success:hover{background:rgba(16,185,129,.25)}
+
+    /* ── EDITOR LAYOUT ── */
+    .editor-layout{display:flex;flex:1;overflow:hidden}
+
+    /* ── LEFT PANEL ── */
+    .left-panel{
+        width:260px;background:#10101e;border-right:1px solid rgba(167,139,250,.08);
+        display:flex;flex-direction:column;flex-shrink:0;overflow:hidden;
+    }
+    .lp-tabs{display:flex;border-bottom:1px solid rgba(167,139,250,.08)}
+    .lp-tab{flex:1;padding:10px 6px;text-align:center;font-size:11px;font-weight:600;cursor:pointer;color:#475569;border:none;background:none;transition:.15s;border-bottom:2px solid transparent}
+    .lp-tab.active{color:#a78bfa;border-bottom-color:#a78bfa}
+    .lp-tab:hover:not(.active){color:#94a3b8}
+    .lp-body{flex:1;overflow-y:auto;padding:10px}
+
+    /* ── COMPONENTS GRID ── */
+    .comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:2px}
+    .comp-item{
+        background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+        border-radius:8px;padding:10px 6px;text-align:center;cursor:pointer;transition:.15s;
+    }
+    .comp-item:hover{border-color:#a78bfa;background:rgba(167,139,250,.08);transform:translateY(-1px)}
+    .comp-item .ci-icon{font-size:18px;margin-bottom:4px}
+    .comp-item .ci-label{font-size:10px;color:#64748b;font-weight:500}
+
+    /* ── LAYERS ── */
+    .layer-item{
+        display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:7px;
+        cursor:pointer;transition:.15s;margin-bottom:2px;border:1px solid transparent;
+    }
+    .layer-item:hover{background:rgba(167,139,250,.06);border-color:rgba(167,139,250,.15)}
+    .layer-item.active{background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.3)}
+    .layer-item.hidden-layer{opacity:.35}
+    .li-icon{font-size:13px;flex-shrink:0}
+    .li-name{flex:1;font-size:11.5px;color:#94a3b8}
+    .li-actions{display:flex;gap:3px;opacity:0;transition:.15s}
+    .layer-item:hover .li-actions{opacity:1}
+    .li-btn{width:20px;height:20px;border-radius:4px;border:none;background:rgba(255,255,255,.06);color:#64748b;cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;transition:.15s}
+    .li-btn:hover{background:#a78bfa;color:#fff}
+    .li-btn.danger:hover{background:#ef4444}
+
+    /* ── CANVAS AREA ── */
+    .canvas-area{flex:1;display:flex;flex-direction:column;background:#050508;position:relative;overflow:hidden}
+
+    .canvas-toolbar{
+        position:absolute;top:12px;left:50%;transform:translateX(-50%);
+        display:flex;align-items:center;gap:6px;z-index:100;
+        background:rgba(16,16,30,.92);border:1px solid rgba(167,139,250,.15);
+        border-radius:10px;padding:6px 10px;backdrop-filter:blur(10px);white-space:nowrap;
+    }
+    .ct-btn{
+        padding:5px 11px;border-radius:6px;font-size:11px;font-weight:600;border:none;
+        cursor:pointer;transition:.15s;background:transparent;color:#64748b;
+    }
+    .ct-btn:hover{background:rgba(167,139,250,.1);color:#a78bfa}
+    .ct-btn.active{background:rgba(167,139,250,.15);color:#a78bfa}
+    .ct-sep{width:1px;height:18px;background:rgba(255,255,255,.08)}
+    .ct-dev-group{display:flex;gap:2px}
+    .ct-dev-btn{padding:4px 8px;border-radius:5px;font-size:11px;border:none;cursor:pointer;background:transparent;color:#475569;transition:.15s}
+    .ct-dev-btn:hover,.ct-dev-btn.active{background:rgba(167,139,250,.12);color:#a78bfa}
+    .ct-badge{font-size:9px;background:rgba(16,185,129,.15);color:#10b981;padding:2px 7px;border-radius:20px;font-weight:700}
+
+    .canvas-frame-wrap{
+        flex:1;display:flex;align-items:flex-start;justify-content:center;
+        padding:60px 16px 16px;overflow:auto;
+    }
+    .canvas-frame-container{
+        background:#fff;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 0 1px rgba(167,139,250,.1);
+        overflow:hidden;transition:width .3s,max-width .3s;width:100%;max-width:1140px;
+        flex-shrink:0;
+    }
+    .canvas-frame-container.tablet{max-width:768px}
+    .canvas-frame-container.mobile{max-width:390px}
+    .canvas-frame-container iframe{width:100%;border:none;display:block;min-height:600px}
+
+    .canvas-status{
+        position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
+        font-size:11px;color:#334155;background:rgba(16,16,30,.8);padding:4px 12px;
+        border-radius:20px;backdrop-filter:blur(6px);white-space:nowrap;pointer-events:none;
+    }
+
+    /* ── RIGHT PANEL ── */
+    .right-panel{
+        width:260px;background:#10101e;border-left:1px solid rgba(167,139,250,.08);
+        display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0;
+    }
+    .rp-header{padding:12px 14px;border-bottom:1px solid rgba(167,139,250,.08)}
+    .rp-el-badge{
+        display:inline-flex;align-items:center;gap:6px;background:rgba(167,139,250,.1);
+        border:1px solid rgba(167,139,250,.2);border-radius:6px;padding:5px 10px;
+        font-size:11px;font-weight:600;color:#a78bfa;
+    }
+    .rp-nosel{padding:28px 14px;text-align:center;color:#334155;font-size:12px;line-height:1.7}
+    .rp-nosel .ns-icon{font-size:32px;margin-bottom:10px;opacity:.5}
+
+    .prop-sec{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.04)}
+    .prop-sec-title{font-size:9.5px;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+    .prop-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+    .prop-label{font-size:10.5px;color:#475569;flex-shrink:0;min-width:52px}
+    .prop-input{
+        background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+        border-radius:6px;color:#e2e8f0;padding:5px 8px;font-size:11.5px;width:100%;
+        outline:none;transition:.15s;font-family:inherit;
+    }
+    .prop-input:focus{border-color:rgba(167,139,250,.4);background:rgba(167,139,250,.04)}
+    .prop-select{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;color:#e2e8f0;padding:5px 8px;font-size:11.5px;outline:none;width:100%;cursor:pointer}
+    .color-wrap{display:flex;align-items:center;gap:6px;width:100%}
+    .color-swatch{width:26px;height:26px;border-radius:5px;border:2px solid rgba(255,255,255,.1);cursor:pointer;flex-shrink:0;transition:.15s}
+    .color-swatch:hover{border-color:#a78bfa}
+    .align-row{display:flex;gap:4px;width:100%}
+    .align-btn{flex:1;padding:6px;border-radius:5px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#475569;cursor:pointer;font-size:12px;text-align:center;transition:.15s}
+    .align-btn.active,.align-btn:hover{border-color:#a78bfa;color:#a78bfa;background:rgba(167,139,250,.08)}
+    .action-btn{width:100%;padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#94a3b8;cursor:pointer;font-size:11.5px;font-weight:600;transition:.15s;text-align:center;margin-bottom:5px}
+    .action-btn:hover{border-color:#a78bfa;color:#a78bfa;background:rgba(167,139,250,.06)}
+    .action-btn.hide-btn:hover{border-color:#f59e0b;color:#f59e0b;background:rgba(245,158,11,.06)}
+    .action-btn.del-btn{color:#ef4444;border-color:rgba(239,68,68,.2)}
+    .action-btn.del-btn:hover{background:rgba(239,68,68,.08);border-color:#ef4444}
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar{width:3px}
+    ::-webkit-scrollbar-track{background:transparent}
+    ::-webkit-scrollbar-thumb{background:rgba(167,139,250,.2);border-radius:3px}
+
+    /* ── TOAST ── */
+    .toast{position:fixed;bottom:20px;right:20px;background:#10b981;color:#fff;padding:9px 16px;border-radius:8px;font-size:12px;font-weight:600;z-index:9999;opacity:0;transition:opacity .3s,transform .3s;transform:translateY(6px);pointer-events:none}
+    .toast.show{opacity:1;transform:translateY(0)}
+    </style>
+</head>
+<body>
+
+<!-- TOP ADMIN BAR -->
+<div class="admin-topbar">
+    <a href="/admin/dashboard" class="atb-brand">
+        <div class="atb-brand-icon">🏠</div>
+        BODHI Admin
+    </a>
+    <div class="atb-sep"></div>
+    <span class="atb-title">🎨 Visual Page Editor</span>
+    <span class="atb-badge">● Live</span>
+    <div class="atb-right">
+        <button class="atb-btn atb-btn-outline" onclick="doUndo()">↩ Undo</button>
+        <button class="atb-btn atb-btn-outline" onclick="doRedo()">↪ Redo</button>
+        <button class="atb-btn atb-btn-outline" onclick="doReset()" id="btn-reset">🔄 Reset</button>
+        <button class="atb-btn atb-btn-success" onclick="doSave()" id="btn-save">💾 Simpan</button>
+        <a href="/" target="_blank" class="atb-btn atb-btn-outline">🌐 Website</a>
+        <a href="/admin/dashboard" class="atb-btn atb-btn-outline">← Dashboard</a>
+    </div>
+</div>
+
+<!-- EDITOR LAYOUT -->
+<div class="editor-layout">
+
+    <!-- LEFT: Add Components + Layers -->
+    <div class="left-panel">
+        <div class="lp-tabs">
+            <button class="lp-tab active" id="ltab-comp" onclick="switchLTab('comp')">➕ Komponen</button>
+            <button class="lp-tab" id="ltab-layers" onclick="switchLTab('layers')">📋 Sections</button>
+        </div>
+        <div class="lp-body" id="lbody-comp">
+            <div style="font-size:10px;color:#334155;text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:8px;padding:2px 2px 6px;border-bottom:1px solid rgba(255,255,255,.05)">Klik untuk tambah ke halaman</div>
+            <div class="comp-grid">
+                <div class="comp-item" onclick="addComp('heading')"><div class="ci-icon">📝</div><div class="ci-label">Heading</div></div>
+                <div class="comp-item" onclick="addComp('text')"><div class="ci-icon">📄</div><div class="ci-label">Teks</div></div>
+                <div class="comp-item" onclick="addComp('image')"><div class="ci-icon">🖼️</div><div class="ci-label">Gambar</div></div>
+                <div class="comp-item" onclick="addComp('button')"><div class="ci-icon">🔘</div><div class="ci-label">Tombol</div></div>
+                <div class="comp-item" onclick="addComp('card')"><div class="ci-icon">🃏</div><div class="ci-label">Card</div></div>
+                <div class="comp-item" onclick="addComp('columns')"><div class="ci-icon">⚏</div><div class="ci-label">2 Kolom</div></div>
+                <div class="comp-item" onclick="addComp('divider')"><div class="ci-icon">➖</div><div class="ci-label">Divider</div></div>
+                <div class="comp-item" onclick="addComp('spacer')"><div class="ci-icon">↕️</div><div class="ci-label">Spacer</div></div>
+                <div class="comp-item" onclick="addComp('badge')"><div class="ci-icon">🏷️</div><div class="ci-label">Badge</div></div>
+                <div class="comp-item" onclick="addComp('video')"><div class="ci-icon">🎥</div><div class="ci-label">Video</div></div>
+            </div>
+            <div style="margin-top:12px;font-size:10px;color:#334155;text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:8px;padding:8px 2px 6px;border-top:1px solid rgba(255,255,255,.05)">Insert ke section</div>
+            <select class="prop-select" id="add-target-select" style="margin-bottom:4px">
+                <option value="">— Pilih section target —</option>
+            </select>
+            <div style="font-size:10px;color:#334155;margin-top:4px">Biarkan kosong = tambah di akhir halaman</div>
+        </div>
+        <div class="lp-body" id="lbody-layers" style="display:none">
+            <div style="font-size:10px;color:#334155;text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:8px">Sections Halaman</div>
+            <div id="sections-list"></div>
+        </div>
+    </div>
+
+    <!-- CENTER: iframe Preview -->
+    <div class="canvas-area">
+        <div class="canvas-toolbar">
+            <button class="ct-btn active" id="btn-editmode" onclick="toggleEditMode()">✏️ Edit: OFF</button>
+            <div class="ct-sep"></div>
+            <div class="ct-dev-group">
+                <button class="ct-dev-btn active" id="dev-desktop" onclick="setDevice('desktop')" title="Desktop">🖥️</button>
+                <button class="ct-dev-btn" id="dev-tablet" onclick="setDevice('tablet')" title="Tablet">📱</button>
+                <button class="ct-dev-btn" id="dev-mobile" onclick="setDevice('mobile')" title="Mobile">📲</button>
+            </div>
+            <div class="ct-sep"></div>
+            <button class="ct-btn" onclick="switchTheme('v1')" id="theme-v1">Theme V1</button>
+            <button class="ct-btn" onclick="switchTheme('v2')" id="theme-v2">Theme V2</button>
+            <div class="ct-sep"></div>
+            <span class="ct-badge" id="live-badge">● Siap</span>
+        </div>
+        <div class="canvas-frame-wrap" id="frameWrap">
+            <div class="canvas-frame-container" id="frameContainer">
+                <iframe id="previewFrame" src="/?theme={{ s.theme or 'v1' }}" onload="onFrameLoad()"></iframe>
+            </div>
+        </div>
+        <div class="canvas-status" id="statusBar">Klik "Edit: OFF" untuk mulai mengedit elemen</div>
+    </div>
+
+    <!-- RIGHT: Properties Panel -->
+    <div class="right-panel" id="rightPanel">
+        <div class="rp-header">
+            <div style="font-size:11px;font-weight:700;color:#475569;margin-bottom:6px;text-transform:uppercase;letter-spacing:.8px">Properties Panel</div>
+            <div id="rp-el-info">
+                <div class="rp-nosel">
+                    <div class="ns-icon">👆</div>
+                    Aktifkan Edit Mode lalu klik elemen di preview untuk mengedit
+                </div>
+            </div>
+        </div>
+
+        <div id="props-form" style="display:none">
+            <!-- Position -->
+            <div class="prop-sec">
+                <div class="prop-sec-title">📐 Posisi & Jarak</div>
+                <div class="prop-row">
+                    <span class="prop-label">Geser X</span>
+                    <input class="prop-input" type="number" id="p-tx" value="0" min="-600" max="600" oninput="applyTransform()" style="width:75px">
+                    <span style="font-size:10px;color:#334155">px</span>
+                </div>
+                <div class="prop-row">
+                    <span class="prop-label">Geser Y</span>
+                    <input class="prop-input" type="number" id="p-ty" value="0" min="-600" max="600" oninput="applyTransform()" style="width:75px">
+                    <span style="font-size:10px;color:#334155">px</span>
+                </div>
+                <div class="prop-row">
+                    <span class="prop-label">Margin T</span>
+                    <input class="prop-input" type="number" id="p-mt" value="0" min="-200" max="200" oninput="applyMargin('top')" style="width:75px">
+                    <span style="font-size:10px;color:#334155">px</span>
+                </div>
+                <div class="prop-row">
+                    <span class="prop-label">Margin B</span>
+                    <input class="prop-input" type="number" id="p-mb" value="0" min="-200" max="200" oninput="applyMargin('bottom')" style="width:75px">
+                    <span style="font-size:10px;color:#334155">px</span>
+                </div>
+                <div class="prop-row">
+                    <span class="prop-label">Padding</span>
+                    <input class="prop-input" type="number" id="p-pad" value="0" min="0" max="200" oninput="applyPadding()" style="width:75px">
+                    <span style="font-size:10px;color:#334155">px</span>
+                </div>
+                <div class="prop-row">
+                    <span class="prop-label">Align</span>
+                </div>
+                <div class="align-row">
+                    <button class="align-btn" id="al-left" onclick="setAlign('left')">⬅</button>
+                    <button class="align-btn" id="al-center" onclick="setAlign('center')">⬛</button>
+                    <button class="align-btn" id="al-right" onclick="setAlign('right')">➡</button>
+                </div>
+            </div>
+
+            <!-- Typography -->
+            <div class="prop-sec">
+                <div class="prop-sec-title">🔤 Tipografi</div>
+                <div class="prop-row">
+                    <span class="prop-label">Font</span>
+                    <select class="prop-select" id="p-font" onchange="applyTypo()">
+                        <option value="">Default</option>
+                        <option value="'Inter',sans-serif">Inter</option>
+                        <option value="'Segoe UI',sans-serif">Segoe UI</option>
+                        <option value="Arial,sans-serif">Arial</option>
+                        <option value="Georgia,serif">Georgia</option>
+                        <option value="'Times New Roman',serif">Times New Roman</option>
+                        <option value="'Courier New',monospace">Courier New</option>
+                        <option value="Verdana,sans-serif">Verdana</option>
+                    </select>
+                </div>
+                <div class="prop-row">
+                    <span class="prop-label">Size</span>
+                    <input class="prop-input" type="number" id="p-fs" min="8" max="120" oninput="applyTypo()" style="width:75px">
+                    <span style="font-size:10px;color:#334155">px</span>
+                </div>
+                <div class="prop-row">
+                    <span class="prop-label">Weight</span>
+                    <select class="prop-select" id="p-fw" onchange="applyTypo()">
+                        <option value="">Default</option>
+                        <option value="300">Light</option>
+                        <option value="400">Normal</option>
+                        <option value="500">Medium</option>
+                        <option value="600">Semibold</option>
+                        <option value="700">Bold</option>
+                        <option value="800">Extrabold</option>
+                    </select>
+                </div>
+                <div class="prop-row">
+                    <span class="prop-label">Warna</span>
+                    <div class="color-wrap">
+                        <div class="color-swatch" id="sw-color" onclick="document.getElementById('p-color').click()"></div>
+                        <input type="color" id="p-color" style="position:absolute;opacity:0;width:0;height:0" onchange="applyColor()">
+                        <input class="prop-input" id="p-color-hex" placeholder="#000000" oninput="syncColorHex('text')" maxlength="7">
+                    </div>
+                </div>
+                <div class="prop-row">
+                    <span class="prop-label">Teks</span>
+                    <textarea class="prop-input" id="p-text" rows="3" oninput="applyText()" style="resize:vertical;line-height:1.5"></textarea>
+                </div>
+            </div>
+
+            <!-- Background -->
+            <div class="prop-sec">
+                <div class="prop-sec-title">🎨 Background</div>
+                <div class="prop-row">
+                    <span class="prop-label">Warna</span>
+                    <div class="color-wrap">
+                        <div class="color-swatch" id="sw-bg" onclick="document.getElementById('p-bg').click()"></div>
+                        <input type="color" id="p-bg" style="position:absolute;opacity:0;width:0;height:0" onchange="applyBg()">
+                        <input class="prop-input" id="p-bg-hex" placeholder="#ffffff" oninput="syncColorHex('bg')" maxlength="7">
+                    </div>
+                </div>
+                <div class="prop-row">
+                    <span class="prop-label">Opacity</span>
+                    <input type="range" id="p-opacity" min="0" max="100" value="100" oninput="applyOpacity(this.value)" style="flex:1;accent-color:#a78bfa">
+                    <span id="opacity-val" style="font-size:10px;color:#475569;width:30px;text-align:right">100%</span>
+                </div>
+                <div class="prop-row">
+                    <span class="prop-label">Radius</span>
+                    <input class="prop-input" type="number" id="p-radius" min="0" max="60" oninput="applyRadius()" style="width:75px">
+                    <span style="font-size:10px;color:#334155">px</span>
+                </div>
+                <div class="prop-row">
+                    <span class="prop-label">Width</span>
+                    <input class="prop-input" id="p-width" placeholder="100%, 300px" oninput="applyWidth()">
+                </div>
+            </div>
+
+            <!-- Visibilitas -->
+            <div class="prop-sec">
+                <div class="prop-sec-title">👁 Visibilitas & Aksi</div>
+                <button class="action-btn hide-btn" id="hide-toggle-btn" onclick="toggleHide()">🙈 Sembunyikan Element</button>
+                <button class="action-btn" onclick="resetEl()">↺ Reset Element Ini</button>
+                <button class="action-btn del-btn" onclick="deleteEl()">🗑️ Hapus Element</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── STATE ──
+let editMode = false;
+let selectedEl = null;
+let frameDoc = null;
+let frameWin = null;
+let savedData = {};
+let hiddenEls = {};
+let deletedEls = {};
+let history = [];
+let histIdx = -1;
+let currentTheme = '{{ s.theme or "v1" }}';
+
+const iframe = document.getElementById('previewFrame');
+const statusBar = document.getElementById('statusBar');
+
+// ── FRAME LOAD ──
+function onFrameLoad() {
+    frameDoc = iframe.contentDocument || iframe.contentWindow.document;
+    frameWin = iframe.contentWindow;
+    injectStyles();
+    loadAndApplySaved();
+    buildSectionsList();
+    buildAddTargets();
+    setStatus('✅ Preview termuat — klik "Edit: OFF" untuk mulai edit');
+    document.getElementById('live-badge').textContent = '● Live';
+}
+
+function injectStyles() {
+    const s = frameDoc.createElement('style');
+    s.id = 'bodhi-editor-ui';
+    s.textContent = `
+        .be-hover { outline: 2px dashed rgba(167,139,250,.6) !important; outline-offset: 2px; cursor: pointer !important; }
+        .be-selected { outline: 2px solid #a78bfa !important; outline-offset: 2px; box-shadow: 0 0 0 4px rgba(167,139,250,.18) !important; }
+        .be-hidden-show { opacity: 0.25 !important; outline: 2px dashed #f59e0b !important; }
+        .be-sec-label { position:absolute; top:3px; left:3px; background:rgba(124,58,237,.85); color:#fff; font-size:10px; padding:2px 8px; border-radius:3px; z-index:9999; font-family:sans-serif; pointer-events:none; }
+    `;
+    const existing = frameDoc.getElementById('bodhi-editor-ui');
+    if (existing) existing.remove();
+    frameDoc.head.appendChild(s);
+}
+
+// ── LOAD/APPLY SAVED ──
+function loadAndApplySaved() {
+    fetch('/api/load-editor-css')
+    .then(r => r.json())
+    .then(d => {
+        savedData = d.data || d.rules || {};
+        hiddenEls = d.hiddenEls || {};
+        deletedEls = d.deletedEls || {};
+        applySavedToFrame();
+        applyHiddenDeleted();
+    }).catch(()=>{});
+}
+
+function applySavedToFrame() {
+    if (!frameDoc) return;
+    Object.entries(savedData).forEach(([sel, props]) => {
+        try {
+            const el = frameDoc.querySelector(sel);
+            if (!el) return;
+            if (typeof props === 'string') {
+                el.style.cssText += ';' + props;
+            } else if (typeof props === 'object') {
+                Object.entries(props).forEach(([k, v]) => {
+                    el.style.setProperty(k.replace(/([A-Z])/g, '-$1').toLowerCase(), v, 'important');
+                });
+            }
+        } catch(e){}
+    });
+}
+
+function applyHiddenDeleted() {
+    if (!frameDoc) return;
+    Object.keys(hiddenEls).forEach(sel => {
+        try { frameDoc.querySelectorAll(sel).forEach(el => { el.style.display='none'; }); } catch(e){}
+    });
+    Object.keys(deletedEls).forEach(sel => {
+        try { frameDoc.querySelectorAll(sel).forEach(el => el.remove()); } catch(e){}
+    });
+}
+
+// ── EDIT MODE ──
+function toggleEditMode() {
+    editMode = !editMode;
+    const btn = document.getElementById('btn-editmode');
+    btn.textContent = editMode ? '✏️ Edit: ON' : '✏️ Edit: OFF';
+    btn.classList.toggle('active', editMode);
+    if (editMode) {
+        enableEdit();
+        setStatus('✏️ Edit ON — klik elemen untuk pilih, drag untuk geser posisi');
+    } else {
+        disableEdit();
+        setStatus('Edit OFF');
+    }
+}
+
+function enableEdit() {
+    if (!frameDoc) return;
+    // Show hidden elements with indicator
+    Object.keys(hiddenEls).forEach(sel => {
+        try {
+            frameDoc.querySelectorAll(sel).forEach(el => {
+                el.style.removeProperty('display');
+                el.classList.add('be-hidden-show');
+            });
+        } catch(e){}
+    });
+    // Auto-assign data-edit attributes
+    let i = 0;
+    frameDoc.querySelectorAll('h1,h2,h3,h4,p,a,button,img,span[class],li,section,div[class]').forEach(el => {
+        if (!el.getAttribute('data-edit') && !el.classList.contains('be-sec-label')) {
+            el.setAttribute('data-edit', 'e' + (i++));
+        }
+    });
+    frameDoc.body.addEventListener('mouseover', onHover);
+    frameDoc.body.addEventListener('mouseout', onUnhover);
+    frameDoc.body.addEventListener('click', onClickEl, true);
+    // Add drag
+    frameDoc.body.addEventListener('mousedown', onDragStart);
+    // Section labels
+    frameDoc.querySelectorAll('[data-section]').forEach(sec => {
+        const lbl = frameDoc.createElement('div');
+        lbl.className = 'be-sec-label';
+        lbl.textContent = sec.getAttribute('data-section') || sec.tagName;
+        sec.style.position = 'relative';
+        sec.appendChild(lbl);
+    });
+}
+
+function disableEdit() {
+    if (!frameDoc) return;
+    deselect();
+    frameDoc.body.removeEventListener('mouseover', onHover);
+    frameDoc.body.removeEventListener('mouseout', onUnhover);
+    frameDoc.body.removeEventListener('click', onClickEl, true);
+    frameDoc.body.removeEventListener('mousedown', onDragStart);
+    frameDoc.querySelectorAll('.be-hover').forEach(el => el.classList.remove('be-hover'));
+    frameDoc.querySelectorAll('.be-sec-label').forEach(el => el.remove());
+    // Re-hide hidden
+    frameDoc.querySelectorAll('.be-hidden-show').forEach(el => {
+        el.classList.remove('be-hidden-show');
+        el.style.display = 'none';
+    });
+}
+
+// ── HOVER ──
+function onHover(e) {
+    const el = e.target.closest('[data-edit]');
+    if (el && el !== selectedEl) el.classList.add('be-hover');
+}
+function onUnhover(e) {
+    const el = e.target.closest('[data-edit]');
+    if (el) el.classList.remove('be-hover');
+}
+
+// ── CLICK SELECT ──
+function onClickEl(e) {
+    e.preventDefault(); e.stopPropagation();
+    const el = e.target.closest('[data-edit]') || e.target;
+    selectEl(el);
+}
+
+function selectEl(el) {
+    if (!el || !editMode) return;
+    if (selectedEl) {
+        selectedEl.classList.remove('be-selected');
+        selectedEl.classList.remove('be-hover');
+    }
+    selectedEl = el;
+    el.classList.add('be-selected');
+    loadElProps(el);
+    document.getElementById('props-form').style.display = '';
+    document.getElementById('rp-el-info').innerHTML = `<div class="rp-el-badge">✏️ ${el.tagName.toLowerCase()}${el.className ? '.'+el.className.split(' ')[0] : ''}</div>`;
+}
+
+function deselect() {
+    if (selectedEl) { selectedEl.classList.remove('be-selected'); selectedEl = null; }
+    document.getElementById('props-form').style.display = 'none';
+    document.getElementById('rp-el-info').innerHTML = `<div class="rp-nosel"><div class="ns-icon">👆</div>Aktifkan Edit Mode lalu klik elemen di preview untuk mengedit</div>`;
+}
+
+// ── DRAG ──
+let dragging = false, dragStartX=0, dragStartY=0, dragOrigTx=0, dragOrigTy=0;
+function onDragStart(e) {
+    if (!editMode) return;
+    const el = e.target.closest('[data-edit]');
+    if (!el || e.button !== 0) return;
+    dragging = true;
+    dragStartX = e.clientX; dragStartY = e.clientY;
+    const t = new DOMMatrix(frameWin.getComputedStyle(el).transform);
+    dragOrigTx = t.m41; dragOrigTy = t.m42;
+    frameDoc.addEventListener('mousemove', onDragMove);
+    frameDoc.addEventListener('mouseup', onDragEnd);
+}
+function onDragMove(e) {
+    if (!dragging || !selectedEl) return;
+    const dx = e.clientX - dragStartX, dy = e.clientY - dragStartY;
+    const nx = dragOrigTx + dx, ny = dragOrigTy + dy;
+    selectedEl.style.transform = `translate(${nx}px,${ny}px)`;
+    document.getElementById('p-tx').value = Math.round(nx);
+    document.getElementById('p-ty').value = Math.round(ny);
+    saveProp(selectedEl, 'transform', `translate(${nx}px,${ny}px)`);
+}
+function onDragEnd() {
+    dragging = false;
+    frameDoc.removeEventListener('mousemove', onDragMove);
+    frameDoc.removeEventListener('mouseup', onDragEnd);
+    if (selectedEl) saveSnapshot();
+    setStatus('↕ Posisi disimpan');
+}
+
+// ── LOAD PROPS ──
+function loadElProps(el) {
+    const cs = frameWin.getComputedStyle(el);
+    const t = new DOMMatrix(cs.transform);
+    document.getElementById('p-tx').value = Math.round(t.m41) || 0;
+    document.getElementById('p-ty').value = Math.round(t.m42) || 0;
+    document.getElementById('p-mt').value = parseInt(cs.marginTop) || 0;
+    document.getElementById('p-mb').value = parseInt(cs.marginBottom) || 0;
+    document.getElementById('p-pad').value = parseInt(cs.paddingTop) || 0;
+    document.getElementById('p-fs').value = parseInt(cs.fontSize) || '';
+    document.getElementById('p-fw').value = cs.fontWeight || '';
+    document.getElementById('p-radius').value = parseInt(cs.borderRadius) || 0;
+    const opacity = Math.round(parseFloat(cs.opacity)*100);
+    document.getElementById('p-opacity').value = opacity;
+    document.getElementById('opacity-val').textContent = opacity + '%';
+    document.getElementById('p-width').value = el.style.width || '';
+
+    const textColor = cs.color || '#000000';
+    const bgColor = cs.backgroundColor || '#ffffff';
+    document.getElementById('p-color').value = rgbToHex(textColor) || '#1e293b';
+    document.getElementById('p-color-hex').value = rgbToHex(textColor) || '';
+    document.getElementById('sw-color').style.background = textColor;
+    document.getElementById('p-bg').value = rgbToHex(bgColor) || '#ffffff';
+    document.getElementById('p-bg-hex').value = rgbToHex(bgColor) || '';
+    document.getElementById('sw-bg').style.background = bgColor;
+
+    document.getElementById('p-text').value = el.innerText?.trim()?.slice(0,300) || '';
+
+    const ta = cs.textAlign || '';
+    ['left','center','right'].forEach(a => {
+        document.getElementById('al-'+a).classList.toggle('active', ta === a);
+    });
+
+    const isHidden = hiddenEls[getSelector(el)];
+    const hb = document.getElementById('hide-toggle-btn');
+    hb.textContent = isHidden ? '👁 Tampilkan Element' : '🙈 Sembunyikan Element';
+}
+
+// ── APPLY PROPS ──
+function applyTransform() {
+    if (!selectedEl) return;
+    const tx = parseFloat(document.getElementById('p-tx').value)||0;
+    const ty = parseFloat(document.getElementById('p-ty').value)||0;
+    selectedEl.style.transform = `translate(${tx}px,${ty}px)`;
+    saveProp(selectedEl, 'transform', `translate(${tx}px,${ty}px)`);
+}
+function applyMargin(side) {
+    if (!selectedEl) return;
+    const v = parseInt(document.getElementById('p-m'+side[0]).value)||0;
+    selectedEl.style['margin'+side.charAt(0).toUpperCase()+side.slice(1)] = v+'px';
+    saveProp(selectedEl, 'margin-'+side, v+'px');
+}
+function applyPadding() {
+    if (!selectedEl) return;
+    const v = parseInt(document.getElementById('p-pad').value)||0;
+    selectedEl.style.padding = v+'px';
+    saveProp(selectedEl, 'padding', v+'px');
+}
+function setAlign(a) {
+    if (!selectedEl) return;
+    selectedEl.style.textAlign = a;
+    ['left','center','right'].forEach(x => document.getElementById('al-'+x).classList.toggle('active', x===a));
+    saveProp(selectedEl, 'text-align', a);
+}
+function applyTypo() {
+    if (!selectedEl) return;
+    const font = document.getElementById('p-font').value;
+    const size = document.getElementById('p-fs').value;
+    const weight = document.getElementById('p-fw').value;
+    if (font) { selectedEl.style.fontFamily = font; saveProp(selectedEl,'font-family',font); }
+    if (size) { selectedEl.style.fontSize = size+'px'; saveProp(selectedEl,'font-size',size+'px'); }
+    if (weight) { selectedEl.style.fontWeight = weight; saveProp(selectedEl,'font-weight',weight); }
+}
+function applyColor() {
+    if (!selectedEl) return;
+    const c = document.getElementById('p-color').value;
+    document.getElementById('sw-color').style.background = c;
+    document.getElementById('p-color-hex').value = c;
+    selectedEl.style.color = c;
+    saveProp(selectedEl, 'color', c);
+}
+function applyBg() {
+    if (!selectedEl) return;
+    const c = document.getElementById('p-bg').value;
+    document.getElementById('sw-bg').style.background = c;
+    document.getElementById('p-bg-hex').value = c;
+    selectedEl.style.backgroundColor = c;
+    saveProp(selectedEl, 'background-color', c);
+}
+function applyOpacity(v) {
+    if (!selectedEl) return;
+    document.getElementById('opacity-val').textContent = v+'%';
+    selectedEl.style.opacity = parseFloat(v)/100;
+    saveProp(selectedEl, 'opacity', parseFloat(v)/100);
+}
+function applyRadius() {
+    if (!selectedEl) return;
+    const v = parseInt(document.getElementById('p-radius').value)||0;
+    selectedEl.style.borderRadius = v+'px';
+    saveProp(selectedEl, 'border-radius', v+'px');
+}
+function applyWidth() {
+    if (!selectedEl) return;
+    const v = document.getElementById('p-width').value;
+    selectedEl.style.width = v;
+    saveProp(selectedEl, 'width', v);
+}
+function applyText() {
+    if (!selectedEl) return;
+    const v = document.getElementById('p-text').value;
+    const img = selectedEl.querySelector('img');
+    if (!img) { selectedEl.textContent = v; }
+}
+function syncColorHex(type) {
+    const v = document.getElementById('p-'+(type==='text'?'color':'bg')+'-hex').value;
+    if (!/^#[0-9A-Fa-f]{6}$/.test(v)) return;
+    document.getElementById('p-'+(type==='text'?'color':'bg')).value = v;
+    document.getElementById('sw-'+(type==='text'?'color':'bg')).style.background = v;
+    if (type==='text') { if(selectedEl) {selectedEl.style.color=v;saveProp(selectedEl,'color',v);} }
+    else { if(selectedEl) {selectedEl.style.backgroundColor=v;saveProp(selectedEl,'background-color',v);} }
+}
+
+// ── HIDE / DELETE / RESET ──
+function toggleHide() {
+    if (!selectedEl) return;
+    saveSnapshot();
+    const sel = getSelector(selectedEl);
+    if (hiddenEls[sel]) {
+        delete hiddenEls[sel];
+        selectedEl.style.removeProperty('display');
+        selectedEl.classList.remove('be-hidden-show');
+        document.getElementById('hide-toggle-btn').textContent = '🙈 Sembunyikan Element';
+        showToast('👁 Element ditampilkan');
+    } else {
+        hiddenEls[sel] = true;
+        selectedEl.classList.add('be-hidden-show');
+        document.getElementById('hide-toggle-btn').textContent = '👁 Tampilkan Element';
+        showToast('🙈 Element disembunyikan (akan disimpan)');
+    }
+}
+
+function deleteEl() {
+    if (!selectedEl || !confirm('Hapus element ini? Aksi bisa di-undo.')) return;
+    saveSnapshot();
+    const sel = getSelector(selectedEl);
+    deletedEls[sel] = true;
+    selectedEl.remove();
+    selectedEl = null;
+    document.getElementById('props-form').style.display = 'none';
+    document.getElementById('rp-el-info').innerHTML = `<div class="rp-nosel"><div class="ns-icon">👆</div>Element dihapus. Klik element lain untuk edit.</div>`;
+    showToast('🗑️ Element dihapus (save untuk permanen)');
+}
+
+function resetEl() {
+    if (!selectedEl) return;
+    saveSnapshot();
+    const sel = getSelector(selectedEl);
+    delete savedData[sel];
+    selectedEl.removeAttribute('style');
+    if (hiddenEls[sel]) { delete hiddenEls[sel]; }
+    loadElProps(selectedEl);
+    showToast('↺ Element di-reset');
+}
+
+// ── SAVE PROP ──
+function saveProp(el, prop, val) {
+    const sel = getSelector(el);
+    if (!savedData[sel]) savedData[sel] = {};
+    if (typeof savedData[sel] === 'string') savedData[sel] = {};
+    savedData[sel][prop] = val + ' !important';
+    setSaved(true);
+}
+
+let saveIndicator = false;
+function setSaved(isDirty) {
+    document.getElementById('btn-save').textContent = isDirty ? '💾 Simpan*' : '💾 Simpan';
+    document.getElementById('btn-save').style.background = isDirty ? '#f59e0b' : '';
+    document.getElementById('btn-save').style.color = isDirty ? '#000' : '';
+    saveIndicator = isDirty;
+}
+
+// ── SAVE TO SERVER ──
+function doSave() {
+    // Build CSS
+    const rules = [];
+    Object.entries(savedData).forEach(([sel, props]) => {
+        if (typeof props === 'object') {
+            const cssStr = Object.entries(props).map(([p,v]) => `${p}:${v}`).join(';');
+            rules.push({selector: sel, css: cssStr});
+        }
+    });
+    fetch('/api/save-editor-css', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+            rules: rules,
+            data: savedData,
+            hiddenEls: hiddenEls,
+            deletedEls: deletedEls
+        })
+    })
+    .then(r=>r.json())
+    .then(d=>{
+        setSaved(false);
+        showToast('💾 Tersimpan! '+d.rules_count+' rules aktif');
+        setStatus('✅ Disimpan — '+d.rules_count+' rules');
+    })
+    .catch(()=>showToast('❌ Gagal menyimpan'));
+}
+
+function doReset() {
+    if (!confirm('Reset semua perubahan visual? Website kembali ke tampilan awal.')) return;
+    fetch('/api/reset-editor-css',{method:'POST'})
+    .then(()=>{
+        savedData={};hiddenEls={};deletedEls={};
+        setSaved(false);
+        iframe.src = iframe.src; // reload
+        showToast('🔄 Reset berhasil');
+    });
+}
+
+// ── UNDO/REDO ──
+function saveSnapshot() {
+    history = history.slice(0, histIdx+1);
+    history.push(JSON.parse(JSON.stringify(savedData)));
+    histIdx = history.length-1;
+    if (history.length > 30) { history.shift(); histIdx--; }
+    setSaved(true);
+}
+function doUndo() {
+    if (histIdx <= 0) { showToast('❌ Tidak ada yang bisa di-undo'); return; }
+    histIdx--;
+    savedData = JSON.parse(JSON.stringify(history[histIdx]));
+    applySavedToFrame();
+    showToast('↩ Undo berhasil');
+}
+function doRedo() {
+    if (histIdx >= history.length-1) { showToast('❌ Tidak ada yang bisa di-redo'); return; }
+    histIdx++;
+    savedData = JSON.parse(JSON.stringify(history[histIdx]));
+    applySavedToFrame();
+    showToast('↪ Redo berhasil');
+}
+
+// ── ADD COMPONENT ──
+function addComp(type) {
+    if (!frameDoc) { showToast('❌ Preview belum termuat'); return; }
+    const html = buildCompHTML(type);
+    const wrapper = frameDoc.createElement('div');
+    wrapper.innerHTML = html;
+    wrapper.setAttribute('data-edit','added-'+Date.now());
+    wrapper.style.cssText='position:relative;margin:10px 0;';
+
+    const targetSel = document.getElementById('add-target-select').value;
+    let target = null;
+    if (targetSel) { try { target = frameDoc.querySelector(targetSel); } catch(e){} }
+    if (target) target.appendChild(wrapper);
+    else frameDoc.body.appendChild(wrapper);
+
+    if (editMode) selectEl(wrapper);
+    switchLTab('layers');
+    buildSectionsList();
+    showToast('✅ Komponen '+type+' ditambahkan');
+}
+
+function buildCompHTML(type) {
+    const map = {
+        heading: '<h2 style="padding:16px 40px;background:#f8fafc;font-size:28px;font-weight:800;color:#1e293b">Heading Baru</h2>',
+        text: '<p style="padding:16px 40px;background:#fff;font-size:15px;color:#475569;line-height:1.7">Tambahkan teks paragraf di sini. Klik untuk mengedit konten ini.</p>',
+        image: '<div style="padding:20px 40px;background:#f8fafc;text-align:center"><div style="background:linear-gradient(135deg,#e2e8f0,#cbd5e1);border-radius:12px;height:200px;display:flex;align-items:center;justify-content:center;font-size:48px">🖼️</div></div>',
+        button: '<div style="padding:16px 40px;background:#fff;text-align:center"><button style="background:#7c3aed;color:#fff;padding:12px 28px;border-radius:8px;font-weight:700;font-size:14px;border:none;cursor:pointer">Tombol Aksi</button></div>',
+        card: '<div style="padding:20px 40px;background:#f8fafc"><div style="background:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.06)"><div style="font-size:28px;margin-bottom:12px">⭐</div><h3 style="font-size:16px;font-weight:700;color:#1e293b;margin-bottom:8px">Judul Card</h3><p style="font-size:13px;color:#64748b">Deskripsi card di sini</p></div></div>',
+        columns: '<div style="padding:20px 40px;background:#fff;display:grid;grid-template-columns:1fr 1fr;gap:20px"><div style="padding:20px;background:#f8fafc;border-radius:8px;text-align:center"><p style="color:#475569">Kolom Kiri</p></div><div style="padding:20px;background:#f8fafc;border-radius:8px;text-align:center"><p style="color:#475569">Kolom Kanan</p></div></div>',
+        divider: '<div style="padding:8px 40px;background:#fff"><hr style="border:none;border-top:2px solid #e2e8f0"></div>',
+        spacer: '<div style="height:48px;background:#fff"></div>',
+        badge: '<div style="padding:12px 40px;background:#fff;text-align:center"><span style="background:rgba(124,58,237,.1);color:#7c3aed;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:600;border:1px solid rgba(124,58,237,.2)">Badge Label</span></div>',
+        video: '<div style="padding:20px 40px;background:#1e293b;text-align:center"><div style="background:#0f172a;border-radius:12px;height:200px;display:flex;align-items:center;justify-content:center;font-size:48px;cursor:pointer">▶️</div><p style="margin-top:8px;color:#94a3b8;font-size:12px">Klik untuk set URL video</p></div>',
+    };
+    return map[type] || '<div style="padding:20px;background:#fff;color:#64748b">New Element</div>';
+}
+
+// ── SECTIONS LIST ──
+function buildSectionsList() {
+    if (!frameDoc) return;
+    const list = document.getElementById('sections-list');
+    list.innerHTML = '';
+    const sections = frameDoc.querySelectorAll('section,[data-section],header,footer,nav,.section');
+    sections.forEach((sec, i) => {
+        const name = sec.getAttribute('data-section') || sec.getAttribute('id') || sec.tagName+'['+i+']';
+        const d = document.createElement('div');
+        d.className = 'layer-item';
+        d.innerHTML = `
+            <span class="li-icon">📄</span>
+            <span class="li-name">${name}</span>
+            <div class="li-actions">
+                <button class="li-btn" title="Pilih" onclick="event.stopPropagation();selectSec('${CSS.escape(name)}')">✏️</button>
+                <button class="li-btn danger" title="Sembunyikan" onclick="event.stopPropagation();toggleSecHide(this,'${i}')">🙈</button>
+            </div>`;
+        d.onclick = () => { if(editMode) selectEl(sec); };
+        list.appendChild(d);
+    });
+    if (!sections.length) {
+        list.innerHTML = '<div style="text-align:center;padding:20px;color:#334155;font-size:11px">Tidak ada sections terdeteksi.<br>Aktifkan Edit Mode untuk melihat lebih detail.</div>';
+    }
+}
+
+function buildAddTargets() {
+    if (!frameDoc) return;
+    const sel = document.getElementById('add-target-select');
+    sel.innerHTML = '<option value="">— Akhir halaman —</option>';
+    frameDoc.querySelectorAll('section,[data-section],header,footer,.section').forEach((sec,i) => {
+        const name = sec.getAttribute('data-section') || sec.getAttribute('id') || sec.tagName+'['+i+']';
+        const opt = document.createElement('option');
+        opt.value = sec.tagName.toLowerCase() + (sec.id ? '#'+sec.id : (sec.className ? '.'+sec.className.split(' ')[0] : ''));
+        opt.textContent = name;
+        sel.appendChild(opt);
+    });
+}
+
+function toggleSecHide(btn, idx) {
+    if (!frameDoc) return;
+    const secs = frameDoc.querySelectorAll('section,[data-section],header,footer,nav,.section');
+    const sec = secs[parseInt(idx)];
+    if (!sec) return;
+    const isHidden = sec.style.display === 'none';
+    sec.style.display = isHidden ? '' : 'none';
+    btn.textContent = isHidden ? '🙈' : '👁';
+    btn.closest('.layer-item').classList.toggle('hidden-layer', !isHidden);
+    showToast(isHidden ? '👁 Section ditampilkan' : '🙈 Section disembunyikan');
+}
+
+// ── DEVICE ──
+function setDevice(d) {
+    const c = document.getElementById('frameContainer');
+    c.className = 'canvas-frame-container' + (d !== 'desktop' ? ' '+d : '');
+    ['desktop','tablet','mobile'].forEach(x => document.getElementById('dev-'+x).classList.toggle('active', x===d));
+    const labels = {desktop:'Desktop (1140px)',tablet:'Tablet (768px)',mobile:'Mobile (390px)'};
+    setStatus('📱 ' + labels[d]);
+}
+
+// ── THEME ──
+function switchTheme(t) {
+    currentTheme = t;
+    ['v1','v2'].forEach(x => document.getElementById('theme-'+x).classList.toggle('active', x===t));
+    iframe.src = '/?theme=' + t;
+    setStatus('🎨 Theme '+t.toUpperCase()+' dimuat...');
+    deselect();
+}
+
+// ── TAB SWITCH ──
+function switchLTab(tab) {
+    document.getElementById('lbody-comp').style.display = tab==='comp' ? '' : 'none';
+    document.getElementById('lbody-layers').style.display = tab==='layers' ? '' : 'none';
+    document.getElementById('ltab-comp').classList.toggle('active', tab==='comp');
+    document.getElementById('ltab-layers').classList.toggle('active', tab==='layers');
+    if (tab==='layers') buildSectionsList();
+}
+
+// ── HELPERS ──
+function getSelector(el) {
+    if (!el) return '';
+    if (el.id) return '#' + el.id;
+    const edit = el.getAttribute('data-edit');
+    if (edit) return '[data-edit="'+edit+'"]';
+    let sel = el.tagName.toLowerCase();
+    if (el.className) {
+        sel += '.' + Array.from(el.classList).filter(c=>!c.startsWith('be-')).join('.');
+    }
+    return sel;
+}
+
+function rgbToHex(rgb) {
+    if (!rgb || rgb==='rgba(0, 0, 0, 0)') return '';
+    const m = rgb.match(/\d+/g);
+    if (!m || m.length < 3) return '';
+    return '#'+[m[0],m[1],m[2]].map(x=>parseInt(x).toString(16).padStart(2,'0')).join('');
+}
+
+function setStatus(msg) { statusBar.textContent = msg; }
+
+// ── TOAST ──
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._t);
+    t._t = setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+// ── KEYBOARD ──
+document.addEventListener('keydown', e => {
+    if ((e.ctrlKey||e.metaKey) && e.key==='s') { e.preventDefault(); doSave(); }
+    if ((e.ctrlKey||e.metaKey) && !e.shiftKey && e.key==='z') { e.preventDefault(); doUndo(); }
+    if ((e.ctrlKey||e.metaKey) && e.shiftKey && e.key==='z') { e.preventDefault(); doRedo(); }
+    if (e.key==='Escape') { if(editMode) { toggleEditMode(); } deselect(); }
+});
+
+// ── THEME ACTIVE ──
+document.getElementById('theme-'+currentTheme).classList.add('active');
+</script>
+</body>
+</html>

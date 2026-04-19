@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "selector": ".hero h1",
+    "css": "font-size: 48px !important; color: #ff6600 !important"
+  },
+  {
+    "selector": "[data-edit=\"hero-logo\"]",
+    "css": "display: none !important; /* deleted */"
+  },
+  {
+    "selector": "[data-edit=\"hero-stats\"]",
+    "css": "display: none !important; /* deleted */"
+  }
+]

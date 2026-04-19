@@ -833,6 +833,22 @@ def api_save_editor_css():
         with open(tc_path, "w") as f:
             json.dump(text_contents, f, indent=2)
 
+    # Save hidden elements
+    hidden_els = data.get("hiddenEls", {})
+    with open(os.path.join(BASE_DIR, "db", "editor_hidden_els.json"), "w") as f:
+        json.dump(hidden_els, f, indent=2)
+
+    # Save deleted elements
+    deleted_els = data.get("deletedEls", {})
+    with open(os.path.join(BASE_DIR, "db", "editor_deleted_els.json"), "w") as f:
+        json.dump(deleted_els, f, indent=2)
+
+    # Append hidden CSS
+    if hidden_els:
+        hidden_css = "\n".join([f"{sel} {{ display: none !important; }}" for sel in hidden_els.keys()])
+        with open(css_path, "a") as f:
+            f.write("\n\n/* Hidden Elements */\n" + hidden_css)
+
     return jsonify({"ok": True, "rules_count": len(css_rules_for_page)})
 
 
@@ -864,12 +880,26 @@ def api_load_editor_css():
     if os.path.exists(tc_path):
         with open(tc_path) as f:
             text_contents = json.load(f)
-    return jsonify({"ok": True, "data": rules, "rules": rules, "textContents": text_contents})
+    # Load hidden and deleted elements
+    hidden_path = os.path.join(BASE_DIR, "db", "editor_hidden_els.json")
+    hidden_els = {}
+    if os.path.exists(hidden_path):
+        with open(hidden_path) as f:
+            hidden_els = json.load(f)
+
+    deleted_path = os.path.join(BASE_DIR, "db", "editor_deleted_els.json")
+    deleted_els = {}
+    if os.path.exists(deleted_path):
+        with open(deleted_path) as f:
+            deleted_els = json.load(f)
+
+    return jsonify({"ok": True, "data": rules, "rules": rules, "textContents": text_contents,
+                    "hiddenEls": hidden_els, "deletedEls": deleted_els})
 
 @app.route("/api/reset-editor-css", methods=["POST"])
 def api_reset_editor_css():
     """Reset editor CSS"""
-    for f in ["editor_rules.json", "editor_css_rules.json", "editor_layouts.json", "editor_text_contents.json"]:
+    for f in ["editor_rules.json", "editor_css_rules.json", "editor_layouts.json", "editor_text_contents.json", "editor_hidden_els.json", "editor_deleted_els.json"]:
         p = os.path.join(BASE_DIR, "db", f)
         if os.path.exists(p):
             os.remove(p)
@@ -879,6 +909,13 @@ def api_reset_editor_css():
             f.write("/* Reset */")
     return jsonify({"ok": True})
 
+
+@app.route("/admin/editor")
+@login_required
+def admin_editor():
+    """Admin Visual Editor — integrated admin + editor"""
+    s = get_all_settings()
+    return render_template("admin_editor.html", s=s)
 
 @app.route("/editor")
 def visual_editor():

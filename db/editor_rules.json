@@ -1,1 +1,5 @@
-{}
+{
+  ".hero h1": "font-size: 48px !important; color: #ff6600 !important",
+  "[data-edit=\"hero-logo\"]": "display: none !important; /* deleted */",
+  "[data-edit=\"hero-stats\"]": "display: none !important; /* deleted */"
+}

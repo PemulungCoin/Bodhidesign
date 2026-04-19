@@ -1,58 +1,200 @@
 {% extends "admin_base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
+
 <div class="page-header">
-    <h1>📊 Dashboard</h1>
-    <a href="/" class="btn btn-secondary" target="_blank">🌐 Lihat Website</a>
-</div>
-
-<div class="grid grid-4" style="margin-bottom:24px">
-    <div class="stat-card"><div class="num">{{ stats.courses }}</div><div class="label">Kursus</div></div>
-    <div class="stat-card"><div class="num">{{ stats.modules }}</div><div class="label">Modul</div></div>
-    <div class="stat-card"><div class="num">{{ stats.instructors }}</div><div class="label">Pengajar</div></div>
-    <div class="stat-card"><div class="num">{{ stats.leads }}</div><div class="label">Leads</div></div>
-</div>
-
-<div class="grid grid-4" style="margin-bottom:24px">
-    <div class="stat-card"><div class="num">{{ stats.testimonials }}</div><div class="label">Testimoni</div></div>
-    <div class="stat-card"><div class="num">{{ stats.faq }}</div><div class="label">FAQ</div></div>
-    <div class="stat-card"><div class="num">{{ stats.audience }}</div><div class="label">Target Audience</div></div>
-    <div class="stat-card"><div class="num">{{ stats.chatbot }}</div><div class="label">Chatbot Response</div></div>
-</div>
-
-<div class="panel">
-    <h2>📋 Leads Terbaru</h2>
-    {% if recent_leads %}
-    <table>
-        <thead><tr><th>Nama</th><th>Phone</th><th>Email</th><th>Pesan</th><th>Tanggal</th></tr></thead>
-        <tbody>
-        {% for lead in recent_leads %}
-        <tr>
-            <td><strong>{{ lead.name }}</strong></td>
-            <td>{{ lead.phone }}</td>
-            <td>{{ lead.email }}</td>
-            <td>{{ lead.message[:50] }}{% if lead.message|length > 50 %}...{% endif %}</td>
-            <td>{{ lead.created_at }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <div style="margin-top:16px"><a href="/admin/leads" class="btn btn-secondary btn-sm">Lihat Semua Leads →</a></div>
-    {% else %}
-    <p class="empty">Belum ada leads. Leads akan muncul ketika pengunjung mengisi form di website.</p>
-    {% endif %}
-</div>
-
-<div class="panel">
-    <h2>🔗 Quick Links</h2>
-    <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a href="/admin/settings" class="btn btn-secondary">⚙️ Edit Settings</a>
-        <a href="/admin/courses" class="btn btn-secondary">📚 Kelola Kursus</a>
-        <a href="/admin/instructors" class="btn btn-secondary">👨‍🏫 Kelola Pengajar</a>
-        <a href="/admin/images" class="btn btn-secondary">🖼️ Kelola Gambar</a>
-        <a href="/admin/chatbot" class="btn btn-secondary">🤖 Chatbot Responses</a>
-        <a href="/set-theme/v1" class="btn btn-secondary">🎨 Theme V1</a>
-        <a href="/set-theme/v2" class="btn btn-secondary">🌊 Theme V2</a>
+    <div>
+        <h1>📊 Dashboard</h1>
+        <div class="text-muted">BODHI Creative + Design — Interior Designer Academy</div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+        <a href="/admin/editor" class="btn btn-editor">🎨 Buka Visual Editor</a>
+        <a href="/" target="_blank" class="btn btn-secondary">🌐 Lihat Website</a>
     </div>
 </div>
+
+<!-- STATS ROW 1 -->
+<div class="grid grid-4" style="margin-bottom:14px">
+    <a href="/admin/leads" style="text-decoration:none">
+        <div class="stat-card" style="border-color:rgba(16,185,129,.2);background:linear-gradient(135deg,rgba(16,185,129,.1),rgba(16,185,129,.03))">
+            <div class="sc-icon">📋</div>
+            <div class="num" style="color:#10b981">{{ stats.leads }}</div>
+            <div class="label">Total Leads</div>
+        </div>
+    </a>
+    <a href="/admin/courses" style="text-decoration:none">
+        <div class="stat-card">
+            <div class="sc-icon">📚</div>
+            <div class="num">{{ stats.courses }}</div>
+            <div class="label">Program Kursus</div>
+        </div>
+    </a>
+    <a href="/admin/modules" style="text-decoration:none">
+        <div class="stat-card">
+            <div class="sc-icon">📖</div>
+            <div class="num">{{ stats.modules }}</div>
+            <div class="label">Modul Kurikulum</div>
+        </div>
+    </a>
+    <a href="/admin/images" style="text-decoration:none">
+        <div class="stat-card">
+            <div class="sc-icon">🖼️</div>
+            <div class="num">{{ stats.images }}</div>
+            <div class="label">Gambar Terupload</div>
+        </div>
+    </a>
+</div>
+
+<!-- STATS ROW 2 -->
+<div class="grid grid-4" style="margin-bottom:24px">
+    <a href="/admin/testimonials" style="text-decoration:none">
+        <div class="stat-card">
+            <div class="sc-icon">💬</div>
+            <div class="num">{{ stats.testimonials }}</div>
+            <div class="label">Testimoni</div>
+        </div>
+    </a>
+    <a href="/admin/instructors" style="text-decoration:none">
+        <div class="stat-card">
+            <div class="sc-icon">👨‍🏫</div>
+            <div class="num">{{ stats.instructors }}</div>
+            <div class="label">Pengajar</div>
+        </div>
+    </a>
+    <a href="/admin/faq" style="text-decoration:none">
+        <div class="stat-card">
+            <div class="sc-icon">❓</div>
+            <div class="num">{{ stats.faq }}</div>
+            <div class="label">FAQ</div>
+        </div>
+    </a>
+    <a href="/admin/chatbot" style="text-decoration:none">
+        <div class="stat-card">
+            <div class="sc-icon">🤖</div>
+            <div class="num">{{ stats.chatbot }}</div>
+            <div class="label">Chatbot Responses</div>
+        </div>
+    </a>
+</div>
+
+<!-- VISUAL EDITOR PROMO BANNER -->
+<div class="panel" style="background:linear-gradient(135deg,#1e1040,#1a0d35);border-color:rgba(167,139,250,.2);margin-bottom:20px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+        <div style="display:flex;align-items:center;gap:16px">
+            <div style="width:52px;height:52px;background:linear-gradient(135deg,#7c3aed,#a78bfa);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">🎨</div>
+            <div>
+                <div style="font-size:1.05rem;font-weight:800;color:#f1f5f9;margin-bottom:4px">Visual Page Editor</div>
+                <div style="font-size:.82rem;color:#94a3b8;line-height:1.5">
+                    Edit tampilan website secara visual — ubah teks, warna, posisi, sembunyikan elemen, dan tambah komponen baru. Perubahan langsung terlihat di website!
+                </div>
+                <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+                    <span style="font-size:.72rem;background:rgba(167,139,250,.15);color:#a78bfa;padding:2px 8px;border-radius:20px">✓ Edit Teks & Font</span>
+                    <span style="font-size:.72rem;background:rgba(167,139,250,.15);color:#a78bfa;padding:2px 8px;border-radius:20px">✓ Ubah Posisi</span>
+                    <span style="font-size:.72rem;background:rgba(167,139,250,.15);color:#a78bfa;padding:2px 8px;border-radius:20px">✓ Hide/Hapus Elemen</span>
+                    <span style="font-size:.72rem;background:rgba(167,139,250,.15);color:#a78bfa;padding:2px 8px;border-radius:20px">✓ Tambah Komponen</span>
+                    <span style="font-size:.72rem;background:rgba(16,185,129,.15);color:#10b981;padding:2px 8px;border-radius:20px">✓ Live Preview</span>
+                </div>
+            </div>
+        </div>
+        <a href="/admin/editor" class="btn btn-editor" style="font-size:.9rem;padding:12px 24px;white-space:nowrap">
+            🎨 Buka Editor →
+        </a>
+    </div>
+</div>
+
+<div class="grid grid-2" style="margin-bottom:20px">
+    <!-- LEADS TERBARU -->
+    <div class="panel" style="margin-bottom:0">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+            <h2 style="margin-bottom:0">📋 Leads Terbaru</h2>
+            <a href="/admin/leads" class="btn btn-secondary btn-sm">Lihat Semua →</a>
+        </div>
+        {% if recent_leads %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Kontak</th>
+                    <th>Waktu</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for lead in recent_leads %}
+            <tr>
+                <td>
+                    <div style="font-weight:600;color:#e2e8f0">{{ lead.name }}</div>
+                    {% if lead.message %}
+                    <div style="font-size:.75rem;color:#475569;margin-top:2px">{{ lead.message[:40] }}{% if lead.message|length > 40 %}...{% endif %}</div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if lead.phone %}
+                    <div style="font-size:.8rem;color:#94a3b8">📱 {{ lead.phone }}</div>
+                    {% endif %}
+                    {% if lead.email %}
+                    <div style="font-size:.8rem;color:#94a3b8">✉️ {{ lead.email }}</div>
+                    {% endif %}
+                </td>
+                <td style="font-size:.75rem;color:#475569;white-space:nowrap">{{ lead.created_at[:10] }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty">
+            <div style="font-size:2rem;margin-bottom:10px">📭</div>
+            Belum ada leads. Leads muncul ketika pengunjung mengisi form di website.
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- QUICK ACTIONS -->
+    <div class="panel" style="margin-bottom:0">
+        <h2>⚡ Quick Actions</h2>
+        <div style="display:flex;flex-direction:column;gap:8px">
+            <a href="/admin/editor" class="btn btn-editor" style="justify-content:flex-start;gap:12px">
+                <span>🎨</span>
+                <div style="text-align:left">
+                    <div>Visual Editor</div>
+                    <div style="font-size:.72rem;opacity:.7;font-weight:400">Edit tampilan website secara visual</div>
+                </div>
+            </a>
+            <a href="/admin/settings" class="btn btn-secondary" style="justify-content:flex-start;gap:12px">
+                <span>⚙️</span>
+                <div style="text-align:left">
+                    <div>Edit Settings & Teks</div>
+                    <div style="font-size:.72rem;opacity:.7;font-weight:400">Judul, deskripsi, kontak, hero text</div>
+                </div>
+            </a>
+            <a href="/admin/courses" class="btn btn-secondary" style="justify-content:flex-start;gap:12px">
+                <span>📚</span>
+                <div style="text-align:left">
+                    <div>Kelola Program Kursus</div>
+                    <div style="font-size:.72rem;opacity:.7;font-weight:400">Tambah, edit, atau hapus program</div>
+                </div>
+            </a>
+            <a href="/admin/images" class="btn btn-secondary" style="justify-content:flex-start;gap:12px">
+                <span>🖼️</span>
+                <div style="text-align:left">
+                    <div>Upload Gambar</div>
+                    <div style="font-size:.72rem;opacity:.7;font-weight:400">Kelola semua gambar website</div>
+                </div>
+            </a>
+            <a href="/admin/leads" class="btn btn-secondary" style="justify-content:flex-start;gap:12px">
+                <span>📋</span>
+                <div style="text-align:left">
+                    <div>Lihat Semua Leads</div>
+                    <div style="font-size:.72rem;opacity:.7;font-weight:400">{{ stats.leads }} leads masuk</div>
+                </div>
+            </a>
+            <hr class="section-divider" style="margin:4px 0">
+            <div style="display:flex;gap:8px">
+                <a href="/set-theme/v1" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center">🎨 Theme V1</a>
+                <a href="/set-theme/v2" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center">🌊 Theme V2</a>
+                <a href="/" target="_blank" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center">🌐 Website</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

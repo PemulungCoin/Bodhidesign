@@ -1,3 +1,6 @@
 /* Editor Overrides — Auto-generated */
 /* Applies to ALL themes */
 
+.hero h1 { font-size: 48px !important; color: #ff6600 !important; }
+[data-edit="hero-logo"] { display: none !important; }
+[data-edit="hero-stats"] { display: none !important; }
