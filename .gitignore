@@ -1,26 +1,11 @@
-# Database
-*.db
-db/
-
-# Uploads (user content)
-uploads/
-
-# Python
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
+*.db
+instance/
 .env
-venv/
-.venv/
-
-# IDE
-.vscode/
-.idea/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
+uploads/
+static/uploads/
 *.log
+.venv/
+venv/
