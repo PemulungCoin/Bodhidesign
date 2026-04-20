@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BODHI Creative + Design — Sekolah Desain Profesional Medan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFDF8;--bg2:#F5EEE5;--bgcard:#FFFFFF;--bgwarm:#FDF6EE;
+  --text:#1E1810;--textsoft:#4A3F35;--muted:#9A8E82;
+  --acc:#C85B2A;--acclt:#F7E8DF;--accdim:#A04520;
+  --green:#4B7B58;--greenlt:#E2F0E7;
+  --bdr:#E5DDD3;--bdrdk:#CFC3B6;--shd:rgba(30,20,10,.07);--shdlg:rgba(30,20,10,.13);
+  --r:14px;--rsm:8px;--rpill:100px;--tr:.3s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:auto}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;line-height:1.15}
+a{color:inherit;text-decoration:none;cursor:pointer}
+img{max-width:100%;display:block}
+.container{max-width:1160px;margin:0 auto;padding:0 28px}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(255,253,248,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--bdr);transition:var(--tr)}
+.nav-inner{max-width:1160px;margin:0 auto;padding:0 28px;height:96px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+
+/* LOGO VERTICAL */
+.nav-logo{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;flex-shrink:0}
+.nav-logo-wrap{position:relative;width:68px;height:68px;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,var(--accdim),var(--acc));display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 16px rgba(200,91,42,.25)}
+.nav-logo-def{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;color:#fff;line-height:1;position:relative;z-index:1}
+.nav-logo-img-el{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;border-radius:14px}
+.nav-logo-img-el.show{display:block}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text);text-align:center;line-height:1.35;white-space:nowrap}
+.nav-brand em{color:var(--acc);font-style:normal}
+/* logo upload overlay */
+.logo-upload-ov{display:none;position:absolute;inset:0;background:rgba(200,91,42,.7);align-items:center;justify-content:center;cursor:pointer;border-radius:14px;z-index:10;font-size:20px;flex-direction:column;gap:3px}
+.logo-upload-ov span{color:#fff;font-size:10px;font-weight:700;letter-spacing:.3px}
+body.admin-on .nav-logo-wrap:hover .logo-upload-ov{display:flex}
+
+.nav-links{display:flex;gap:22px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);transition:color .2s;white-space:nowrap;cursor:pointer}
+.nav-links a:hover{color:var(--acc)}
+.nav-cta{background:var(--acc);color:#fff;font-size:13px;font-weight:700;padding:10px 22px;border-radius:var(--rpill);white-space:nowrap;transition:var(--tr);border:none;cursor:pointer;font-family:inherit;box-shadow:0 2px 12px rgba(200,91,42,.25)}
+.nav-cta:hover{background:var(--accdim);transform:translateY(-1px)}
+
+/* ── ADMIN BAR ── */
+#admin-bar{position:fixed;top:0;left:0;right:0;z-index:1000;background:#fff8f5;border-bottom:2px solid var(--acc);padding:8px 20px;display:none;align-items:center;justify-content:space-between;gap:12px;font-size:13px;flex-wrap:wrap}
+body.admin-on #admin-bar{display:flex}
+body.admin-on nav{top:46px}
+.abar-left{font-weight:700;color:var(--acc);font-size:13px;display:flex;align-items:center;gap:6px}
+.abar-right{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.abtn{padding:6px 12px;border-radius:6px;border:none;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit;transition:var(--tr)}
+.abtn-ol{background:#fff;border:1px solid var(--bdr);color:var(--textsoft)}.abtn-ol:hover{border-color:var(--acc);color:var(--acc)}
+.abtn-acc{background:var(--acc);color:#fff}.abtn-acc:hover{background:var(--accdim)}
+.abtn-gray{background:var(--bg2);color:var(--muted);border:1px solid var(--bdr)}.abtn-gray:hover{color:var(--text)}
+.abtn-green{background:#e8f5ee;color:var(--green);border:1px solid #b8dfc8}.abtn-green:hover{background:#d0edd8}
+.abtn-blue{background:#e8f0ff;color:#3060c0;border:1px solid #b8c8f0}.abtn-blue:hover{background:#d0e0ff}
+.abtn-purple{background:#f0e8ff;color:#6040c0;border:1px solid #d0b8f0}.abtn-purple:hover{background:#e4d8ff}
+
+#admin-fab{position:fixed;bottom:28px;right:28px;z-index:999;width:50px;height:50px;border-radius:50%;background:var(--bgcard);border:1.5px solid var(--bdr);color:var(--muted);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--tr);box-shadow:0 4px 20px var(--shdlg)}
+#admin-fab:hover{border-color:var(--acc);color:var(--acc);transform:scale(1.08)}
+body.admin-on #admin-fab{background:var(--acc);color:#fff;border-color:var(--acc)}
+
+/* ── SECTION ADMIN OVERLAY ── */
+.sw{position:relative}
+body.admin-on .sw::after{content:'';position:absolute;inset:0;border:2px dashed rgba(200,91,42,.15);pointer-events:none;z-index:10;border-radius:2px}
+.sc{display:none;position:absolute;top:10px;right:14px;z-index:50;gap:6px;align-items:center;background:rgba(255,253,248,.97);border:1px solid var(--bdrdk);border-radius:var(--rsm);padding:6px 10px;box-shadow:0 4px 16px var(--shdlg)}
+body.admin-on .sc{display:flex}
+.sc-lbl{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;padding-right:8px;border-right:1px solid var(--bdr);margin-right:4px}
+.scbtn{border:none;cursor:pointer;font-size:11px;font-weight:600;padding:5px 10px;border-radius:5px;font-family:inherit;transition:var(--tr)}
+.scbtn-h{background:#F5EDDA;color:#9A7030}.scbtn-h:hover{background:#eddcb0}
+.scbtn-d{background:#FDEAEA;color:#C03030}.scbtn-d:hover{background:#f8d0d0}
+.sw.sec-hidden>*:not(.sc){opacity:.18;pointer-events:none;filter:blur(2px)}
+.sw.sec-deleted{display:none!important}
+.hbadge{display:none;position:absolute;top:10px;left:14px;background:#F5EDDA;border:1px solid #d4b860;color:#9A7030;font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;z-index:20}
+body.admin-on .sw.sec-hidden .hbadge{display:block}
+
+/* ── IMAGE UPLOAD ── */
+.img-wrap{position:relative;overflow:hidden}
+.img-upload-ov{display:none;position:absolute;inset:0;background:rgba(200,91,42,.65);align-items:center;justify-content:center;flex-direction:column;gap:4px;cursor:pointer;z-index:5;transition:.2s}
+body.admin-on .img-wrap:hover .img-upload-ov{display:flex}
+.img-upload-ov .cam{font-size:24px}
+.img-upload-ov span{color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+#img-file-input{display:none}
+
+/* ── EDIT MODE ── */
+body.edit-on [contenteditable="true"]{outline:1.5px dashed rgba(200,91,42,.4);border-radius:3px;cursor:text}
+body.edit-on [contenteditable="true"]:focus{outline:2px solid var(--acc);background:rgba(200,91,42,.04)}
+
+/* ── MODALS ── */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(30,24,16,.55);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.modal-ov.open{display:flex}
+.mbox{background:var(--bgcard);border:1px solid var(--bdrdk);border-radius:20px;padding:36px;width:460px;max-width:92vw;box-shadow:0 20px 60px var(--shdlg)}
+.mbox-lg{width:780px;max-width:96vw;max-height:88vh;display:flex;flex-direction:column}
+.mbox-xl{width:860px;max-width:96vw;max-height:92vh;display:flex;flex-direction:column}
+.mtitle{font-size:24px;margin-bottom:6px}
+.msub{font-size:13px;color:var(--muted);margin-bottom:22px}
+.minput{width:100%;padding:12px 15px;background:var(--bgwarm);border:1.5px solid var(--bdr);border-radius:var(--rsm);color:var(--text);font-family:inherit;font-size:14px;outline:none;transition:border-color .2s;margin-bottom:10px}
+.minput:focus{border-color:var(--acc)}
+.merr{font-size:13px;color:#C03030;min-height:20px;margin-bottom:10px}
+.mbtns{display:flex;gap:10px}
+.mbtn{flex:1;padding:12px;border:none;border-radius:var(--rsm);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:var(--tr)}
+.mbtn-cancel{background:var(--bg2);color:var(--muted)}.mbtn-cancel:hover{color:var(--text)}
+.mbtn-ok{background:var(--acc);color:#fff}.mbtn-ok:hover{background:var(--accdim)}
+.mscroll{overflow-y:auto;flex:1;margin-top:16px;padding-right:4px}
+.mscroll::-webkit-scrollbar{width:4px}.mscroll::-webkit-scrollbar-track{background:var(--bg2)}.mscroll::-webkit-scrollbar-thumb{background:var(--bdrdk);border-radius:4px}
+
+/* Settings grid */
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.sfield{display:flex;flex-direction:column;gap:6px}
+.sfield label{font-size:12px;font-weight:700;color:var(--textsoft)}
+.sfield input,.sfield select{padding:11px 14px;background:var(--bgwarm);border:1.5px solid var(--bdr);border-radius:var(--rsm);color:var(--text);font-family:inherit;font-size:14px;outline:none;transition:border-color .2s;width:100%}
+.sfield input:focus,.sfield select:focus{border-color:var(--acc)}
+.sfield .hint{font-size:11px;color:var(--muted);margin-top:2px}
+.sfield-full{grid-column:span 2}
+
+/* FAQ Manager */
+.faq-mgr-item{background:var(--bgwarm);border:1.5px solid var(--bdr);border-radius:12px;padding:16px;margin-bottom:10px;transition:border-color .2s}
+.faq-mgr-item:hover{border-color:var(--acc)}
+.faq-mgr-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.faq-mgr-num{font-size:11px;font-weight:700;color:var(--acc);background:var(--acclt);padding:3px 9px;border-radius:100px}
+.faq-mgr-del{background:#FDEAEA;color:#C03030;border:none;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:var(--tr)}
+.faq-mgr-del:hover{background:#f8d0d0}
+.faq-mgr-label{font-size:12px;font-weight:600;color:var(--textsoft);margin-bottom:4px}
+.faq-mgr-input{width:100%;padding:10px 12px;background:var(--bgcard);border:1.5px solid var(--bdr);border-radius:var(--rsm);color:var(--text);font-family:inherit;font-size:13px;outline:none;transition:border-color .2s;margin-bottom:8px}
+.faq-mgr-input:focus{border-color:var(--acc)}
+.faq-mgr-textarea{width:100%;padding:10px 12px;background:var(--bgcard);border:1.5px solid var(--bdr);border-radius:var(--rsm);color:var(--text);font-family:inherit;font-size:13px;outline:none;resize:vertical;min-height:80px;transition:border-color .2s;line-height:1.5}
+.faq-mgr-textarea:focus{border-color:var(--acc)}
+
+/* Member table */
+.mtable{width:100%;border-collapse:collapse;font-size:13px}
+.mtable th{background:var(--bg2);padding:10px 14px;text-align:left;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);border-bottom:1px solid var(--bdr)}
+.mtable td{padding:10px 14px;border-bottom:1px solid var(--bdr);color:var(--textsoft);vertical-align:middle}
+.mtable tr:last-child td{border-bottom:none}
+.mtable tr:hover td{background:var(--bgwarm)}
+.badge-prog{font-size:11px;font-weight:600;padding:3px 9px;border-radius:100px;background:var(--acclt);color:var(--accdim);white-space:nowrap}
+
+/* ── SHARED SECTION STYLES ── */
+.section-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--acc);margin-bottom:14px}
+.section-tag::before{content:'';width:20px;height:2px;background:var(--acc);border-radius:2px}
+.sec-title{font-size:clamp(30px,3vw,44px);line-height:1.15}
+.sec-title em{color:var(--acc);font-weight:300}
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.fade-up.vis{opacity:1;transform:translateY(0)}
+.fade-up:nth-child(2){transition-delay:.08s}.fade-up:nth-child(3){transition-delay:.16s}
+.fade-up:nth-child(4){transition-delay:.24s}.fade-up:nth-child(5){transition-delay:.32s}
+
+/* ── HERO ── */
+#hero{padding:180px 0 90px;position:relative;overflow:hidden}
+.hero-d1{position:absolute;top:60px;right:-80px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(200,91,42,.07),transparent 70%);pointer-events:none}
+.hero-d2{position:absolute;bottom:-100px;left:-100px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(75,123,88,.06),transparent 70%);pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;border:1.5px solid rgba(200,91,42,.3);background:var(--acclt);color:var(--acc);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border-radius:100px;margin-bottom:22px}
+.hero-badge::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--acc);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+.hero-title{font-size:clamp(44px,5vw,72px);font-weight:700;letter-spacing:-1.5px;line-height:1.06;margin-bottom:22px}
+.hero-title em{font-style:italic;color:var(--acc);font-weight:300}
+.hero-sub{font-size:16px;color:var(--textsoft);line-height:1.75;margin-bottom:36px;max-width:500px}
+.hero-pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:38px}
+.pill{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--textsoft);background:var(--bgcard);border:1px solid var(--bdr);padding:8px 15px;border-radius:100px;box-shadow:0 2px 8px var(--shd)}
+.pill-ic{color:var(--acc);font-size:14px}
+.hero-ctas{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.btn-pri{background:var(--acc);color:#fff;font-weight:700;font-size:14px;padding:15px 32px;border-radius:var(--rpill);border:none;cursor:pointer;font-family:inherit;transition:var(--tr);box-shadow:0 4px 16px rgba(200,91,42,.3)}
+.btn-pri:hover{background:var(--accdim);transform:translateY(-2px);box-shadow:0 8px 24px rgba(200,91,42,.4)}
+.btn-ghost{color:var(--muted);font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;transition:color .2s;cursor:pointer;border:none;background:none;font-family:inherit}
+.btn-ghost:hover{color:var(--acc)}
+.hero-visual{position:relative}
+.hero-card{border-radius:20px;overflow:hidden;background:linear-gradient(150deg,var(--bg2),#eeddd0);border:1px solid var(--bdrdk);aspect-ratio:4/5;display:flex;align-items:flex-end;padding:28px;position:relative;box-shadow:0 20px 60px var(--shdlg)}
+.hero-card-pat{position:absolute;inset:0;background-image:radial-gradient(circle at 30% 20%,rgba(200,91,42,.08),transparent 40%),radial-gradient(circle at 80% 70%,rgba(75,123,88,.06),transparent 40%)}
+.hero-card-grid{position:absolute;inset:0;opacity:.3;background-image:linear-gradient(rgba(200,91,42,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(200,91,42,.07) 1px,transparent 1px);background-size:28px 28px}
+.hero-card-img{position:absolute;inset:0;background-size:cover;background-position:center;display:none}
+.hero-card-icon{position:absolute;top:28px;left:28px;font-size:64px;opacity:.2;transform:rotate(-10deg)}
+.hero-card-text{position:relative;z-index:1}
+.hero-card-num{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:700;color:var(--acc);line-height:1}
+.hero-card-lbl{font-size:14px;color:var(--textsoft);margin-top:4px}
+.hfloat{position:absolute;background:var(--bgcard);border:1px solid var(--bdrdk);border-radius:14px;padding:14px 18px;box-shadow:0 8px 28px var(--shdlg)}
+.hf1{top:28px;left:-30px;display:flex;align-items:center;gap:12px}
+.hf-ic{width:38px;height:38px;border-radius:10px;background:var(--acclt);display:flex;align-items:center;justify-content:center;font-size:18px}
+.hf-lbl{font-size:12px;color:var(--muted);margin-bottom:2px}
+.hf-val{font-size:14px;font-weight:700}
+.hf2{bottom:120px;right:-24px;text-align:center;min-width:100px}
+.hf2-num{font-size:26px;font-weight:800;color:var(--green)}
+.hf2-lbl{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* Trust dots */
+.hero-trust{margin-top:20px;display:flex;align-items:center;gap:12px;font-size:12px;color:var(--muted)}
+.trust-dots{display:flex}
+.trust-dot{width:32px;height:32px;border-radius:50%;border:2.5px solid var(--bg);margin-left:-9px;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--acclt),#f0d8cc);color:var(--accdim);overflow:hidden;flex-shrink:0;position:relative}
+.trust-dot:first-child{margin-left:0}
+.trust-dot img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:none}
+.trust-dot img.show{display:block}
+
+/* ── MARQUEE ── */
+.marquee-sec{border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:14px 0;overflow:hidden;background:var(--bg2)}
+.mtrack{display:flex;white-space:nowrap;animation:mq 30s linear infinite}
+.mitem{display:inline-flex;align-items:center;gap:10px;padding:0 24px;font-size:13px;font-weight:500;color:var(--textsoft);flex-shrink:0}
+.mdot{color:var(--acc);font-size:12px}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── ABOUT ── */
+#about{padding:100px 0;background:var(--bg2)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:52px}
+.about-card{border-radius:20px;background:linear-gradient(150deg,#f5ede4,#eeddd0);border:1px solid var(--bdrdk);padding:44px 38px;box-shadow:0 12px 40px var(--shdlg);position:relative;overflow:hidden}
+.about-card::before{content:'✦';position:absolute;top:-10px;right:20px;font-size:120px;color:rgba(200,91,42,.06);pointer-events:none;font-family:serif}
+.about-year{font-family:'Cormorant Garamond',serif;font-size:88px;font-weight:700;color:var(--acc);line-height:1}
+.about-year-lbl{font-size:14px;color:var(--textsoft);margin-bottom:28px}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.astat{background:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.8);border-radius:12px;padding:16px}
+.astat-num{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:var(--acc);line-height:1}
+.astat-lbl{font-size:12px;color:var(--textsoft);margin-top:4px}
+.about-content{display:flex;flex-direction:column;gap:24px}
+.about-lead{font-size:17px;color:var(--textsoft);line-height:1.75}
+.vm-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.vm-card{background:var(--bgcard);border:1px solid var(--bdr);border-radius:14px;padding:22px;transition:var(--tr)}
+.vm-card:hover{border-color:var(--acc);box-shadow:0 4px 20px var(--shd)}
+.vm-icon{font-size:24px;margin-bottom:10px}
+.vm-title{font-size:20px;margin-bottom:8px}
+.vm-text{font-size:13px;color:var(--textsoft);line-height:1.65}
+.about-pts{list-style:none;display:flex;flex-direction:column;gap:10px}
+.about-pts li{font-size:14px;color:var(--textsoft);display:flex;align-items:flex-start;gap:10px;line-height:1.6}
+.about-pts li::before{content:'✦';color:var(--acc);font-size:10px;flex-shrink:0;margin-top:4px}
+
+/* ── FOR WHO ── */
+#for-who{padding:100px 0}
+.fw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:52px}
+.fw-card{background:var(--bgcard);border:1px solid var(--bdr);border-radius:var(--r);padding:30px 26px;transition:var(--tr)}
+.fw-card:hover{border-color:var(--acc);box-shadow:0 8px 28px var(--shdlg);transform:translateY(-4px)}
+.fw-num{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;-webkit-text-stroke:1.5px var(--acc);color:transparent;line-height:1;margin-bottom:14px}
+.fw-card h3{font-size:16px;font-weight:700;margin-bottom:8px;font-family:'Plus Jakarta Sans'}
+.fw-card p{font-size:13px;color:var(--muted);line-height:1.65}
+
+/* ── FOUNDER ── */
+#founder{padding:100px 0;background:var(--bg2)}
+.founder-grid{display:grid;grid-template-columns:340px 1fr;gap:60px;align-items:start;margin-top:52px}
+.founder-card{background:var(--bgcard);border:1px solid var(--bdrdk);border-radius:20px;overflow:hidden;box-shadow:0 12px 40px var(--shdlg);position:sticky;top:90px}
+.founder-photo-wrap{width:100%;height:280px;position:relative}
+.founder-photo-ph{width:100%;height:100%;background:linear-gradient(150deg,var(--bg2),#e8ddd0);display:flex;align-items:center;justify-content:center;font-size:80px}
+.founder-photo-ph::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(255,253,248,.9) 100%)}
+.fpgrid{position:absolute;inset:0;opacity:.4;background-image:linear-gradient(rgba(200,91,42,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(200,91,42,.06) 1px,transparent 1px);background-size:24px 24px}
+.founder-photo-actual{position:absolute;inset:0;background-size:cover;background-position:center;display:none}
+.founder-body{padding:24px}
+.founder-role{font-size:12px;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.founder-name{font-size:26px;margin-bottom:8px}
+.founder-tag-line{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:16px}
+.ftags{display:flex;flex-wrap:wrap;gap:6px}
+.ftag{font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px;background:var(--acclt);color:var(--accdim);border:1px solid rgba(200,91,42,.2)}
+.founder-detail{display:flex;flex-direction:column;gap:28px}
+.fd-blk h3{font-size:20px;margin-bottom:12px}
+.fd-blk p{font-size:14px;color:var(--textsoft);line-height:1.75}
+.fd-timeline{display:flex;flex-direction:column;gap:10px}
+.fd-item{display:flex;gap:14px;align-items:flex-start;background:var(--bgcard);border:1px solid var(--bdr);border-radius:12px;padding:14px 16px;transition:var(--tr)}
+.fd-item:hover{border-color:var(--acc)}
+.fd-yr{font-size:11px;font-weight:700;color:var(--acc);background:var(--acclt);padding:3px 8px;border-radius:100px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.fd-txt{font-size:13px;color:var(--textsoft);line-height:1.55}
+
+/* ── PROGRAMS ── */
+#programs{padding:100px 0}
+.prog-tabs{display:flex;gap:10px;margin-top:20px;margin-bottom:48px;flex-wrap:wrap}
+.prog-tab{padding:10px 22px;border-radius:100px;border:1.5px solid var(--bdr);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;background:var(--bgcard);color:var(--muted);transition:var(--tr)}
+.prog-tab.on,.prog-tab:hover{background:var(--acc);color:#fff;border-color:var(--acc)}
+.prog-content{display:none}.prog-content.on{display:block}
+.prog-layout{display:grid;grid-template-columns:1fr 1.6fr;gap:52px;align-items:start}
+.prog-info-card{background:linear-gradient(150deg,var(--acclt),#f5ece4);border:1px solid rgba(200,91,42,.2);border-radius:20px;padding:36px;position:sticky;top:90px;box-shadow:0 8px 32px rgba(200,91,42,.1)}
+.prog-icon{font-size:48px;margin-bottom:20px}
+.prog-lbl{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc);margin-bottom:8px}
+.prog-name{font-size:28px;margin-bottom:12px;line-height:1.2}
+.prog-desc{font-size:14px;color:var(--textsoft);line-height:1.7;margin-bottom:24px}
+.prog-meta{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.prog-mi{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--textsoft)}
+.prog-mi strong{color:var(--text);font-weight:700}
+.prog-mic{width:28px;height:28px;border-radius:7px;background:rgba(200,91,42,.12);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.prog-cta{width:100%;padding:14px;background:var(--acc);color:#fff;border:none;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:var(--tr)}
+.prog-cta:hover{background:var(--accdim)}
+.studios-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:28px}
+.studio-card{background:var(--bgwarm);border:1px solid var(--bdr);border-radius:12px;padding:18px 16px}
+.stu-ic{font-size:24px;margin-bottom:8px}
+.stu-nm{font-size:13px;font-weight:700;margin-bottom:6px}
+.stu-tl{font-size:12px;color:var(--muted);line-height:1.6}
+.mod-list{display:flex;flex-direction:column;gap:6px}
+.mod-item{background:var(--bgcard);border:1.5px solid var(--bdr);border-radius:12px;overflow:hidden;transition:border-color .2s}
+.mod-item:hover{border-color:var(--acc)}.mod-item.open{border-color:var(--acc)}
+.mod-hdr{display:flex;align-items:center;padding:16px 20px;cursor:pointer;gap:14px}
+.mod-num{width:28px;height:28px;border-radius:8px;background:var(--acclt);color:var(--acc);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.mod-title{font-size:14px;font-weight:600;flex:1}
+.mod-arr{font-size:11px;color:var(--muted);transition:transform .3s;flex-shrink:0}
+.mod-item.open .mod-arr{transform:rotate(90deg);color:var(--acc)}
+.mod-body{display:none;padding:0 20px 16px 62px}
+.mod-item.open .mod-body{display:block}
+.mod-desc{font-size:13px;color:var(--textsoft);line-height:1.7}
+
+/* ── OUTCOMES ── */
+#outcomes{padding:100px 0;background:var(--bg2)}
+.outcomes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px}
+.oc-card{background:var(--bgcard);border:1px solid var(--bdr);border-radius:var(--r);padding:30px;transition:var(--tr)}
+.oc-card:hover{border-color:var(--acc);transform:translateY(-4px);box-shadow:0 8px 28px var(--shdlg)}
+.oc-icon{font-size:36px;margin-bottom:14px}
+.oc-card h3{font-size:18px;margin-bottom:10px}
+.oc-card p{font-size:13px;color:var(--muted);line-height:1.65}
+
+/* ── SCHEDULE ── */
+#schedule{padding:100px 0}
+.sched-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:52px}
+.sched-card{background:var(--bgcard);border:1px solid var(--bdr);border-radius:var(--r);padding:28px;transition:var(--tr)}
+.sched-card:hover{border-color:var(--acc)}
+.sched-icon{font-size:28px;margin-bottom:14px}
+.sched-title{font-size:18px;margin-bottom:8px}
+.sched-body{font-size:14px;color:var(--textsoft);line-height:1.7}
+.sched-body strong{color:var(--text)}
+.sched-hl{background:linear-gradient(135deg,var(--acclt),#f5ece4);border-color:rgba(200,91,42,.25)}
+
+/* ── TESTIMONIALS ── */
+#testimonials{padding:100px 0;background:var(--bg2)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.testi-card{background:var(--bgcard);border:1px solid var(--bdr);border-radius:20px;overflow:hidden;transition:var(--tr);display:flex;flex-direction:column}
+.testi-card:hover{border-color:var(--acc);box-shadow:0 8px 32px var(--shdlg);transform:translateY(-4px)}
+.testi-work{width:100%;height:190px;position:relative;overflow:hidden;flex-shrink:0}
+.testi-work-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:40px;color:rgba(200,91,42,.2);background:linear-gradient(135deg,#f5ece4,#eeddd0)}
+.testi-work-img{position:absolute;inset:0;background-size:cover;background-position:center;display:none}
+.testi-body{padding:20px 22px;flex:1;display:flex;flex-direction:column;gap:10px}
+.testi-header{display:flex;align-items:center;gap:12px}
+.testi-avatar-wrap{width:46px;height:46px;border-radius:50%;overflow:hidden;border:2px solid var(--bdrdk);flex-shrink:0;position:relative;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:20px}
+.testi-avatar-img{position:absolute;inset:0;background-size:cover;background-position:center;border-radius:50%;display:none}
+.testi-name{font-size:15px;font-weight:700;margin-bottom:2px;font-family:'Plus Jakarta Sans'}
+.testi-prog{font-size:12px;color:var(--muted)}
+.testi-stars{display:flex;gap:3px;margin-bottom:2px}
+.testi-stars .star{font-size:14px;cursor:default}
+body.edit-on .testi-stars .star{cursor:pointer}
+.testi-quote{font-size:13px;color:var(--textsoft);line-height:1.7;font-style:italic;flex:1}
+.testi-quote::before{content:'"';color:var(--acc);font-size:20px;font-family:'Cormorant Garamond',serif;line-height:1;display:block;margin-bottom:4px}
+.testi-admin{display:none;padding:10px 22px 14px;border-top:1px solid var(--bdr);gap:6px;flex-wrap:wrap}
+body.admin-on .testi-admin{display:flex}
+.ta-btn{font-size:11px;font-weight:600;padding:5px 10px;border-radius:6px;border:none;cursor:pointer;font-family:inherit;transition:var(--tr)}
+.ta-btn-w{background:var(--acclt);color:var(--accdim)}.ta-btn-w:hover{background:#f0d8cc}
+.ta-btn-a{background:var(--greenlt);color:var(--green)}.ta-btn-a:hover{background:#c8e8d4}
+.ta-btn-del{background:#FDEAEA;color:#C03030}.ta-btn-del:hover{background:#f8d0d0}
+#add-testi-btn{display:none;margin-top:20px;width:100%;padding:14px;background:var(--bgcard);border:2px dashed var(--bdrdk);border-radius:16px;font-family:inherit;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;transition:var(--tr)}
+body.admin-on #add-testi-btn{display:block}
+#add-testi-btn:hover{border-color:var(--acc);color:var(--acc)}
+
+/* ── CTA ── */
+#cta{padding:100px 0}
+.cta-wrap{background:linear-gradient(135deg,var(--bg2),#eeddd0);border:1px solid var(--bdrdk);border-radius:24px;overflow:hidden;display:grid;grid-template-columns:1fr 440px;box-shadow:0 16px 56px var(--shdlg)}
+.cta-left{padding:60px 52px}
+.urg-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(200,91,42,.1);border:1px solid rgba(200,91,42,.25);color:var(--acc);font-size:12px;font-weight:700;padding:6px 14px;border-radius:100px;margin-bottom:22px}
+.cta-title{font-size:clamp(28px,2.5vw,40px);margin-bottom:14px;line-height:1.2}
+.cta-desc{font-size:14px;color:var(--textsoft);line-height:1.75;margin-bottom:32px}
+.cta-cci{display:flex;flex-direction:column;gap:10px}
+.cci{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--textsoft)}
+.cci-ic{width:32px;height:32px;border-radius:8px;background:rgba(200,91,42,.1);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.cta-form{background:var(--bgcard);border-left:1px solid var(--bdrdk);padding:44px 38px;display:flex;flex-direction:column;gap:14px}
+.form-h{font-size:20px;margin-bottom:4px}
+.form-s{font-size:12px;color:var(--muted);margin-bottom:8px}
+.fgrp{display:flex;flex-direction:column;gap:5px}
+.flbl{font-size:12px;font-weight:600;color:var(--textsoft)}
+.finput{padding:12px 15px;background:var(--bgwarm);border:1.5px solid var(--bdr);border-radius:var(--rsm);color:var(--text);font-family:inherit;font-size:14px;outline:none;transition:border-color .2s;width:100%}
+.finput:focus{border-color:var(--acc)}
+.fsub{width:100%;padding:14px;background:#25d366;border:none;border-radius:10px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;transition:var(--tr);margin-top:4px}
+.fsub:hover{background:#1da855;transform:translateY(-1px)}
+.ftos{font-size:11px;color:var(--muted);text-align:center;line-height:1.6}
+.ftos a{color:var(--acc)}
+
+/* ── FAQ ── */
+#faq{padding:100px 0;background:var(--bg2)}
+.faq-layout{display:grid;grid-template-columns:1fr 1.8fr;gap:60px;margin-top:52px}
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{background:var(--bgcard);border:1.5px solid var(--bdr);border-radius:var(--rsm);overflow:hidden;transition:border-color .2s}
+.faq-item.open{border-color:var(--acc)}
+.faq-q{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px 20px;cursor:pointer;font-size:14px;font-weight:600;line-height:1.5}
+.faq-ic{flex-shrink:0;color:var(--muted);transition:transform .3s;font-size:18px;font-weight:300}
+.faq-item.open .faq-ic{transform:rotate(45deg);color:var(--acc)}
+.faq-a{display:none;padding:0 20px 18px;font-size:13px;color:var(--textsoft);line-height:1.7}
+.faq-item.open .faq-a{display:block}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--bdr);background:var(--bg);padding:60px 0 36px}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:48px}
+.flogo{display:flex;flex-direction:column;align-items:flex-start;gap:4px;margin-bottom:14px}
+.flogo-wrap{width:60px;height:60px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,var(--accdim),var(--acc));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:#fff;position:relative;box-shadow:0 4px 14px rgba(200,91,42,.2)}
+.flogo-img{width:100%;height:100%;object-fit:cover;display:none}
+.flogo-img.show{display:block}
+.flogo-nm{font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;line-height:1.3}
+.flogo-nm em{color:var(--acc);font-style:normal}
+.footer-about{font-size:13px;color:var(--muted);line-height:1.7}
+.footer-contact{margin-top:16px;font-size:13px;color:var(--textsoft);display:flex;flex-direction:column;gap:6px}
+.footer-contact span{display:flex;align-items:flex-start;gap:8px}
+.fcol h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--textsoft);margin-bottom:16px;font-family:'Plus Jakarta Sans'}
+.fcol ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.fcol ul li a{font-size:13px;color:var(--muted);transition:color .2s;cursor:pointer}
+.fcol ul li a:hover{color:var(--acc)}
+.footer-bottom{border-top:1px solid var(--bdr);padding-top:24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.footer-copy{font-size:12px;color:var(--muted)}
+.footer-legal{display:flex;gap:16px}
+.footer-legal a{font-size:12px;color:var(--muted);transition:color .2s}
+.footer-legal a:hover{color:var(--acc)}
+
+/* ── CHATBOT ── */
+#chat-fab{position:fixed;bottom:28px;left:28px;z-index:997;width:54px;height:54px;border-radius:50%;background:var(--acc);border:none;color:#fff;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(200,91,42,.4);transition:var(--tr)}
+#chat-fab:hover{background:var(--accdim);transform:scale(1.08)}
+.chat-notif{position:absolute;top:-3px;right:-3px;width:14px;height:14px;background:#ff4444;border-radius:50%;border:2px solid #fff;display:none}
+.chat-notif.show{display:block}
+#chat-win{position:fixed;bottom:94px;left:28px;z-index:998;width:340px;max-width:calc(100vw - 40px);background:var(--bgcard);border:1px solid var(--bdrdk);border-radius:20px;box-shadow:0 16px 56px var(--shdlg);display:none;flex-direction:column;overflow:hidden;max-height:520px}
+#chat-win.open{display:flex}
+.chat-hdr{padding:16px 20px;background:linear-gradient(135deg,var(--accdim),var(--acc));color:#fff;display:flex;align-items:center;gap:12px}
+.chat-hdr-av{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.chat-hdr-name{font-weight:700;font-size:14px}
+.chat-hdr-status{font-size:11px;opacity:.8}
+.chat-close{margin-left:auto;background:none;border:none;color:#fff;font-size:20px;cursor:pointer;opacity:.7;transition:.2s;line-height:1;padding:0}
+.chat-close:hover{opacity:1}
+.chat-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:180px;max-height:280px}
+.cmsg{max-width:82%;font-size:13px;line-height:1.6;padding:10px 13px;border-radius:14px;word-break:break-word}
+.cmsg-bot{background:var(--bg2);color:var(--textsoft);border-bottom-left-radius:4px;align-self:flex-start}
+.cmsg-user{background:var(--acc);color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
+.cmsg-wa{background:var(--bgcard);border:1.5px solid #25d366;color:var(--text);padding:10px 14px;border-radius:12px;align-self:flex-start;max-width:90%;cursor:pointer;transition:var(--tr);display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+.cmsg-wa:hover{background:#f0fff5}
+.chat-quick{padding:0 12px 10px;display:flex;flex-wrap:wrap;gap:6px}
+.cq-btn{font-size:11px;font-weight:600;padding:6px 12px;border-radius:100px;border:1px solid var(--bdrdk);background:var(--bg2);color:var(--textsoft);cursor:pointer;transition:var(--tr);font-family:inherit}
+.cq-btn:hover{border-color:var(--acc);color:var(--acc);background:var(--acclt)}
+.chat-input-row{padding:12px;border-top:1px solid var(--bdr);display:flex;gap:8px}
+.chat-input{flex:1;padding:10px 14px;background:var(--bgwarm);border:1.5px solid var(--bdr);border-radius:100px;font-family:inherit;font-size:13px;color:var(--text);outline:none;transition:border-color .2s}
+.chat-input:focus{border-color:var(--acc)}
+.chat-send{width:38px;height:38px;border-radius:50%;background:var(--acc);border:none;color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--tr);flex-shrink:0}
+.chat-send:hover{background:var(--accdim)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .hero-grid,.about-grid,.founder-grid,.cta-wrap{grid-template-columns:1fr}
+  .hero-visual,.about-visual-col{display:none}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .outcomes-grid{grid-template-columns:1fr 1fr}
+  .sched-grid{grid-template-columns:1fr}
+  .testi-grid{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+  .prog-layout{grid-template-columns:1fr}
+  .prog-info-card{position:static}
+  .faq-layout{grid-template-columns:1fr}
+  .cta-form{border-left:none;border-top:1px solid var(--bdrdk)}
+  .founder-card{position:static}
+}
+@media(max-width:600px){
+  .outcomes-grid,.fw-grid,.testi-grid,.vm-grid,.about-stats{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+  .studios-grid{grid-template-columns:1fr}
+  .settings-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== MODAL: Admin Login ========== -->
+<div id="modal-admin" class="modal-ov">
+  <div class="mbox">
+    <div class="mtitle">🔐 Admin Panel</div>
+    <div class="msub">Masukkan password untuk mengelola halaman ini.</div>
+    <input type="password" id="admin-pass" class="minput" placeholder="Password admin...">
+    <div class="merr" id="admin-err"></div>
+    <div class="mbtns">
+      <button class="mbtn mbtn-cancel" onclick="closeModal('modal-admin')">Batal</button>
+      <button class="mbtn mbtn-ok" onclick="checkPass()">Masuk →</button>
+    </div>
+    <p style="margin-top:14px;font-size:11px;color:var(--muted);text-align:center">Password default: <code style="color:var(--acc);font-weight:700">admin123</code></p>
+  </div>
+</div>
+
+<!-- ========== MODAL: Pengaturan Umum ========== -->
+<div id="modal-settings" class="modal-ov">
+  <div class="mbox mbox-lg" style="padding:36px">
+    <div class="mtitle">⚙️ Pengaturan Website</div>
+    <div class="msub">Konfigurasi kontak, branding, statistik, dan tampilan</div>
+    <div class="mscroll">
+      <!-- SECTION: Kontak & Branding -->
+      <div style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--bdr)">📱 Kontak & Branding</div>
+      <div class="settings-grid" style="margin-bottom:20px">
+        <div class="sfield">
+          <label>📱 Nomor WhatsApp Admin</label>
+          <input type="text" id="s-wa" placeholder="628xxxxxxxxxx">
+          <span class="hint">Format: 628xxx... (tanpa + atau spasi)</span>
+        </div>
+        <div class="sfield">
+          <label>⭐ Rating Kursus (di hero)</label>
+          <input type="number" id="s-rating" min="1" max="5" step="0.1" placeholder="4.9">
+          <span class="hint">Angka 1.0 – 5.0</span>
+        </div>
+        <div class="sfield sfield-full">
+          <label>📛 Nama Brand (di bawah logo)</label>
+          <input type="text" id="s-brand" placeholder="BODHI CREATIVE + DESIGN">
+          <span class="hint">Gunakan + untuk warna aksen merah. Contoh: BODHI CREATIVE + DESIGN</span>
+        </div>
+        <div class="sfield sfield-full">
+          <label>👥 Nama Alumni Trust Dots (A B C D di hero)</label>
+          <input type="text" id="s-trust" placeholder="Ahmad, Siti, Rizky, Dewi">
+          <span class="hint">1–4 nama, pisah koma. Huruf pertama jadi inisial. Contoh: Ahmad Fauzi, Siti R, Rizky P, Dewi</span>
+        </div>
+        <div class="sfield sfield-full">
+          <label>📝 Teks di bawah Trust Dots</label>
+          <input type="text" id="s-trust-lbl" placeholder="Dipercaya ratusan alumni">
+        </div>
+      </div>
+      <!-- SECTION: Statistik About -->
+      <div style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--bdr)">📊 Statistik (Kartu About — gambar 1 yang kamu kirim)</div>
+      <div style="background:var(--bgwarm);border:1px solid var(--bdr);border-radius:12px;padding:16px 20px;margin-bottom:12px;font-size:13px;color:var(--muted);line-height:1.6">
+        💡 Ini adalah angka-angka yang muncul di kartu About: tahun berdiri, jumlah alumni, jumlah pertemuan, dll. Edit bebas sesuai data nyata BODHI.
+      </div>
+      <div class="settings-grid" style="margin-bottom:8px">
+        <div class="sfield">
+          <label>📅 Tahun Berdiri</label>
+          <input type="text" id="s-year" placeholder="2011">
+        </div>
+        <div class="sfield">
+          <label>📝 Label Tahun</label>
+          <input type="text" id="s-year-lbl" placeholder="Tahun berdiri BODHI Creative + Design">
+        </div>
+        <div class="sfield">
+          <label>📊 Statistik 1 — Angka</label>
+          <input type="text" id="s-stat1n" placeholder="100+">
+        </div>
+        <div class="sfield">
+          <label>📊 Statistik 1 — Label</label>
+          <input type="text" id="s-stat1l" placeholder="Alumni berkarir">
+        </div>
+        <div class="sfield">
+          <label>📊 Statistik 2 — Angka</label>
+          <input type="text" id="s-stat2n" placeholder="50">
+        </div>
+        <div class="sfield">
+          <label>📊 Statistik 2 — Label</label>
+          <input type="text" id="s-stat2l" placeholder="Pertemuan intensif">
+        </div>
+        <div class="sfield">
+          <label>📊 Statistik 3 — Angka</label>
+          <input type="text" id="s-stat3n" placeholder="2">
+        </div>
+        <div class="sfield">
+          <label>📊 Statistik 3 — Label</label>
+          <input type="text" id="s-stat3l" placeholder="Program unggulan">
+        </div>
+        <div class="sfield">
+          <label>📊 Statistik 4 — Angka</label>
+          <input type="text" id="s-stat4n" placeholder="∞">
+          <span class="hint">Contoh: ∞ atau 100% atau 3x</span>
+        </div>
+        <div class="sfield">
+          <label>📊 Statistik 4 — Label</label>
+          <input type="text" id="s-stat4l" placeholder="Pendampingan pasca lulus">
+        </div>
+      </div>
+    </div>
+    <div class="mbtns" style="margin-top:20px;border-top:1px solid var(--bdr);padding-top:16px">
+      <button class="mbtn mbtn-cancel" onclick="closeModal('modal-settings')">Batal</button>
+      <button class="mbtn mbtn-ok" onclick="saveSettings()">💾 Simpan Semua Pengaturan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MODAL: FAQ Bot Manager ========== -->
+<div id="modal-faq" class="modal-ov">
+  <div class="mbox mbox-xl">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <div>
+        <div class="mtitle">💬 Kelola FAQ Chatbot</div>
+        <div class="msub" style="margin-bottom:0">Tambah, edit, atau hapus pertanyaan & jawaban untuk bot. Kata kunci dipisah koma.</div>
+      </div>
+      <button class="abtn abtn-acc" onclick="addFaqItem()" style="flex-shrink:0">+ Tambah FAQ</button>
+    </div>
+    <div class="mscroll" id="faq-mgr-list" style="margin-top:16px"></div>
+    <div style="margin-top:16px;display:flex;justify-content:flex-end;gap:10px;border-top:1px solid var(--bdr);padding-top:16px">
+      <button class="mbtn mbtn-cancel" style="flex:none;padding:10px 22px" onclick="closeModal('modal-faq')">Tutup</button>
+      <button class="mbtn mbtn-ok" style="flex:none;padding:10px 24px" onclick="saveFaqData();closeModal('modal-faq')">💾 Simpan & Tutup</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MODAL: Daftar Member ========== -->
+<div id="modal-members" class="modal-ov">
+  <div class="mbox mbox-lg">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <div>
+        <div class="mtitle" style="margin-bottom:4px">📋 Daftar Registrasi</div>
+        <div class="msub" style="margin-bottom:0" id="member-count">Memuat...</div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="abtn abtn-gray" onclick="exportMembers()">⬇ Export CSV</button>
+        <button class="mbtn mbtn-cancel" style="flex:none;padding:8px 16px;font-size:13px" onclick="closeModal('modal-members')">Tutup</button>
+      </div>
+    </div>
+    <div class="mscroll" id="member-table-wrap">
+      <p style="color:var(--muted);text-align:center;padding:40px;font-size:14px">Belum ada pendaftar.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ADMIN BAR ========== -->
+<div id="admin-bar">
+  <div class="abar-left">⚙ Mode Admin Aktif</div>
+  <div class="abar-right">
+    <button class="abtn abtn-ol" id="edit-btn" onclick="toggleEdit()">✏️ Edit Teks</button>
+    <button class="abtn abtn-blue" onclick="showSettings()">⚙️ Pengaturan</button>
+    <button class="abtn abtn-purple" onclick="showFaqMgr()">💬 Kelola Bot FAQ</button>
+    <button class="abtn abtn-green" onclick="showMembers()">📋 Daftar Member</button>
+    <button class="abtn abtn-gray" onclick="resetAll()">↺ Reset</button>
+    <button class="abtn abtn-acc" onclick="exitAdmin()">✕ Keluar</button>
+  </div>
+</div>
+
+<!-- ========== ADMIN FAB ========== -->
+<button id="admin-fab" onclick="openAdminModal()" title="Admin Panel">⚙</button>
+
+<!-- ========== CHATBOT ========== -->
+<button id="chat-fab" onclick="toggleChat()">💬<span class="chat-notif" id="chat-notif"></span></button>
+<div id="chat-win">
+  <div class="chat-hdr">
+    <div class="chat-hdr-av">🤖</div>
+    <div><div class="chat-hdr-name">BODHI Assistant</div><div class="chat-hdr-status">● Online — Siap membantu</div></div>
+    <button class="chat-close" onclick="toggleChat()">×</button>
+  </div>
+  <div class="chat-msgs" id="chat-msgs"></div>
+  <div class="chat-quick" id="chat-quick">
+    <button class="cq-btn" onclick="quickAsk('Program apa yang tersedia?')">Program</button>
+    <button class="cq-btn" onclick="quickAsk('Berapa biayanya?')">Biaya</button>
+    <button class="cq-btn" onclick="quickAsk('Ada kelas online?')">Online?</button>
+    <button class="cq-btn" onclick="quickAsk('Bagaimana jadwal belajar?')">Jadwal</button>
+    <button class="cq-btn" onclick="quickAsk('Software apa yang dipelajari?')">Software</button>
+    <button class="cq-btn" onclick="quickAsk('Berapa lama belajarnya?')">Durasi</button>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" class="chat-input" id="chat-input" placeholder="Ketik pertanyaanmu..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chat-send" onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+<!-- ========== NAVIGATION ========== -->
+<nav>
+  <div class="nav-inner">
+    <!-- LOGO VERTIKAL -->
+    <div class="nav-logo" onclick="goto('hero')">
+      <div class="nav-logo-wrap" id="nav-logo-wrap">
+        <div class="nav-logo-def" id="nav-logo-def">B</div>
+        <img src="" id="nav-logo-img" class="nav-logo-img-el" alt="Logo">
+        <div class="logo-upload-ov" onclick="triggerLogoUpload();event.stopPropagation()"><span>📷</span><span>Ganti</span></div>
+      </div>
+      <div class="nav-brand" id="nav-brand">BODHI CREATIVE<br><em>+ DESIGN</em></div>
+    </div>
+    <ul class="nav-links">
+      <li><a onclick="goto('about')">Tentang</a></li>
+      <li><a onclick="goto('programs')">Program</a></li>
+      <li><a onclick="goto('founder')">Pengajar</a></li>
+      <li><a onclick="goto('schedule')">Jadwal</a></li>
+      <li><a onclick="goto('testimonials')">Testimoni</a></li>
+      <li><a onclick="goto('faq')">FAQ</a></li>
+    </ul>
+    <button class="nav-cta" onclick="goto('cta')">Daftar Sekarang</button>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<div class="sw" data-id="hero" data-name="Hero / Banner Utama">
+  <div class="hbadge">● TERSEMBUNYI</div>
+  <div class="sc"><span class="sc-lbl">Hero</span><button class="scbtn scbtn-h" onclick="hideSection(this)">👁 Sembunyikan</button><button class="scbtn scbtn-d" onclick="delSection(this)">🗑 Hapus</button></div>
+  <section id="hero">
+    <div class="hero-d1"></div><div class="hero-d2"></div>
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-badge">Kursus Desain Profesional — Medan</div>
+          <h1 class="hero-title">Jadilah<br><em>Designer</em><br>Profesional</h1>
+          <p class="hero-sub">BODHI Creative + Design hadir sejak 2011 untuk mencetak desainer interior profesional melalui kurikulum praktis, mentor berpengalaman, dan metode belajar yang mudah diterapkan di segala usia.</p>
+          <div class="hero-pills">
+            <div class="pill"><span class="pill-ic">📐</span> 50 Pertemuan Intensif</div>
+            <div class="pill"><span class="pill-ic">🖥️</span> Online & Offline</div>
+            <div class="pill"><span class="pill-ic">🏆</span> Sertifikat Profesional</div>
+            <div class="pill"><span class="pill-ic">💼</span> Career Support</div>
+          </div>
+          <div class="hero-ctas">
+            <button class="btn-pri" onclick="goto('cta')">Daftar Konsultasi Gratis →</button>
+            <button class="btn-ghost" onclick="goto('programs')">Lihat Program ↓</button>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hfloat hf1">
+            <div class="hf-ic">🎨</div>
+            <div><div class="hf-lbl">Berdiri Sejak</div><div class="hf-val">Tahun 2011</div></div>
+          </div>
+          <div class="hero-card img-wrap">
+            <div class="hero-card-pat"></div><div class="hero-card-grid"></div>
+            <div class="hero-card-img" id="hero-card-img"></div>
+            <div class="hero-card-icon">🏠</div>
+            <div class="hero-card-text">
+              <div class="hero-card-num">Ratusan</div>
+              <div class="hero-card-lbl">Alumni berhasil berkarir</div>
+            </div>
+            <div class="img-upload-ov" onclick="triggerImgUpload('hero_main','hero-card-img','bg')"><span class="cam">📷</span><span>Ganti Foto</span></div>
+          </div>
+          <!-- Rating Badge — edit via Pengaturan Admin -->
+          <div class="hfloat hf2">
+            <div class="hf2-num">⭐ <span id="hero-rating">4.9</span></div>
+            <div class="hf2-lbl">Rating Kursus</div>
+          </div>
+          <!-- Trust Dots — edit via Pengaturan Admin (nama alumni) -->
+          <div class="hero-trust">
+            <div class="trust-dots" id="trust-dots"></div>
+            <span id="trust-label">Dipercaya ratusan alumni</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========== MARQUEE ========== -->
+<div class="sw" data-id="marquee" data-name="Ticker Marquee">
+  <div class="hbadge">● TERSEMBUNYI</div>
+  <div class="sc"><span class="sc-lbl">Marquee</span><button class="scbtn scbtn-h" onclick="hideSection(this)">👁 Sembunyikan</button><button class="scbtn scbtn-d" onclick="delSection(this)">🗑 Hapus</button></div>
+  <div class="marquee-sec">
+    <div class="mtrack">
+      <span class="mitem"><span class="mdot">✦</span>Interior Design</span><span class="mitem"><span class="mdot">✦</span>AutoCAD 2D</span><span class="mitem"><span class="mdot">✦</span>SketchUp 3D</span><span class="mitem"><span class="mdot">✦</span>Enscape Rendering</span><span class="mitem"><span class="mdot">✦</span>Design Thinking</span><span class="mitem"><span class="mdot">✦</span>Mural Art</span><span class="mitem"><span class="mdot">✦</span>Konstruksi Furniture</span><span class="mitem"><span class="mdot">✦</span>Marketing Design</span><span class="mitem"><span class="mdot">✦</span>Bisnis Kontraktor</span><span class="mitem"><span class="mdot">✦</span>Upcycling Daur Ulang</span><span class="mitem"><span class="mdot">✦</span>Psikologi Design</span><span class="mitem"><span class="mdot">✦</span>Portofolio Profesional</span>
+      <span class="mitem"><span class="mdot">✦</span>Interior Design</span><span class="mitem"><span class="mdot">✦</span>AutoCAD 2D</span><span class="mitem"><span class="mdot">✦</span>SketchUp 3D</span><span class="mitem"><span class="mdot">✦</span>Enscape Rendering</span><span class="mitem"><span class="mdot">✦</span>Design Thinking</span><span class="mitem"><span class="mdot">✦</span>Mural Art</span><span class="mitem"><span class="mdot">✦</span>Konstruksi Furniture</span><span class="mitem"><span class="mdot">✦</span>Marketing Design</span><span class="mitem"><span class="mdot">✦</span>Bisnis Kontraktor</span><span class="mitem"><span class="mdot">✦</span>Upcycling Daur Ulang</span><span class="mitem"><span class="mdot">✦</span>Psikologi Design</span><span class="mitem"><span class="mdot">✦</span>Portofolio Profesional</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ABOUT ========== -->
+<div class="sw" data-id="about" data-name="Tentang BODHI">
+  <div class="hbadge">● TERSEMBUNYI</div>
+  <div class="sc"><span class="sc-lbl">Tentang</span><button class="scbtn scbtn-h" onclick="hideSection(this)">👁 Sembunyikan</button><button class="scbtn scbtn-d" onclick="delSection(this)">🗑 Hapus</button></div>
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual-col">
+          <div class="about-card fade-up">
+            <div class="about-year" id="stat-year">2011</div>
+            <div class="about-year-lbl" id="stat-year-lbl">Tahun berdiri BODHI Creative + Design</div>
+            <div class="about-stats">
+              <div class="astat"><div class="astat-num" id="stat1-num">100+</div><div class="astat-lbl" id="stat1-lbl">Alumni berkarir</div></div>
+              <div class="astat"><div class="astat-num" id="stat2-num">50</div><div class="astat-lbl" id="stat2-lbl">Pertemuan intensif</div></div>
+              <div class="astat"><div class="astat-num" id="stat3-num">2</div><div class="astat-lbl" id="stat3-lbl">Program unggulan</div></div>
+              <div class="astat"><div class="astat-num" id="stat4-num">∞</div><div class="astat-lbl" id="stat4-lbl">Pendampingan pasca lulus</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="about-content">
+          <div><div class="section-tag">Tentang BODHI</div><h2 class="sec-title fade-up">Wadah pendidikan lahir dari <em>riset nyata</em></h2></div>
+          <p class="about-lead fade-up">BODHI Creative + Design adalah wadah pendidikan yang lahir dari gagasan kuat, hasil riset nyata tentang kebutuhan tenaga kreatif dan tuntutan dunia design. Kami percaya tenaga ahli yang kreatif bisa dicetak secara singkat — tanpa harus bertahun-tahun lamanya.</p>
+          <ul class="about-pts fade-up">
+            <li>Pengalaman praktisi profesional dalam menangani proyek desain nyata</li>
+            <li>Mentor yang mengerti psikologi semua tipe manusia sebagai pembelajar</li>
+            <li>Sejak 2011 dengan ratusan peserta yang berhasil membidangi profesi ini</li>
+            <li>Alumni yang melanjutkan pendidikan ke luar negeri</li>
+            <li>Mampu membuka peluang besar di dunia BISNIS Kreatif tanpa bertahun-tahun belajar</li>
+          </ul>
+          <div class="vm-grid fade-up">
+            <div class="vm-card"><div class="vm-icon">🎯</div><div class="vm-title">Visi</div><p class="vm-text">Profesi AHLI yang lahir dari KREATIFITAS sejalan dengan Teknologi dan Perubahan.</p></div>
+            <div class="vm-card"><div class="vm-icon">🚀</div><div class="vm-title">Misi</div><p class="vm-text">Mempersiapkan dan menjadikan PROFESI seorang Profesional Designer secara Singkat melalui cara-cara yang tepat, penuh kepastian, bersama tenaga ahli berpengalaman dekade lamanya.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========== FOR WHO ========== -->
+<div class="sw" data-id="for-who" data-name="Untuk Siapa">
+  <div class="hbadge">● TERSEMBUNYI</div>
+  <div class="sc"><span class="sc-lbl">Untuk Siapa</span><button class="scbtn scbtn-h" onclick="hideSection(this)">👁 Sembunyikan</button><button class="scbtn scbtn-d" onclick="delSection(this)">🗑 Hapus</button></div>
+  <section id="for-who">
+    <div class="container">
+      <div class="section-tag">Target Peserta</div>
+      <h2 class="sec-title">Kursus ini cocok buat <em>siapa saja?</em></h2>
+      <div class="fw-grid">
+        <div class="fw-card fade-up"><div class="fw-num">01</div><h3>Pemula yang Ingin Berkarir</h3><p>Belum punya pengalaman? Kurikulum dirancang dari nol agar mudah dipahami dan langsung bisa diterapkan.</p></div>
+        <div class="fw-card fade-up"><div class="fw-num">02</div><h3>Pelajar SMU / SMK / SLTA</h3><p>Persiapkan portofolio kuat untuk masuk perguruan tinggi terkemuka dalam/luar negeri, bahkan meraih beasiswa.</p></div>
+        <div class="fw-card fade-up"><div class="fw-num">03</div><h3>Mahasiswa Segala Jurusan</h3><p>Tambah keahlian desain interior sebagai profesi tambahan yang menjanjikan atau jadikan karier utama.</p></div>
+        <div class="fw-card fade-up"><div class="fw-num">04</div><h3>Profesional yang Ganti Karier</h3><p>Latar belakang bukan desain? Program kami dirancang untuk berbagai latar belakang profesi dan usia.</p></div>
+        <div class="fw-card fade-up"><div class="fw-num">05</div><h3>Pengusaha Bisnis Kreatif</h3><p>Ingin membangun bisnis konsultan atau kontraktor interior? Kami siapkan strategi, skill, dan pendampingan.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========== FOUNDER ========== -->
+<div class="sw" data-id="founder" data-name="Pengajar / Pendiri">
+  <div class="hbadge">● TERSEMBUNYI</div>
+  <div class="sc"><span class="sc-lbl">Pengajar</span><button class="scbtn scbtn-h" onclick="hideSection(this)">👁 Sembunyikan</button><button class="scbtn scbtn-d" onclick="delSection(this)">🗑 Hapus</button></div>
+  <section id="founder">
+    <div class="container">
+      <div class="section-tag">Pengajar & Pendiri</div>
+      <h2 class="sec-title">Belajar dari yang <em>telah terbukti</em></h2>
+      <div class="founder-grid">
+        <div class="founder-card fade-up">
+          <div class="founder-photo-wrap img-wrap">
+            <div class="founder-photo-ph"><div class="fpgrid"></div>🏛️</div>
+            <div class="founder-photo-actual" id="founder-photo-img"></div>
+            <div class="img-upload-ov" onclick="triggerImgUpload('founder_photo','founder-photo-img','bg')"><span class="cam">📷</span><span>Ganti Foto</span></div>
+          </div>
+          <div class="founder-body">
+            <div class="founder-role">Pendiri & Pengajar Utama</div>
+            <h3 class="founder-name">Jamry, S.T., M.Psi</h3>
+            <p class="founder-tag-line">Arsitek, Praktisi Psikologi, Konsultan Perencana & Kontraktor Building sejak 1999. Founder BODHI Creative + Design.</p>
+            <div class="ftags"><span class="ftag">S.T. Arsitektur</span><span class="ftag">M.Psi Industri</span><span class="ftag">Lions Club</span><span class="ftag">APSDA</span><span class="ftag">HDII</span></div>
+          </div>
+        </div>
+        <div class="founder-detail">
+          <div class="fd-blk fade-up"><h3>Latar Belakang</h3><p>Alumni Arsitektur Institut Sains & Teknologi TD. Pardede Medan tahun 1999, dan meraih gelar Magister Psikologi Industri dan Organisasi dengan fokus riset ilmu design terhadap perkembangan perilaku manusia serta pengaruhnya terhadap bisnis.<br><br>Sejak 1999 aktif sebagai Konsultan Perencana dan Kontraktor Building. Mendirikan Intrash-design, karya daur ulang (upcycling) untuk produk design. Saat ini juga Dosen Arsitektur di Institute Modern of Architecture and Technology Medan.</p></div>
+          <div class="fd-blk fade-up"><h3>Perjalanan Karier</h3>
+            <div class="fd-timeline">
+              <div class="fd-item"><span class="fd-yr">1999</span><span class="fd-txt">Lulus Arsitektur IST TD. Pardede — mulai berkarir sebagai Konsultan & Kontraktor Building</span></div>
+              <div class="fd-item"><span class="fd-yr">2011</span><span class="fd-txt">Mendirikan BODHI Creative + Design sebagai wadah pendidikan desain informal profesional</span></div>
+              <div class="fd-item"><span class="fd-yr">2014</span><span class="fd-txt">Delegate Asia Pacific Space Designers Alliance (APSDA) — Solo, Yogyakarta</span></div>
+              <div class="fd-item"><span class="fd-yr">2014–16</span><span class="fd-txt">Koordinator PSDM Himpunan Designer Interior Indonesia (HDII) Sumatera Utara</span></div>
+              <div class="fd-item"><span class="fd-yr">2021–22</span><span class="fd-txt">Presiden Lions Club Medan Premier, Distrik 307A2</span></div>
+              <div class="fd-item"><span class="fd-yr">2023</span><span class="fd-txt">Alumni Faculty Development Institute — Peninsula Jakarta & Regional Lions Leadership Institute — Santika Medan</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========== PROGRAMS ========== -->
+<div class="sw" data-id="programs" data-name="Program Studi">
+  <div class="hbadge">● TERSEMBUNYI</div>
+  <div class="sc"><span class="sc-lbl">Program</span><button class="scbtn scbtn-h" onclick="hideSection(this)">👁 Sembunyikan</button><button class="scbtn scbtn-d" onclick="delSection(this)">🗑 Hapus</button></div>
+  <section id="programs">
+    <div class="container">
+      <div class="section-tag">Program Studi</div>
+      <h2 class="sec-title">Pilih program yang <em>sesuai kamu</em></h2>
+      <div class="prog-tabs">
+        <button class="prog-tab on" onclick="switchProg('p1',this)">🏠 Profesional Eksklusif</button>
+        <button class="prog-tab" onclick="switchProg('p2',this)">🎓 Arsitektur Interior SMU/SMK</button>
+      </div>
+      <div class="prog-content on" id="p1">
+        <div class="prog-layout">
+          <div class="prog-info-card">
+            <div class="prog-icon">🏠</div><div class="prog-lbl">Program Unggulan</div>
+            <h3 class="prog-name">Profesional Eksklusif <em>(Interior)</em></h3>
+            <p class="prog-desc">Program intensif untuk mencetak designer dan kontraktor interior profesional secara singkat, jelas, dan padat melalui kurikulum sistematis yang dinamis.</p>
+            <div class="prog-meta">
+              <div class="prog-mi"><div class="prog-mic">📅</div><span>Durasi: <strong>50 Pertemuan Intensif</strong></span></div>
+              <div class="prog-mi"><div class="prog-mic">📆</div><span>Jadwal: <strong>Senin – Sabtu</strong></span></div>
+              <div class="prog-mi"><div class="prog-mic">💻</div><span>Mode: <strong>Online & Offline</strong></span></div>
+              <div class="prog-mi"><div class="prog-mic">🎯</div><span>Untuk: <strong>Semua usia & latar belakang</strong></span></div>
+            </div>
+            <button class="prog-cta" onclick="goto('cta')">Daftar Program Ini →</button>
+          </div>
+          <div>
+            <div class="studios-grid">
+              <div class="studio-card"><div class="stu-ic">🖥️</div><div class="stu-nm">Studio Komputer</div><div class="stu-tl">AutoCAD 2D · SketchUp + 3Max 3D · Enscape Rendering</div></div>
+              <div class="studio-card"><div class="stu-ic">📐</div><div class="stu-nm">Studio Perancangan</div><div class="stu-tl">Proses perancangan project design dari awal hingga akhir</div></div>
+              <div class="studio-card"><div class="stu-ic">🔨</div><div class="stu-nm">Studio Konstruksi</div><div class="stu-tl">Workshop gambar kerja ke konstruksi interior & furniture</div></div>
+            </div>
+            <div class="mod-list">
+              <div class="mod-item open"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">01</div><span class="mod-title">Dasar-Dasar Pemodelan & Bentuk</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Pengetahuan dan pelatihan dasar sumber seluruh konsep bentuk dan model dalam menghasilkan satu bentuk hingga menjadi suatu fungsi. Focus pada teknis yang terarah dan jelas, mudah diterapkan pada pedesignan.</p></div></div>
+              <div class="mod-item"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">02</div><span class="mod-title">Konsep Cepat Design Kreatif</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Teknik mengarahkan dalam menerjemahkan tujuan penggambaran secara menarik yang sederhana, mencakup keseluruhan dan menjawab semua kebutuhan yang bersifat realistis.</p></div></div>
+              <div class="mod-item"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">03</div><span class="mod-title">Strategi Perencanaan Design</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Langkah/tahapan yang sistematis serta dapat dilaksanakan dengan mudah dan menarik, tanpa harus melalui plagiat atau mengambil karya orang lain.</p></div></div>
+              <div class="mod-item"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">04</div><span class="mod-title">Trend Daur Ulang dalam Design</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Produk daur ulang (recycle & upcycle) yang menjadi trend topik di era globalisasi pada industri kreatif design dan memiliki nilai jual tinggi.</p></div></div>
+              <div class="mod-item"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">05</div><span class="mod-title">Design Thinking for Designer</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Pengetahuan dan ilmu psikologi tentang manusia terhadap sebuah karya, baik sebelum ataupun sesudah dimulainya produksi karya design.</p></div></div>
+              <div class="mod-item"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">06</div><span class="mod-title">Teknik Marketing Design & Problem Solving</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Cara menjual dan memasarkan karya — teknik konseling pertemuan dengan owner, menjawab pertanyaan, dan meyakinkan konsumen.</p></div></div>
+              <div class="mod-item"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">07</div><span class="mod-title">Membangun Bisnis Konstruksi Design</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Setiap peserta harus mampu membangun bisnis dunia design sebagai harapan, baik sebagai Konsultan maupun Kontraktor.</p></div></div>
+              <div class="mod-item"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">08</div><span class="mod-title">Praktek Kerja Lapangan (PKL)</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Peserta memahami penerapan semua yang sudah dikonsep melalui pengamatan hingga mengetahui secara terperinci teknik pelaksanaan di lapangan.</p></div></div>
+              <div class="mod-item"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">09</div><span class="mod-title">Project Tugas Akhir</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Selesainya studi ditandai dengan karya project design dari konsep ide hingga portofolio realistis — bukan sekadar nilai akademis.</p></div></div>
+              <div class="mod-item"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">10</div><span class="mod-title">Program Pendampingan Proyek Design</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Konsultasi design, bantuan pelaksanaan proyek, hingga bermitra dengan kontraktor dalam pencapaian bisnis dan karir.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="prog-content" id="p2">
+        <div class="prog-layout">
+          <div class="prog-info-card">
+            <div class="prog-icon">🎓</div><div class="prog-lbl">Program Khusus Pelajar</div>
+            <h3 class="prog-name">Arsitektur Interior <em>SMU/SMK/SLTA</em></h3>
+            <p class="prog-desc">Program khusus pelajar untuk mempersiapkan portofolio masuk perguruan tinggi dalam/luar negeri dan meraih beasiswa perkuliahan di bidang desain.</p>
+            <div class="prog-meta">
+              <div class="prog-mi"><div class="prog-mic">📅</div><span>Jadwal: <strong>2x Pertemuan / Minggu</strong></span></div>
+              <div class="prog-mi"><div class="prog-mic">👤</div><span>Untuk: <strong>Pelajar SMU / SMK / SLTA</strong></span></div>
+              <div class="prog-mi"><div class="prog-mic">💻</div><span>Mode: <strong>Online & Offline</strong></span></div>
+              <div class="prog-mi"><div class="prog-mic">🏆</div><span>Output: <strong>Portofolio Beasiswa</strong></span></div>
+            </div>
+            <button class="prog-cta" onclick="goto('cta')">Daftar Program Ini →</button>
+          </div>
+          <div class="mod-list">
+            <div class="mod-item open"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">01</div><span class="mod-title">Pengantar & Motivasi Profesi</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Pengarahan tujuan dalam mewujudkan harapan yang kuat sebelum menjadikan profesi di dunia design interior.</p></div></div>
+            <div class="mod-item"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">02</div><span class="mod-title">Menggambar Teknik</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Teknik menggambar sistem manual: gambar konsep, ilustrasi ide bentuk ke fungsi, dari sketsa hingga gambar kerja mendetail.</p></div></div>
+            <div class="mod-item"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">03</div><span class="mod-title">Bentuk dan Ruang</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Transformasi bentuk dalam membentuk gubahan ruang secara kreatif — konsep, fungsi, komposisi, sirkulasi.</p></div></div>
+            <div class="mod-item"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">04</div><span class="mod-title">Dwimatra dan Trimatra</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Dimensi dua dan tiga dalam fungsi tatanan ilmu menata ruang: Nirmana datar, nirmana ruang, warna dan pencahayaan.</p></div></div>
+            <div class="mod-item"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">05</div><span class="mod-title">Design Thinking for Designer</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Ilmu psikologi tentang manusia terhadap sebuah karya yang memberikan sesuatu yang berbeda dari karya setiap designer.</p></div></div>
+            <div class="mod-item"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">06</div><span class="mod-title">Pengembangan Minat dan Bakat</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Menggali dan mengembangkan potensi yang mendukung ilmu design melalui indikator pembelajaran yang tepat.</p></div></div>
+            <div class="mod-item"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">07</div><span class="mod-title">Mural Art Design</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Teknik seni melukis dalam warna dan gambar 2D yang memberikan nuansa nilai lebih dalam sentuhan komunikasi visual.</p></div></div>
+            <div class="mod-item"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">08</div><span class="mod-title">Trend Daur Ulang dalam Design</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Produk daur ulang (recycle & upcycle) yang menjadi trend topik di era globalisasi pada industri kreatif design.</p></div></div>
+            <div class="mod-item"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">09</div><span class="mod-title">Psikologi Design dan Penerapan</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Ilmu dasar memahami manusia melalui Sikap, Perilaku, dan Cara Berpikir yang mempengaruhi lahirnya sebuah konsep karya.</p></div></div>
+            <div class="mod-item"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">10</div><span class="mod-title">Studio Aplikasi Design 2D & 3D</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Teknik mendisain digital memakai AutoCAD dan SketchUp beserta rendering melalui aplikasi Enscape.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========== OUTCOMES ========== -->
+<div class="sw" data-id="outcomes" data-name="Target Hasil">
+  <div class="hbadge">● TERSEMBUNYI</div>
+  <div class="sc"><span class="sc-lbl">Target Hasil</span><button class="scbtn scbtn-h" onclick="hideSection(this)">👁 Sembunyikan</button><button class="scbtn scbtn-d" onclick="delSection(this)">🗑 Hapus</button></div>
+  <section id="outcomes">
+    <div class="container">
+      <div class="section-tag">Yang Akan Kamu Capai</div>
+      <h2 class="sec-title">Target hasil setelah <em>menyelesaikan program</em></h2>
+      <div class="outcomes-grid">
+        <div class="oc-card fade-up"><div class="oc-icon">👨‍🎨</div><h3>Profesi Designer Mandiri</h3><p>Menjadi Designer dan Kontraktor Interior secara mandiri sekelas pendidikan formal, dengan mengerti teknis membuat konsep design dari dasar hingga selesai proyek.</p></div>
+        <div class="oc-card fade-up"><div class="oc-icon">🏢</div><h3>Bisnis Interior Design</h3><p>Membuka bisnis interior design sekelas Konsultan Design dan Kontraktor Pelaksana pengadaan secara benar, dalam proses tahapan persiapan yang profesional.</p></div>
+        <div class="oc-card fade-up"><div class="oc-icon">🏆</div><h3>Strategi Kompetitif</h3><p>Strategi yang kuat dan tepat untuk memenangkan persaingan — dipastikan melalui Program Pendampingan bergaransi setelah selesai pembelajaran.</p></div>
+        <div class="oc-card fade-up"><div class="oc-icon">📂</div><h3>Portofolio Profesional</h3><p>Karya project design dari konsep ide hingga portofolio realistis — bukan sekadar nilai akademis. Siap ditampilkan ke klien dan pasar global.</p></div>
+        <div class="oc-card fade-up"><div class="oc-icon">🌍</div><h3>Bersaing di Pasar Global</h3><p>Skill yang bersaing antar designer — fokus pada praktisi design dan konstruksi bisnis. Siap berhadapan dengan persaingan global.</p></div>
+        <div class="oc-card fade-up"><div class="oc-icon">🎓</div><h3>Portofolio Beasiswa (SMU/SMK)</h3><p>Portofolio produk design untuk memperkuat pengajuan di perguruan tinggi terkemuka luar negeri maupun meraih program beasiswa global.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========== SCHEDULE ========== -->
+<div class="sw" data-id="schedule" data-name="Jadwal Belajar">
+  <div class="hbadge">● TERSEMBUNYI</div>
+  <div class="sc"><span class="sc-lbl">Jadwal</span><button class="scbtn scbtn-h" onclick="hideSection(this)">👁 Sembunyikan</button><button class="scbtn scbtn-d" onclick="delSection(this)">🗑 Hapus</button></div>
+  <section id="schedule">
+    <div class="container">
+      <div class="section-tag">Jadwal Belajar</div>
+      <h2 class="sec-title">Belajar fleksibel, <em>sesuai waktumu</em></h2>
+      <div class="sched-grid">
+        <div class="sched-card fade-up"><div class="sched-icon">📅</div><h3 class="sched-title">Hari Belajar</h3><p class="sched-body">Seminggu <strong>2–3 kali pertemuan</strong><br><strong>Senin – Sabtu</strong><br>Fleksibel sesuai kesepakatan kelas</p></div>
+        <div class="sched-card fade-up"><div class="sched-icon">⏰</div><h3 class="sched-title">Jam Belajar</h3><p class="sched-body"><strong>Sesi 1:</strong> Pukul 15.00 – 16.30 WIB<br><strong>Sesi 2:</strong> Pukul 18.00 – 19.30 WIB</p></div>
+        <div class="sched-card fade-up"><div class="sched-icon">💻</div><h3 class="sched-title">Mode Pembelajaran</h3><p class="sched-body">Tersedia <strong>Online dan Offline</strong>. Pilih yang paling nyaman untukmu — atau kombinasikan keduanya.</p></div>
+        <div class="sched-card sched-hl fade-up"><div class="sched-icon">🎨</div><h3 class="sched-title">Ekstrakulikuler: Clinic Arsitektur & Design</h3><p class="sched-body">Kegiatan terpadu peserta belajar: diskusi ilmiah antar peserta serta konsultasi design tapak dan ruang kepada masyarakat melalui <strong>pameran design</strong> dan <strong>hari konsultasi design</strong>.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========== TESTIMONIALS ========== -->
+<div class="sw" data-id="testimonials" data-name="Testimoni Alumni">
+  <div class="hbadge">● TERSEMBUNYI</div>
+  <div class="sc"><span class="sc-lbl">Testimoni</span><button class="scbtn scbtn-h" onclick="hideSection(this)">👁 Sembunyikan</button><button class="scbtn scbtn-d" onclick="delSection(this)">🗑 Hapus</button></div>
+  <section id="testimonials">
+    <div class="container">
+      <div class="section-tag">Testimoni Alumni</div>
+      <h2 class="sec-title">Kata mereka yang <em>telah berhasil</em></h2>
+      <p style="margin-top:8px;margin-bottom:0;font-size:15px;color:var(--textsoft)">Studi literatur, studi banding, seminar, kunjungan proyek design, hingga praktek kerja langsung bersama mentor.</p>
+      <div class="testi-grid" id="testi-grid" style="margin-top:40px"></div>
+      <button id="add-testi-btn" onclick="addTestimoni()">+ Tambah Testimoni</button>
+    </div>
+  </section>
+</div>
+
+<!-- ========== CTA ========== -->
+<div class="sw" data-id="cta" data-name="Form Pendaftaran">
+  <div class="hbadge">● TERSEMBUNYI</div>
+  <div class="sc"><span class="sc-lbl">Pendaftaran</span><button class="scbtn scbtn-h" onclick="hideSection(this)">👁 Sembunyikan</button><button class="scbtn scbtn-d" onclick="delSection(this)">🗑 Hapus</button></div>
+  <section id="cta">
+    <div class="container">
+      <div class="cta-wrap">
+        <div class="cta-left">
+          <div class="urg-tag">🎓 Konsultasi Pertama Gratis!</div>
+          <h2 class="cta-title">Mulai perjalananmu jadi <em>designer profesional</em></h2>
+          <p class="cta-desc">Hubungi kami langsung via WhatsApp. Tim dan mentor BODHI siap mendiskusikan program yang paling sesuai dengan tujuan dan latar belakangmu.</p>
+          <div class="cta-cci">
+            <div class="cci"><div class="cci-ic">📍</div><span>Jl. Pelita I No.74D, Kel. Sidorame Timur, Kec. Medan Perjuangan, Kota Medan — Sumatera Utara 20233</span></div>
+            <div class="cci"><div class="cci-ic">📅</div><span>Senin – Sabtu · Sesi 15.00–16.30 atau 18.00–19.30 WIB</span></div>
+            <div class="cci"><div class="cci-ic">💻</div><span>Online & Offline tersedia</span></div>
+          </div>
+        </div>
+        <div class="cta-form">
+          <h3 class="form-h">Konsultasi Gratis</h3>
+          <p class="form-s">Isi data di bawah ini, tim kami akan segera menghubungimu.</p>
+          <div class="fgrp"><label class="flbl">Nama Lengkap</label><input type="text" class="finput" id="f-nama" placeholder="Nama kamu..."></div>
+          <div class="fgrp"><label class="flbl">Nomor WhatsApp</label><input type="tel" class="finput" id="f-wa" placeholder="08xx-xxxx-xxxx"></div>
+          <div class="fgrp"><label class="flbl">Email</label><input type="email" class="finput" id="f-email" placeholder="email@kamu.com"></div>
+          <div class="fgrp"><label class="flbl">Program yang Diminati</label>
+            <select class="finput" id="f-prog">
+              <option value="">Pilih program...</option>
+              <option>Profesional Eksklusif (Interior)</option>
+              <option>Arsitektur Interior (SMU/SMK/SLTA)</option>
+              <option>Belum tahu, butuh konsultasi</option>
+            </select>
+          </div>
+          <button class="fsub" onclick="submitForm()">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Hubungi via WhatsApp
+          </button>
+          <p class="ftos">Dengan mengirim, kamu menyetujui <a href="javascript:void(0)">Syarat & Ketentuan</a> dan <a href="javascript:void(0)">Kebijakan Privasi</a> kami.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========== FAQ ========== -->
+<div class="sw" data-id="faq" data-name="FAQ">
+  <div class="hbadge">● TERSEMBUNYI</div>
+  <div class="sc"><span class="sc-lbl">FAQ</span><button class="scbtn scbtn-h" onclick="hideSection(this)">👁 Sembunyikan</button><button class="scbtn scbtn-d" onclick="delSection(this)">🗑 Hapus</button></div>
+  <section id="faq">
+    <div class="container">
+      <div class="faq-layout">
+        <div>
+          <div class="section-tag">Pertanyaan Umum</div>
+          <h2 class="sec-title" style="margin-bottom:16px">Ada yang ingin <em>ditanyakan?</em></h2>
+          <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:28px">Tidak menemukan jawaban yang dicari? Hubungi langsung via WhatsApp dan tim kami siap membantu.</p>
+          <button class="btn-pri" onclick="goto('cta')">Tanya Kami →</button>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item open"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Apakah perlu pengalaman desain sebelumnya?<span class="faq-ic">+</span></div><div class="faq-a">Sama sekali tidak perlu. Kurikulum dirancang mulai dari nol dan mudah dipahami di segala usia. Yang terpenting adalah kemauan belajar dan semangat untuk berkembang.</div></div>
+          <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Berapa lama durasi program Profesional Eksklusif?<span class="faq-ic">+</span></div><div class="faq-a">Program Profesional Eksklusif terdiri dari 50 pertemuan intensif. Dengan jadwal 2-3x per minggu, program bisa diselesaikan dalam beberapa bulan dengan hasil yang komprehensif.</div></div>
+          <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Apa perbedaan program Profesional Eksklusif dan SMU/SMK?<span class="faq-ic">+</span></div><div class="faq-a">Program Profesional Eksklusif untuk semua kalangan yang ingin berkarir atau membuka bisnis sebagai designer/kontraktor. Program SMU/SMK khusus pelajar yang mempersiapkan portofolio beasiswa luar negeri.</div></div>
+          <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Apakah ada pendampingan setelah selesai program?<span class="faq-ic">+</span></div><div class="faq-a">Ya! Program Pendampingan Proyek Design tersedia setelah peserta lulus — konsultasi design, bantuan pelaksanaan proyek, dan kemitraan kontraktor. Bergaransi.</div></div>
+          <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Software apa yang dipelajari?<span class="faq-ic">+</span></div><div class="faq-a">AutoCAD (gambar 2D), SketchUp + 3ds Max (modeling 3D), dan Enscape (rendering realistis). Semua software yang dipakai di industri desain interior profesional.</div></div>
+          <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Bagaimana cara mendaftar?<span class="faq-ic">+</span></div><div class="faq-a">Isi form konsultasi di halaman ini, dan tim kami akan menghubungi kamu via WhatsApp untuk membahas detail program, jadwal, dan pilihan pembayaran. Konsultasi pertama gratis!</div></div>
+          <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Apakah ada kelas online?<span class="faq-ic">+</span></div><div class="faq-a">Ya, program tersedia Online maupun Offline. Bisa memilih sesuai kebutuhan dan kenyamananmu, bahkan kombinasi keduanya.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========== FOOTER ========== -->
+<div class="sw" data-id="footer" data-name="Footer">
+  <div class="hbadge">● TERSEMBUNYI</div>
+  <div class="sc"><span class="sc-lbl">Footer</span><button class="scbtn scbtn-h" onclick="hideSection(this)">👁 Sembunyikan</button><button class="scbtn scbtn-d" onclick="delSection(this)">🗑 Hapus</button></div>
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div class="flogo">
+            <div class="flogo-wrap"><div id="flogo-def" style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:#fff">B</div><img src="" id="flogo-img" class="flogo-img" alt=""></div>
+            <div class="flogo-nm" id="flogo-nm">BODHI CREATIVE<br><em>+ DESIGN</em></div>
+          </div>
+          <p class="footer-about">Wadah pendidikan desain interior profesional di Medan. Mencetak designer dan kontraktor interior sejak 2011.</p>
+          <div class="footer-contact">
+            <span>📍 Jl. Pelita I No.74D, Kel. Sidorame Timur, Kec. Medan Perjuangan, Kota Medan, Sumatera Utara 20233</span>
+            <span>📅 Senin – Sabtu · 15.00–16.30 dan 18.00–19.30 WIB</span>
+          </div>
+        </div>
+        <div class="fcol"><h4>Program</h4><ul><li><a onclick="goto('programs')">Profesional Eksklusif</a></li><li><a onclick="goto('programs')">Arsitektur Interior SMU/SMK</a></li><li><a onclick="goto('schedule')">Jadwal Kelas</a></li><li><a onclick="goto('testimonials')">Testimoni</a></li></ul></div>
+        <div class="fcol"><h4>Tentang</h4><ul><li><a onclick="goto('about')">Tentang BODHI</a></li><li><a onclick="goto('founder')">Pendiri</a></li><li><a onclick="goto('outcomes')">Target Hasil</a></li><li><a onclick="goto('faq')">FAQ</a></li></ul></div>
+        <div class="fcol"><h4>Kontak</h4><ul><li><a onclick="goto('cta')">Daftar Konsultasi</a></li><li><a onclick="goto('cta')">Hubungi via WhatsApp</a></li><li><a onclick="toggleChat()">Chat dengan Bot</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2011–2026 BODHI Creative + Design. Jl. Pelita I No.74D, Medan, Sumatera Utara.</p>
+        <div class="footer-legal"><a href="javascript:void(0)">Syarat & Ketentuan</a><a href="javascript:void(0)">Kebijakan Privasi</a></div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<input type="file" id="img-file-input" accept="image/*" style="display:none" onchange="handleImgFile(event)">
+<input type="file" id="logo-file-input" accept="image/*" style="display:none" onchange="handleLogoFile(event)">
+
+<script>
+/* =========================================================
+   SETTINGS — editable via admin panel
+   ========================================================= */
+var DEF_SETTINGS = {
+  wa:'6281234567890', rating:'4.9', brand:'BODHI CREATIVE + DESIGN',
+  trust:'Ahmad, Siti, Rizky, Dewi', trustLbl:'Dipercaya ratusan alumni',
+  statsYear:'2011', statsYearLbl:'Tahun berdiri BODHI Creative + Design',
+  stat1n:'100+', stat1l:'Alumni berkarir',
+  stat2n:'50',   stat2l:'Pertemuan intensif',
+  stat3n:'2',    stat3l:'Program unggulan',
+  stat4n:'∞',    stat4l:'Pendampingan pasca lulus'
+};
+var SETTINGS = {};
+try { SETTINGS = JSON.parse(localStorage.getItem('bodhi_settings') || '{}'); } catch(e){}
+SETTINGS = Object.assign({}, DEF_SETTINGS, SETTINGS);
+
+function applySettings() {
+  // Rating
+  var rEl = document.getElementById('hero-rating');
+  if (rEl) rEl.textContent = SETTINGS.rating || '4.9';
+  // Trust dots
+  renderTrustDots();
+  // Trust label
+  var tl = document.getElementById('trust-label');
+  if (tl) tl.textContent = SETTINGS.trustLbl || 'Dipercaya ratusan alumni';
+  // Brand name (nav + footer)
+  applyBrandName(SETTINGS.brand || 'BODHI CREATIVE + DESIGN');
+  // Stats card
+  var ids = {
+    'stat-year': SETTINGS.statsYear||'2011',
+    'stat-year-lbl': SETTINGS.statsYearLbl||'Tahun berdiri BODHI Creative + Design',
+    'stat1-num': SETTINGS.stat1n||'100+', 'stat1-lbl': SETTINGS.stat1l||'Alumni berkarir',
+    'stat2-num': SETTINGS.stat2n||'50',   'stat2-lbl': SETTINGS.stat2l||'Pertemuan intensif',
+    'stat3-num': SETTINGS.stat3n||'2',    'stat3-lbl': SETTINGS.stat3l||'Program unggulan',
+    'stat4-num': SETTINGS.stat4n||'∞',   'stat4-lbl': SETTINGS.stat4l||'Pendampingan pasca lulus',
+  };
+  Object.keys(ids).forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.textContent = ids[id];
+  });
+}
+
+function applyBrandName(val) {
+  // Convert "BODHI CREATIVE + DESIGN" → "BODHI CREATIVE<br><em>+ DESIGN</em>"
+  var parts = val.split('+');
+  var html;
+  if (parts.length >= 2) {
+    html = parts[0].trim() + '<br><em>+ ' + parts.slice(1).join('+').trim() + '</em>';
+  } else {
+    html = val;
+  }
+  var nb = document.getElementById('nav-brand');
+  if (nb) nb.innerHTML = html;
+  var fb = document.getElementById('flogo-nm');
+  if (fb) fb.innerHTML = html;
+}
+
+function renderTrustDots() {
+  var names = (SETTINGS.trust || 'Ahmad,Siti,Rizky,Dewi').split(',').map(function(n){ return n.trim(); }).filter(Boolean).slice(0,4);
+  var container = document.getElementById('trust-dots');
+  if (!container) return;
+  container.innerHTML = '';
+  names.forEach(function(name, i) {
+    var d = document.createElement('div');
+    d.className = 'trust-dot';
+    d.title = name;
+    var initial = name.charAt(0).toUpperCase();
+    // Check for stored photo
+    var imgData = localStorage.getItem('bodhi_img_trust_' + i);
+    if (imgData) {
+      d.innerHTML = '<img src="' + imgData + '" class="show" alt="' + name + '">';
+    } else {
+      d.textContent = initial;
+    }
+    container.appendChild(d);
+  });
+}
+
+function showSettings() {
+  document.getElementById('s-wa').value = SETTINGS.wa || '';
+  document.getElementById('s-rating').value = SETTINGS.rating || '4.9';
+  document.getElementById('s-brand').value = SETTINGS.brand || 'BODHI CREATIVE + DESIGN';
+  document.getElementById('s-trust').value = SETTINGS.trust || '';
+  document.getElementById('s-trust-lbl').value = SETTINGS.trustLbl || '';
+  document.getElementById('s-year').value = SETTINGS.statsYear || '2011';
+  document.getElementById('s-year-lbl').value = SETTINGS.statsYearLbl || 'Tahun berdiri BODHI Creative + Design';
+  document.getElementById('s-stat1n').value = SETTINGS.stat1n || '100+';
+  document.getElementById('s-stat1l').value = SETTINGS.stat1l || 'Alumni berkarir';
+  document.getElementById('s-stat2n').value = SETTINGS.stat2n || '50';
+  document.getElementById('s-stat2l').value = SETTINGS.stat2l || 'Pertemuan intensif';
+  document.getElementById('s-stat3n').value = SETTINGS.stat3n || '2';
+  document.getElementById('s-stat3l').value = SETTINGS.stat3l || 'Program unggulan';
+  document.getElementById('s-stat4n').value = SETTINGS.stat4n || '∞';
+  document.getElementById('s-stat4l').value = SETTINGS.stat4l || 'Pendampingan pasca lulus';
+  openModal('modal-settings');
+}
+
+function saveSettings() {
+  SETTINGS.wa        = document.getElementById('s-wa').value.trim()       || SETTINGS.wa;
+  SETTINGS.rating    = document.getElementById('s-rating').value.trim()    || SETTINGS.rating;
+  SETTINGS.brand     = document.getElementById('s-brand').value.trim()     || SETTINGS.brand;
+  SETTINGS.trust     = document.getElementById('s-trust').value.trim()     || SETTINGS.trust;
+  SETTINGS.trustLbl  = document.getElementById('s-trust-lbl').value.trim() || SETTINGS.trustLbl;
+  // Stats
+  var sy = document.getElementById('s-year').value.trim();    if(sy) SETTINGS.statsYear    = sy;
+  var sl = document.getElementById('s-year-lbl').value.trim();if(sl) SETTINGS.statsYearLbl = sl;
+  var s1n= document.getElementById('s-stat1n').value.trim();  if(s1n) SETTINGS.stat1n = s1n;
+  var s1l= document.getElementById('s-stat1l').value.trim();  if(s1l) SETTINGS.stat1l = s1l;
+  var s2n= document.getElementById('s-stat2n').value.trim();  if(s2n) SETTINGS.stat2n = s2n;
+  var s2l= document.getElementById('s-stat2l').value.trim();  if(s2l) SETTINGS.stat2l = s2l;
+  var s3n= document.getElementById('s-stat3n').value.trim();  if(s3n) SETTINGS.stat3n = s3n;
+  var s3l= document.getElementById('s-stat3l').value.trim();  if(s3l) SETTINGS.stat3l = s3l;
+  var s4n= document.getElementById('s-stat4n').value.trim();  if(s4n) SETTINGS.stat4n = s4n;
+  var s4l= document.getElementById('s-stat4l').value.trim();  if(s4l) SETTINGS.stat4l = s4l;
+  try { localStorage.setItem('bodhi_settings', JSON.stringify(SETTINGS)); } catch(e){}
+  applySettings();
+  closeModal('modal-settings');
+  showToast('✅ Pengaturan berhasil disimpan!');
+}
+
+/* =========================================================
+   FAQ BOT DATA — editable via admin panel
+   ========================================================= */
+var DEF_FAQ = [
+  { kw:'program, tersedia, ada apa, pilihan program', ans:'BODHI punya 2 program:\n\n🏠 **Profesional Eksklusif** – 50 pertemuan, untuk semua usia yang ingin berkarir sebagai designer interior\n\n🎓 **Arsitektur Interior SMU/SMK** – khusus pelajar untuk persiapan portofolio & beasiswa\n\nMau tahu lebih detail yang mana?' },
+  { kw:'berapa lama, durasi, lama belajar, pertemuan', ans:'Program Profesional Eksklusif terdiri dari **50 pertemuan** intensif. Dengan jadwal 2-3x seminggu, bisa selesai dalam beberapa bulan! 📅' },
+  { kw:'online, offline, kelas online, daring, virtual', ans:'Ya, tersedia **Online dan Offline** keduanya! 💻 Kamu bisa pilih sesuai kenyamanan, atau bahkan kombinasikan keduanya.' },
+  { kw:'pengalaman, pemula, nol, belum bisa, baru mulai', ans:'Tidak perlu pengalaman sama sekali! 🙌 Kurikulum dirancang dari **nol** dan mudah dipahami di segala usia. Yang penting semangat belajar!' },
+  { kw:'biaya, harga, bayar, fee, cost, berapa bayar', ans:'Untuk info biaya dan paket terbaik, langsung konsultasi dengan tim kami ya! Tersedia pilihan pembayaran yang fleksibel. Klik tombol di bawah 👇' },
+  { kw:'jadwal, jam, hari belajar, waktu belajar, sesi', ans:'Jadwal belajar:\n📅 **Senin – Sabtu** (2-3x/minggu)\n⏰ **Sesi 1:** 15.00 – 16.30 WIB\n⏰ **Sesi 2:** 18.00 – 19.30 WIB' },
+  { kw:'daftar, cara daftar, mendaftar, registrasi, bergabung', ans:'Cara daftar sangat mudah! 🎉 Isi form di halaman ini atau langsung chat via WhatsApp. Tim kami akan bantu semuanya!' },
+  { kw:'software, aplikasi, autocad, sketchup, enscape, 3d, rendering', ans:'Software yang dipelajari:\n🖥️ **AutoCAD** – gambar teknik 2D\n🏠 **SketchUp + 3ds Max** – modeling 3D\n✨ **Enscape** – rendering realistis' },
+  { kw:'sertifikat, ijazah, bukti, tanda lulus', ans:'Ya! Peserta yang lulus mendapat **Sertifikat Penyelesaian** dari BODHI. Cocok untuk portofolio dan CV profesional! 🏆' },
+  { kw:'lokasi, dimana, alamat, tempat, jalan', ans:'📍 **Jl. Pelita I No.74D**, Kel. Sidorame Timur, Kec. Medan Perjuangan, Kota Medan, Sumatera Utara 20233\n\nAda kelas **online** juga jika kamu di luar Medan!' },
+  { kw:'mentor, pengajar, siapa yang ngajar, guru, dosen, instruktur', ans:'Pengajar utama adalah **Jamry, S.T., M.Psi** 👨‍🏫 — Arsitek sekaligus Magister Psikologi Industri. Berpengalaman sejak 1999 dan mendirikan BODHI sejak 2011.' },
+  { kw:'pendampingan, setelah lulus, pasca lulus, garansi, konsultasi proyek', ans:'Ya! Ada **Program Pendampingan Proyek Design** setelah lulus — konsultasi design, bantuan pelaksanaan proyek, dan kemitraan kontraktor. Bergaransi! 🤝' },
+  { kw:'siswa sma, smk, slta, pelajar, beasiswa, luar negeri, portfolio', ans:'Program **Arsitektur Interior SMU/SMK/SLTA** dirancang khusus untuk pelajar yang ingin mempersiapkan portofolio masuk universitas luar negeri dan meraih beasiswa! 🎓' },
+];
+
+var FAQDATA = [];
+try { var sf = localStorage.getItem('bodhi_faq'); FAQDATA = sf ? JSON.parse(sf) : JSON.parse(JSON.stringify(DEF_FAQ)); } catch(e){ FAQDATA = JSON.parse(JSON.stringify(DEF_FAQ)); }
+if (!FAQDATA.length) FAQDATA = JSON.parse(JSON.stringify(DEF_FAQ));
+
+function saveFaqData() {
+  // Read from manager UI
+  var items = document.querySelectorAll('#faq-mgr-list .faq-mgr-item');
+  var newData = [];
+  items.forEach(function(item) {
+    var kw = item.querySelector('.fkw').value.trim();
+    var ans = item.querySelector('.fans').value.trim();
+    if (kw && ans) newData.push({ kw:kw, ans:ans });
+  });
+  if (newData.length) {
+    FAQDATA = newData;
+    try { localStorage.setItem('bodhi_faq', JSON.stringify(FAQDATA)); } catch(e){}
+    showToast('✅ FAQ Bot berhasil disimpan! (' + FAQDATA.length + ' item)');
+  }
+}
+
+function showFaqMgr() {
+  renderFaqMgr();
+  openModal('modal-faq');
+}
+
+function renderFaqMgr() {
+  var list = document.getElementById('faq-mgr-list');
+  list.innerHTML = '';
+  FAQDATA.forEach(function(item, i) {
+    var d = document.createElement('div');
+    d.className = 'faq-mgr-item';
+    d.innerHTML = '<div class="faq-mgr-header"><span class="faq-mgr-num">FAQ #' + (i+1) + '</span><button class="faq-mgr-del" onclick="deleteFaqItem(this)">🗑 Hapus</button></div>'
+      + '<div class="faq-mgr-label">🔑 Kata Kunci (pisah dengan koma) — bot akan merespons jika pesan mengandung kata-kata ini:</div>'
+      + '<input class="faq-mgr-input fkw" type="text" value="' + escHtml(item.kw) + '" placeholder="contoh: biaya, harga, bayar">'
+      + '<div class="faq-mgr-label">💬 Jawaban Bot (gunakan **teks** untuk bold, \\n untuk baris baru):</div>'
+      + '<textarea class="faq-mgr-textarea fans" placeholder="Jawaban yang akan ditampilkan bot...">' + escHtml(item.ans) + '</textarea>';
+    list.appendChild(d);
+  });
+  if (!FAQDATA.length) {
+    list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:30px;font-size:14px">Belum ada FAQ. Klik "+ Tambah FAQ" untuk mulai.</p>';
+  }
+}
+
+function addFaqItem() {
+  var list = document.getElementById('faq-mgr-list');
+  var i = list.querySelectorAll('.faq-mgr-item').length;
+  var d = document.createElement('div');
+  d.className = 'faq-mgr-item';
+  d.innerHTML = '<div class="faq-mgr-header"><span class="faq-mgr-num">FAQ #' + (i+1) + '</span><button class="faq-mgr-del" onclick="deleteFaqItem(this)">🗑 Hapus</button></div>'
+    + '<div class="faq-mgr-label">🔑 Kata Kunci (pisah dengan koma):</div>'
+    + '<input class="faq-mgr-input fkw" type="text" placeholder="contoh: biaya, harga, bayar">'
+    + '<div class="faq-mgr-label">💬 Jawaban Bot:</div>'
+    + '<textarea class="faq-mgr-textarea fans" placeholder="Jawaban yang akan ditampilkan bot..."></textarea>';
+  list.appendChild(d);
+  d.scrollIntoView({ behavior:'smooth', block:'center' });
+  d.querySelector('.fkw').focus();
+}
+
+function deleteFaqItem(btn) {
+  if (confirm('Hapus FAQ ini?')) {
+    btn.closest('.faq-mgr-item').remove();
+    // Renumber
+    document.querySelectorAll('#faq-mgr-list .faq-mgr-num').forEach(function(el, i){ el.textContent = 'FAQ #' + (i+1); });
+  }
+}
+
+function escHtml(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function findAnswer(msg) {
+  msg = msg.toLowerCase();
+  for (var i = 0; i < FAQDATA.length; i++) {
+    var kws = FAQDATA[i].kw.split(',').map(function(k){ return k.trim().toLowerCase(); });
+    for (var j = 0; j < kws.length; j++) {
+      if (kws[j] && msg.indexOf(kws[j]) !== -1) return FAQDATA[i].ans;
+    }
+  }
+  return null;
+}
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+function goto(id) {
+  var el = document.getElementById(id);
+  if (!el) return false;
+  var navH = document.querySelector('nav').offsetHeight;
+  if (document.body.classList.contains('admin-on')) navH += 46;
+  var top = el.getBoundingClientRect().top + window.pageYOffset - navH - 12;
+  window.scrollTo({ top: Math.max(0,top), behavior:'smooth' });
+  return false;
+}
+
+/* =========================================================
+   ADMIN SYSTEM
+   ========================================================= */
+var PASS = 'admin123';
+var adminOn = false, editOn = false;
+var ST = {};
+try { ST = JSON.parse(localStorage.getItem('bodhi_st') || '{}'); } catch(e){}
+
+function applyState() {
+  document.querySelectorAll('.sw').forEach(function(w) {
+    var s = ST[w.dataset.id];
+    if (s==='hidden') { w.classList.add('sec-hidden'); var b=w.querySelector('.scbtn-h'); if(b) b.textContent='👁 Tampilkan'; }
+    if (s==='deleted') w.classList.add('sec-deleted');
+  });
+}
+applyState();
+
+function saveState() {
+  document.querySelectorAll('.sw').forEach(function(w) {
+    var id=w.dataset.id;
+    if (w.classList.contains('sec-deleted')) ST[id]='deleted';
+    else if (w.classList.contains('sec-hidden')) ST[id]='hidden';
+    else ST[id]='visible';
+  });
+  try { localStorage.setItem('bodhi_st', JSON.stringify(ST)); } catch(e){}
+}
+
+function openAdminModal() { if (adminOn) { exitAdmin(); return; } openModal('modal-admin'); setTimeout(function(){document.getElementById('admin-pass').focus();},80); }
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); if(id==='modal-admin'){document.getElementById('admin-pass').value='';document.getElementById('admin-err').textContent='';} }
+function checkPass() {
+  if (document.getElementById('admin-pass').value===PASS) { closeModal('modal-admin'); enterAdmin(); }
+  else { document.getElementById('admin-err').textContent='❌ Password salah.'; document.getElementById('admin-pass').value=''; document.getElementById('admin-pass').focus(); }
+}
+document.getElementById('admin-pass').addEventListener('keydown', function(e){ if(e.key==='Enter') checkPass(); if(e.key==='Escape') closeModal('modal-admin'); });
+
+function enterAdmin() { adminOn=true; document.body.classList.add('admin-on'); document.getElementById('admin-fab').textContent='✕'; document.getElementById('admin-fab').title='Keluar Admin'; }
+function exitAdmin() {
+  adminOn=false; editOn=false;
+  document.body.classList.remove('admin-on','edit-on');
+  document.getElementById('admin-fab').textContent='⚙'; document.getElementById('admin-fab').title='Admin Panel';
+  document.getElementById('edit-btn').textContent='✏️ Edit Teks'; document.getElementById('edit-btn').style.color='';
+  document.querySelectorAll('[contenteditable]').forEach(function(el){ el.removeAttribute('contenteditable'); });
+}
+function toggleEdit() {
+  editOn=!editOn; document.body.classList.toggle('edit-on',editOn);
+  var btn=document.getElementById('edit-btn');
+  if (editOn) {
+    btn.textContent='✓ Edit Aktif'; btn.style.color='var(--acc)';
+    var sel='h1,h2,h3,h4,p,.hero-sub,.about-lead,.vm-text,.fw-card p,.founder-tag-line,.prog-desc,.oc-card p,.sched-body,.fd-txt,.testi-name,.testi-prog,.testi-quote,.faq-a,.mod-desc,.footer-about';
+    document.querySelectorAll(sel).forEach(function(el){ el.setAttribute('contenteditable','true'); });
+  } else {
+    btn.textContent='✏️ Edit Teks'; btn.style.color='';
+    document.querySelectorAll('[contenteditable]').forEach(function(el){ el.removeAttribute('contenteditable'); });
+  }
+}
+function hideSection(btn) { var w=btn.closest('.sw'); var h=w.classList.toggle('sec-hidden'); btn.textContent=h?'👁 Tampilkan':'👁 Sembunyikan'; saveState(); }
+function delSection(btn) { var w=btn.closest('.sw'); if (confirm('Hapus "'+w.dataset.name+'"?\n\nBisa dikembalikan via tombol Reset.')) { w.classList.add('sec-deleted'); saveState(); } }
+function resetAll() { if (confirm('Reset semua perubahan?')) { document.querySelectorAll('.sw').forEach(function(w){ w.classList.remove('sec-hidden','sec-deleted'); var b=w.querySelector('.scbtn-h'); if(b) b.textContent='👁 Sembunyikan'; }); try { localStorage.removeItem('bodhi_st'); } catch(e){} ST={}; } }
+
+/* =========================================================
+   IMAGE UPLOAD
+   ========================================================= */
+var _imgTarget = null;
+
+function triggerImgUpload(key, elId, mode) {
+  _imgTarget = {key:key, elId:elId, mode:mode||'bg'};
+  var inp = document.getElementById('img-file-input');
+  inp.value=''; inp.click();
+}
+function triggerLogoUpload() {
+  document.getElementById('logo-file-input').value='';
+  document.getElementById('logo-file-input').click();
+}
+
+function resizeAndSave(file, storageKey, callback) {
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var img = new Image();
+    img.onload = function() {
+      var canvas = document.createElement('canvas');
+      var MAX=700, w=img.width, h=img.height;
+      if (w>MAX||h>MAX) { if(w>=h){h=Math.round(h*MAX/w);w=MAX;}else{w=Math.round(w*MAX/h);h=MAX;} }
+      canvas.width=w; canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      var data = canvas.toDataURL('image/jpeg',.78);
+      try { localStorage.setItem(storageKey, data); } catch(er){}
+      callback(data);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function handleImgFile(event) {
+  var file = event.target.files[0];
+  if (!file || !_imgTarget) return;
+  if (!file.type.startsWith('image/')) { alert('Pilih file gambar (JPG, PNG, dll.)'); return; }
+  resizeAndSave(file, 'bodhi_img_'+_imgTarget.key, function(data) {
+    applyBgImg(_imgTarget.elId, data);
+  });
+}
+
+function handleLogoFile(event) {
+  var file = event.target.files[0];
+  if (!file || !file.type.startsWith('image/')) return;
+  resizeAndSave(file, 'bodhi_img_logo', function(data) {
+    // Apply to nav logo
+    var navImg = document.getElementById('nav-logo-img');
+    navImg.src = data; navImg.classList.add('show');
+    document.getElementById('nav-logo-def').style.display = 'none';
+    // Apply to footer logo
+    var fImg = document.getElementById('flogo-img');
+    fImg.src = data; fImg.classList.add('show');
+    document.getElementById('flogo-def').style.display = 'none';
+  });
+}
+
+function applyBgImg(elId, data) {
+  var el = document.getElementById(elId);
+  if (!el) return;
+  el.style.backgroundImage = 'url('+data+')';
+  el.style.backgroundSize = 'cover';
+  el.style.backgroundPosition = 'center';
+  el.style.display = 'block';
+}
+
+function loadStoredImages() {
+  // Logo
+  var logoData = localStorage.getItem('bodhi_img_logo');
+  if (logoData) {
+    var nli = document.getElementById('nav-logo-img');
+    nli.src=logoData; nli.classList.add('show');
+    document.getElementById('nav-logo-def').style.display='none';
+    var fli = document.getElementById('flogo-img');
+    fli.src=logoData; fli.classList.add('show');
+    document.getElementById('flogo-def').style.display='none';
+  }
+  // Founder photo
+  var fp = localStorage.getItem('bodhi_img_founder_photo');
+  if (fp) applyBgImg('founder-photo-img', fp);
+  // Hero card
+  var hc = localStorage.getItem('bodhi_img_hero_main');
+  if (hc) applyBgImg('hero-card-img', hc);
+}
+loadStoredImages();
+
+/* =========================================================
+   TESTIMONIALS
+   ========================================================= */
+var DEF_TESTIS = [
+  {id:'t1',name:'Ahmad Fauzi',prog:'Alumni Profesional Eksklusif',stars:5,quote:'Saya mulai dari nol, tidak punya background desain sama sekali. Setelah ikut program BODHI, dalam 3 bulan saya sudah bisa handle project pertama saya.',workEmoji:'🏠'},
+  {id:'t2',name:'Siti Rahayu',prog:'Alumni Arsitektur Interior SMU/SMK',stars:5,quote:'Berkat portofolio yang saya buat di BODHI, saya berhasil diterima di universitas desain di Belanda dengan beasiswa penuh. Program ini benar-benar mengubah hidup saya!',workEmoji:'📐'},
+  {id:'t3',name:'Rizky Pratama',prog:'Alumni Profesional Eksklusif',stars:5,quote:'Mentor di BODHI tidak hanya mengajar teknis, tapi juga cara berbisnis dan berkomunikasi dengan klien. Sekarang saya punya studio desain sendiri di Medan.',workEmoji:'🎨'},
+  {id:'t4',name:'Dewi Lestari',prog:'Alumni Profesional Eksklusif',stars:5,quote:'Metode belajarnya sangat praktis dan mudah dipahami. Saya yang tadinya tidak kenal AutoCAD sama sekali, sekarang sudah lancar 2D dan 3D.',workEmoji:'🏡'},
+  {id:'t5',name:'Budi Santoso',prog:'Alumni Arsitektur Interior SMU/SMK',stars:5,quote:'Pak Jamry mengajar dengan sabar dan metodenya sangat sistematis. Dari gambar manual sampai render 3D, semua diajarkan dengan jelas.',workEmoji:'🖥️'},
+  {id:'t6',name:'Putri Handayani',prog:'Alumni Profesional Eksklusif',stars:5,quote:'Program pendampingan setelah lulus sangat membantu. Saya tidak merasa sendirian saat mengerjakan proyek pertama karena bisa konsultasi langsung.',workEmoji:'✨'},
+];
+var TESTIS = [];
+try { var st=localStorage.getItem('bodhi_testis'); TESTIS=st?JSON.parse(st):JSON.parse(JSON.stringify(DEF_TESTIS)); } catch(e){ TESTIS=JSON.parse(JSON.stringify(DEF_TESTIS)); }
+if (!TESTIS.length) TESTIS=JSON.parse(JSON.stringify(DEF_TESTIS));
+function saveTestis(){ try{localStorage.setItem('bodhi_testis',JSON.stringify(TESTIS));}catch(e){} }
+
+function starsHTML(rating,tid) {
+  var h='<div class="testi-stars">';
+  for(var i=1;i<=5;i++) h+='<span class="star" onclick="setStars(\''+tid+'\','+i+')" title="'+i+' bintang">'+(i<=rating?'⭐':'☆')+'</span>';
+  return h+'</div>';
+}
+function setStars(tid,val){ var t=TESTIS.find(function(x){return x.id===tid;}); if(t){t.stars=val;saveTestis();renderTestiCard(tid);} }
+
+function buildTestiCard(t) {
+  var div=document.createElement('div'); div.className='testi-card'; div.id='tcard-'+t.id;
+  div.innerHTML='<div class="testi-work img-wrap" style="height:190px">'
+    +'<div class="testi-work-ph">'+t.workEmoji+'</div>'
+    +'<div class="testi-work-img" id="twork-'+t.id+'"></div>'
+    +'<div class="img-upload-ov" onclick="triggerImgUpload(\'tw_'+t.id+'\',\'twork-'+t.id+'\',\'bg\')"><span class="cam">📷</span><span>Foto Karya</span></div>'
+    +'</div>'
+    +'<div class="testi-body">'
+    +'<div class="testi-header">'
+    +'<div class="testi-avatar-wrap img-wrap">'
+    +'<span>'+t.workEmoji+'</span>'
+    +'<div class="testi-avatar-img" id="tavatar-'+t.id+'"></div>'
+    +'<div class="img-upload-ov" onclick="triggerImgUpload(\'ta_'+t.id+'\',\'tavatar-'+t.id+'\',\'bg\')" style="border-radius:50%"><span style="font-size:14px">📷</span></div>'
+    +'</div>'
+    +'<div><div class="testi-name">'+t.name+'</div><div class="testi-prog">'+t.prog+'</div></div>'
+    +'</div>'
+    +starsHTML(t.stars,t.id)
+    +'<div class="testi-quote">'+t.quote+'</div>'
+    +'</div>'
+    +'<div class="testi-admin">'
+    +'<button class="ta-btn ta-btn-w" onclick="triggerImgUpload(\'tw_'+t.id+'\',\'twork-'+t.id+'\',\'bg\')">📷 Foto Karya</button>'
+    +'<button class="ta-btn ta-btn-a" onclick="triggerImgUpload(\'ta_'+t.id+'\',\'tavatar-'+t.id+'\',\'bg\')">👤 Foto Profil</button>'
+    +'<button class="ta-btn ta-btn-del" onclick="deleteTesti(\''+t.id+'\')">🗑 Hapus</button>'
+    +'</div>';
+  return div;
+}
+
+function renderTestis() {
+  var g=document.getElementById('testi-grid'); g.innerHTML='';
+  TESTIS.forEach(function(t){ g.appendChild(buildTestiCard(t)); });
+  loadTestiImgs();
+}
+function renderTestiCard(tid) {
+  var t=TESTIS.find(function(x){return x.id===tid;}); if(!t) return;
+  var old=document.getElementById('tcard-'+tid);
+  if(old){ old.parentNode.replaceChild(buildTestiCard(t),old); }
+  loadTestiImgs();
+}
+function loadTestiImgs() {
+  TESTIS.forEach(function(t) {
+    var wd=localStorage.getItem('bodhi_img_tw_'+t.id); if(wd) applyBgImg('twork-'+t.id,wd);
+    var ad=localStorage.getItem('bodhi_img_ta_'+t.id); if(ad) applyBgImg('tavatar-'+t.id,ad);
+  });
+}
+function addTestimoni() {
+  var id='tc'+Date.now();
+  TESTIS.push({id:id,name:'Nama Alumni',prog:'Program yang diikuti',stars:5,quote:'Tuliskan testimoni alumni di sini. Aktifkan Edit Teks di admin bar untuk mengubah konten ini.',workEmoji:'🏠'});
+  saveTestis(); renderTestis();
+  setTimeout(function(){var el=document.getElementById('tcard-'+id);if(el)el.scrollIntoView({behavior:'smooth',block:'center'});},100);
+}
+function deleteTesti(tid) {
+  if (!confirm('Hapus testimoni ini?')) return;
+  TESTIS=TESTIS.filter(function(t){return t.id!==tid;}); saveTestis(); renderTestis();
+}
+renderTestis();
+
+/* =========================================================
+   PROGRAM TABS & MODULE
+   ========================================================= */
+function switchProg(id,btn) {
+  document.querySelectorAll('.prog-content').forEach(function(c){c.classList.remove('on');});
+  document.querySelectorAll('.prog-tab').forEach(function(b){b.classList.remove('on');});
+  document.getElementById(id).classList.add('on'); btn.classList.add('on');
+}
+function toggleMod(hdr) {
+  var item=hdr.parentElement; var isOpen=item.classList.contains('open');
+  hdr.closest('.mod-list').querySelectorAll('.mod-item').forEach(function(i){i.classList.remove('open');});
+  if(!isOpen) item.classList.add('open');
+}
+
+/* =========================================================
+   MEMBER REGISTRATION
+   ========================================================= */
+var MEMBERS = [];
+try { MEMBERS = JSON.parse(localStorage.getItem('bodhi_members') || '[]'); } catch(e){}
+
+function submitForm() {
+  var nama=document.getElementById('f-nama').value.trim();
+  var wa=document.getElementById('f-wa').value.trim();
+  var email=document.getElementById('f-email').value.trim();
+  var prog=document.getElementById('f-prog').value;
+  if (!nama||!wa) { alert('Mohon isi Nama Lengkap dan Nomor WhatsApp terlebih dahulu.'); return; }
+  var m={nama:nama,wa:wa,email:email||'-',prog:prog||'Belum dipilih',tanggal:new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})};
+  MEMBERS.push(m); try{localStorage.setItem('bodhi_members',JSON.stringify(MEMBERS));}catch(e){}
+  var msg='Halo BODHI Creative + Design! Saya '+nama+' ingin konsultasi mengenai program: '+(prog||'(belum dipilih')+'. Nomor WA saya: '+wa;
+  window.open('https://wa.me/'+(SETTINGS.wa||'6281234567890')+'?text='+encodeURIComponent(msg),'_blank');
+}
+
+function showMembers() {
+  var wrap=document.getElementById('member-table-wrap');
+  var count=document.getElementById('member-count');
+  if (!MEMBERS.length) { wrap.innerHTML='<p style="color:var(--muted);text-align:center;padding:40px;font-size:14px">Belum ada pendaftar.</p>'; count.textContent='0 pendaftar'; openModal('modal-members'); return; }
+  count.textContent=MEMBERS.length+' pendaftar';
+  var rows=MEMBERS.slice().reverse().map(function(m,i){ return '<tr><td>'+(MEMBERS.length-i)+'</td><td><strong>'+m.nama+'</strong></td><td>'+m.wa+'</td><td>'+m.email+'</td><td><span class="badge-prog">'+m.prog+'</span></td><td style="color:var(--muted);font-size:12px">'+m.tanggal+'</td></tr>'; }).join('');
+  wrap.innerHTML='<table class="mtable"><thead><tr><th>#</th><th>Nama</th><th>WhatsApp</th><th>Email</th><th>Program</th><th>Tanggal</th></tr></thead><tbody>'+rows+'</tbody></table>';
+  openModal('modal-members');
+}
+
+function exportMembers() {
+  if (!MEMBERS.length) { alert('Belum ada data member.'); return; }
+  var csv='No,Nama,WhatsApp,Email,Program,Tanggal\n';
+  MEMBERS.forEach(function(m,i){ csv+=(i+1)+',"'+m.nama+'","'+m.wa+'","'+m.email+'","'+m.prog+'","'+m.tanggal+'"\n'; });
+  var blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a'); a.href=url; a.download='bodhi_members_'+Date.now()+'.csv'; a.click();
+  setTimeout(function(){URL.revokeObjectURL(url);},1000);
+}
+
+/* =========================================================
+   CHATBOT
+   ========================================================= */
+var chatOpen=false, chatGreeted=false;
+
+function toggleChat() {
+  chatOpen=!chatOpen;
+  document.getElementById('chat-win').classList.toggle('open',chatOpen);
+  document.getElementById('chat-notif').classList.remove('show');
+  if (chatOpen && !chatGreeted) {
+    chatGreeted=true;
+    setTimeout(function(){addMsg('Halo! Selamat datang di BODHI Creative + Design 🎨','bot');},300);
+    setTimeout(function(){addMsg('Saya siap bantu jawab pertanyaanmu seputar program desain kami. Pilih topik di bawah atau ketik pertanyaanmu langsung ya! 😊','bot');},900);
+  }
+  if (chatOpen) setTimeout(function(){document.getElementById('chat-input').focus();},200);
+}
+
+function addMsg(text,type) {
+  var msgs=document.getElementById('chat-msgs');
+  var d=document.createElement('div');
+  if (type==='wa') {
+    d.className='cmsg cmsg-wa';
+    d.innerHTML='📱 Lanjut Chat ke WhatsApp';
+    d.onclick=function(){window.open('https://wa.me/'+(SETTINGS.wa||'6281234567890')+'?text='+encodeURIComponent('Halo BODHI, saya ingin bertanya tentang program desain interior.'),'_blank');};
+  } else {
+    d.className='cmsg cmsg-'+type;
+    d.innerHTML=(text||'').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  }
+  msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight;
+}
+
+function sendChat() {
+  var input=document.getElementById('chat-input');
+  var msg=input.value.trim(); if(!msg) return;
+  addMsg(msg,'user'); input.value='';
+  document.getElementById('chat-quick').style.display='none';
+  setTimeout(function(){
+    var ans=findAnswer(msg);
+    if(ans){
+      addMsg(ans,'bot');
+      setTimeout(function(){ addMsg('Ada pertanyaan lain? Atau mau langsung hubungi tim kami? 👇','bot'); addMsg('','wa'); },600);
+    } else {
+      addMsg('Pertanyaan kamu menarik! Yuk langsung chat dengan tim BODHI yang bisa jawab lebih detail:','bot');
+      setTimeout(function(){ addMsg('','wa'); },400);
+    }
+  },500);
+}
+
+function quickAsk(q){ document.getElementById('chat-input').value=q; sendChat(); }
+
+// Show notification after 3s
+setTimeout(function(){ if(!chatOpen) document.getElementById('chat-notif').classList.add('show'); },3000);
+
+/* =========================================================
+   TOAST NOTIFICATION
+   ========================================================= */
+function showToast(msg) {
+  var t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:100px;font-size:13px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.3);pointer-events:none;transition:opacity .3s';
+  t.textContent=msg; document.body.appendChild(t);
+  setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},300);},2500);
+}
+
+/* =========================================================
+   SCROLL ANIMATION
+   ========================================================= */
+var io=new IntersectionObserver(function(entries){ entries.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);} }); },{threshold:.08});
+document.querySelectorAll('.fade-up').forEach(function(el){io.observe(el);});
+
+/* =========================================================
+   CLOSE MODALS ON BACKDROP CLICK
+   ========================================================= */
+document.querySelectorAll('.modal-ov').forEach(function(el){
+  el.addEventListener('click',function(e){ if(e.target===el){ var id=el.id; if(id!=='modal-admin'||!adminOn) closeModal(id); } });
+});
+
+/* =========================================================
+   INIT
+   ========================================================= */
+applySettings();
+</script>
+</body>
+</html>
