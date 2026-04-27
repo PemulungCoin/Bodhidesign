@@ -28,20 +28,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(255,253,248,
 
 /* LOGO VERTICAL */
 .nav-logo{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;flex-shrink:0}
-.nav-logo-wrap{position:relative;width:80px;height:80px;border-radius:16px;overflow:hidden;background:linear-gradient(135deg,var(--accdim),var(--acc));display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 16px rgba(200,91,42,.25)}
+.nav-logo-wrap{position:relative;width:68px;height:68px;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,var(--accdim),var(--acc));display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 16px rgba(200,91,42,.25)}
 .nav-logo-def{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;color:#fff;line-height:1;position:relative;z-index:1}
 .nav-logo-img-el{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;border-radius:14px}
 .nav-logo-img-el.show{display:block}
 .nav-logo-wrap:has(.nav-logo-img-el.show) .nav-logo-def{display:none}
 .nav-brand{font-family:'Cormorant Garamond',serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text);text-align:center;line-height:1.35;white-space:nowrap}
 .nav-brand em{color:var(--acc);font-style:normal}
-body.hide-brand-name .nav-brand{display:none}
 /* logo upload overlay */
 .logo-upload-ov{display:none;position:absolute;inset:0;background:rgba(200,91,42,.7);align-items:center;justify-content:center;cursor:pointer;border-radius:14px;z-index:10;font-size:20px;flex-direction:column;gap:3px}
 .logo-upload-ov span{color:#fff;font-size:10px;font-weight:700;letter-spacing:.3px}
 body.admin-on .nav-logo-wrap:hover .logo-upload-ov{display:flex}
-body.admin-on .flogo-wrap:hover .logo-upload-ov{display:flex}
-body.admin-on .flogo-wrap{cursor:pointer}
 
 .nav-links{display:flex;gap:22px;list-style:none}
 .nav-links a{font-size:13px;font-weight:500;color:var(--muted);transition:color .2s;white-space:nowrap;cursor:pointer}
@@ -225,11 +222,11 @@ body.edit-on [contenteditable="true"]:focus{outline:2px solid var(--acc);backgro
 
 /* ── ABOUT ── */
 #about{padding:100px 0;background:var(--bg2)}
-.about-grid{display:grid;grid-template-columns:320px 1fr;gap:48px;align-items:start;margin-top:52px}
+.about-grid{display:grid;grid-template-columns:360px 1fr;gap:48px;align-items:start;margin-top:52px}
 .about-visual-col{display:flex;flex-direction:column;gap:16px}
-.about-card{border-radius:20px;background:linear-gradient(150deg,#f5ede4,#eeddd0);border:1px solid var(--bdrdk);padding:32px 28px;box-shadow:0 12px 40px var(--shdlg);position:relative;overflow:hidden}
+.about-card{border-radius:20px;background:linear-gradient(150deg,#f5ede4,#eeddd0);border:1px solid var(--bdrdk);padding:44px 38px;box-shadow:0 12px 40px var(--shdlg);position:relative;overflow:hidden}
 .about-card::before{content:'✦';position:absolute;top:-10px;right:20px;font-size:120px;color:rgba(200,91,42,.06);pointer-events:none;font-family:serif}
-.about-year{font-size:72px;font-weight:700;color:var(--acc);line-height:1;font-family:Arial,Helvetica,sans-serif}
+.about-year{font-family:'Cormorant Garamond',serif;font-size:88px;font-weight:700;color:var(--acc);line-height:1}
 .about-year-lbl{font-size:14px;color:var(--textsoft);margin-bottom:28px}
 .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .astat{background:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.8);border-radius:12px;padding:16px}
@@ -288,26 +285,19 @@ body.edit-on [contenteditable="true"]:focus{outline:2px solid var(--acc);backgro
 .prog-content{display:none}.prog-content.on{display:block}
 .prog-layout{display:grid;grid-template-columns:1fr 1.6fr;gap:52px;align-items:start}
 .prog-info-card{background:linear-gradient(150deg,var(--acclt),#f5ece4);border:1px solid rgba(200,91,42,.2);border-radius:20px;padding:36px;position:sticky;top:90px;box-shadow:0 8px 32px rgba(200,91,42,.1)}
-.prog-icon{font-size:48px;margin-bottom:20px;position:relative;display:inline-block;cursor:default}
-body.admin-on .prog-icon:hover{cursor:pointer;outline:2px dashed var(--acc);border-radius:8px;outline-offset:4px}
-.prog-icon img{width:48px;height:48px;object-fit:contain;display:block}
+.prog-icon{font-size:48px;margin-bottom:20px}
 .prog-lbl{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc);margin-bottom:8px}
 .prog-name{font-size:28px;margin-bottom:12px;line-height:1.2}
 .prog-desc{font-size:14px;color:var(--textsoft);line-height:1.7;margin-bottom:24px}
 .prog-meta{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
 .prog-mi{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--textsoft)}
 .prog-mi strong{color:var(--text);font-weight:700}
-.prog-mic{width:32px;height:32px;border-radius:8px;background:rgba(200,91,42,.12);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;position:relative;overflow:hidden}
-body.admin-on .prog-mic:hover{cursor:pointer;outline:2px dashed var(--acc)}
-body.admin-on .prog-mic:hover::after{content:'📷';position:absolute;inset:0;background:rgba(200,91,42,.8);display:flex;align-items:center;justify-content:center;font-size:14px;border-radius:8px}
-.prog-mic img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+.prog-mic{width:28px;height:28px;border-radius:7px;background:rgba(200,91,42,.12);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
 .prog-cta{width:100%;padding:14px;background:var(--acc);color:#fff;border:none;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:var(--tr)}
 .prog-cta:hover{background:var(--accdim)}
 .studios-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:28px}
 .studio-card{background:var(--bgwarm);border:1px solid var(--bdr);border-radius:12px;padding:18px 16px}
-.stu-ic{font-size:24px;margin-bottom:8px;position:relative;display:inline-block;cursor:default}
-body.admin-on .stu-ic:hover{cursor:pointer;outline:2px dashed var(--acc);border-radius:6px;outline-offset:3px}
-.stu-ic img{width:28px;height:28px;object-fit:contain;display:block}
+.stu-ic{font-size:24px;margin-bottom:8px}
 .stu-nm{font-size:13px;font-weight:700;margin-bottom:6px}
 .stu-tl{font-size:12px;color:var(--muted);line-height:1.6}
 .mod-list{display:flex;flex-direction:column;gap:6px}
@@ -400,8 +390,6 @@ body.admin-on #add-testi-btn{display:block}
 .faq-item{background:var(--bgcard);border:1.5px solid var(--bdr);border-radius:var(--rsm);overflow:hidden;transition:border-color .2s}
 .faq-item.open{border-color:var(--acc)}
 .faq-q{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px 20px;cursor:pointer;font-size:14px;font-weight:600;line-height:1.5}
-body.edit-on .faq-q{cursor:text}
-body.edit-on .faq-q[contenteditable="true"]{pointer-events:auto;cursor:text}
 .faq-ic{flex-shrink:0;color:var(--muted);transition:transform .3s;font-size:18px;font-weight:300}
 .faq-item.open .faq-ic{transform:rotate(45deg);color:var(--acc)}
 .faq-a{display:none;padding:0 20px 18px;font-size:13px;color:var(--textsoft);line-height:1.7}
@@ -525,10 +513,6 @@ footer{border-top:1px solid var(--bdr);background:var(--bg);padding:60px 0 36px}
         <div class="sfield sfield-full">
           <label>📛 Nama Brand (di bawah logo)</label>
           <input type="text" id="s-brand" placeholder="BODHI | CREATIVE + DESIGN" oninput="previewBrand()">
-          <div style="margin-top:8px;display:flex;align-items:center;gap:8px">
-            <input type="checkbox" id="s-hide-brand" style="width:16px;height:16px;accent-color:var(--acc);cursor:pointer">
-            <label for="s-hide-brand" style="font-size:12px;color:var(--textsoft);cursor:pointer;font-weight:500;text-transform:none;letter-spacing:0;margin:0">Sembunyikan nama brand di bawah logo</label>
-          </div>
           <span class="hint">Gunakan <strong>|</strong> untuk ganti baris (Baris 1 | Baris 2). Gunakan <strong>+</strong> untuk warna aksen merah. Contoh: <code>BODHI | CREATIVE + DESIGN</code></span>
         </div>
         <!-- FONT SIZE CONTROLS -->
@@ -976,7 +960,7 @@ footer{border-top:1px solid var(--bdr);background:var(--bg);padding:60px 0 36px}
       <div class="about-grid">
         <div class="about-visual-col">
           <div style="position:relative;margin-bottom:20px">
-            <div class="img-wrap about-img-wrap" style="border-radius:16px;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);border:1px solid var(--bdrdk);position:relative" id="about-img-outer">
+            <div class="img-wrap about-img-wrap" style="border-radius:20px;overflow:hidden;aspect-ratio:3/4;background:var(--bg2);border:1px solid var(--bdrdk);position:relative" id="about-img-outer">
               <img id="about-main-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:none;border-radius:20px">
               <div id="about-img-placeholder" style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted)">
                 <div style="font-size:48px;opacity:.3">🏠</div>
@@ -1083,22 +1067,22 @@ footer{border-top:1px solid var(--bdr);background:var(--bg);padding:60px 0 36px}
       <div class="prog-content on" id="p1">
         <div class="prog-layout">
           <div class="prog-info-card">
-            <div class="prog-icon img-wrap" id="prog1-main-icon" onclick="triggerImgUpload('prog1_main_icon','prog1-main-icon','emoji-lg')">🏠</div><div class="prog-lbl">Program Unggulan</div>
+            <div class="prog-icon">🏠</div><div class="prog-lbl">Program Unggulan</div>
             <h3 class="prog-name">Profesional Eksklusif <em>(Interior)</em></h3>
             <p class="prog-desc">Program intensif untuk mencetak designer dan kontraktor interior profesional secara singkat, jelas, dan padat melalui kurikulum sistematis yang dinamis.</p>
             <div class="prog-meta">
-              <div class="prog-mi"><div class="prog-mic img-wrap" id="prog1-ic1" onclick="triggerImgUpload('prog1_ic1','prog1-ic1','emoji')">📅</div><span>Durasi: <strong>50 Pertemuan Intensif</strong></span></div>
-              <div class="prog-mi"><div class="prog-mic img-wrap" id="prog1-ic2" onclick="triggerImgUpload('prog1_ic2','prog1-ic2','emoji')">📆</div><span>Jadwal: <strong>Senin – Sabtu</strong></span></div>
-              <div class="prog-mi"><div class="prog-mic img-wrap" id="prog1-ic3" onclick="triggerImgUpload('prog1_ic3','prog1-ic3','emoji')">💻</div><span>Mode: <strong>Online & Offline</strong></span></div>
-              <div class="prog-mi"><div class="prog-mic img-wrap" id="prog1-ic4" onclick="triggerImgUpload('prog1_ic4','prog1-ic4','emoji')">🎯</div><span>Untuk: <strong>Semua usia & latar belakang</strong></span></div>
+              <div class="prog-mi"><div class="prog-mic">📅</div><span>Durasi: <strong>50 Pertemuan Intensif</strong></span></div>
+              <div class="prog-mi"><div class="prog-mic">📆</div><span>Jadwal: <strong>Senin – Sabtu</strong></span></div>
+              <div class="prog-mi"><div class="prog-mic">💻</div><span>Mode: <strong>Online & Offline</strong></span></div>
+              <div class="prog-mi"><div class="prog-mic">🎯</div><span>Untuk: <strong>Semua usia & latar belakang</strong></span></div>
             </div>
             <button class="prog-cta" onclick="goto('cta')">Daftar Program Ini →</button>
           </div>
           <div>
             <div class="studios-grid">
-              <div class="studio-card"><div class="stu-ic img-wrap" id="stu-p1-1" onclick="triggerImgUpload('stu_p1_1','stu-p1-1','emoji-lg')">🖥️</div><div class="stu-nm">Studio Komputer</div><div class="stu-tl">AutoCAD 2D · SketchUp + 3Max 3D · Enscape Rendering</div></div>
-              <div class="studio-card"><div class="stu-ic img-wrap" id="stu-p1-2" onclick="triggerImgUpload('stu_p1_2','stu-p1-2','emoji-lg')">📐</div><div class="stu-nm">Studio Perancangan</div><div class="stu-tl">Proses perancangan project design dari awal hingga akhir</div></div>
-              <div class="studio-card"><div class="stu-ic img-wrap" id="stu-p1-3" onclick="triggerImgUpload('stu_p1_3','stu-p1-3','emoji-lg')">🔨</div><div class="stu-nm">Studio Konstruksi</div><div class="stu-tl">Workshop gambar kerja ke konstruksi interior & furniture</div></div>
+              <div class="studio-card"><div class="stu-ic">🖥️</div><div class="stu-nm">Studio Komputer</div><div class="stu-tl">AutoCAD 2D · SketchUp + 3Max 3D · Enscape Rendering</div></div>
+              <div class="studio-card"><div class="stu-ic">📐</div><div class="stu-nm">Studio Perancangan</div><div class="stu-tl">Proses perancangan project design dari awal hingga akhir</div></div>
+              <div class="studio-card"><div class="stu-ic">🔨</div><div class="stu-nm">Studio Konstruksi</div><div class="stu-tl">Workshop gambar kerja ke konstruksi interior & furniture</div></div>
             </div>
             <div class="mod-list">
               <div class="mod-item open"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">01</div><span class="mod-title">Dasar-Dasar Pemodelan & Bentuk</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Pengetahuan dan pelatihan dasar sumber seluruh konsep bentuk dan model dalam menghasilkan satu bentuk hingga menjadi suatu fungsi. Focus pada teknis yang terarah dan jelas, mudah diterapkan pada pedesignan.</p></div></div>
@@ -1118,14 +1102,14 @@ footer{border-top:1px solid var(--bdr);background:var(--bg);padding:60px 0 36px}
       <div class="prog-content" id="p2">
         <div class="prog-layout">
           <div class="prog-info-card">
-            <div class="prog-icon img-wrap" id="prog2-main-icon" onclick="triggerImgUpload('prog2_main_icon','prog2-main-icon','emoji-lg')">🎓</div><div class="prog-lbl">Program Khusus Pelajar</div>
+            <div class="prog-icon">🎓</div><div class="prog-lbl">Program Khusus Pelajar</div>
             <h3 class="prog-name">Arsitektur Interior <em>SMU/SMK/SLTA</em></h3>
             <p class="prog-desc">Program khusus pelajar untuk mempersiapkan portofolio masuk perguruan tinggi dalam/luar negeri dan meraih beasiswa perkuliahan di bidang desain.</p>
             <div class="prog-meta">
-              <div class="prog-mi"><div class="prog-mic img-wrap" id="prog2-ic1" onclick="triggerImgUpload('prog2_ic1','prog2-ic1','emoji')">📅</div><span>Jadwal: <strong>2x Pertemuan / Minggu</strong></span></div>
-              <div class="prog-mi"><div class="prog-mic img-wrap" id="prog2-ic2" onclick="triggerImgUpload('prog2_ic2','prog2-ic2','emoji')">👤</div><span>Untuk: <strong>Pelajar SMU / SMK / SLTA</strong></span></div>
-              <div class="prog-mi"><div class="prog-mic img-wrap" id="prog2-ic3" onclick="triggerImgUpload('prog2_ic3','prog2-ic3','emoji')">💻</div><span>Mode: <strong>Online & Offline</strong></span></div>
-              <div class="prog-mi"><div class="prog-mic img-wrap" id="prog2-ic4" onclick="triggerImgUpload('prog2_ic4','prog2-ic4','emoji')">🏆</div><span>Output: <strong>Portofolio Beasiswa</strong></span></div>
+              <div class="prog-mi"><div class="prog-mic">📅</div><span>Jadwal: <strong>2x Pertemuan / Minggu</strong></span></div>
+              <div class="prog-mi"><div class="prog-mic">👤</div><span>Untuk: <strong>Pelajar SMU / SMK / SLTA</strong></span></div>
+              <div class="prog-mi"><div class="prog-mic">💻</div><span>Mode: <strong>Online & Offline</strong></span></div>
+              <div class="prog-mi"><div class="prog-mic">🏆</div><span>Output: <strong>Portofolio Beasiswa</strong></span></div>
             </div>
             <button class="prog-cta" onclick="goto('cta')">Daftar Program Ini →</button>
           </div>
@@ -1278,11 +1262,7 @@ footer{border-top:1px solid var(--bdr);background:var(--bg);padding:60px 0 36px}
       <div class="footer-top">
         <div>
           <div class="flogo">
-            <div class="flogo-wrap" id="flogo-wrap" style="position:relative;cursor:default">
-              <div id="flogo-def" style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:#fff">B</div>
-              <img src="" id="flogo-img" class="flogo-img" alt="">
-              <div class="logo-upload-ov" onclick="triggerLogoUpload();event.stopPropagation()" style="border-radius:12px"><span>📷</span><span>Ganti</span></div>
-            </div>
+            <div class="flogo-wrap"><div id="flogo-def" style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:#fff">B</div><img src="" id="flogo-img" class="flogo-img" alt=""></div>
             <div class="flogo-nm" id="flogo-nm">BODHI | CREATIVE + DESIGN</div>
           </div>
           <p class="footer-about">Wadah pendidikan desain interior profesional di Medan. Mencetak designer dan kontraktor interior sejak 2011.</p>
@@ -1318,7 +1298,7 @@ var DEF_SETTINGS = {
   stat2n:'50',   stat2l:'Pertemuan intensif',
   stat3n:'2',    stat3l:'Program unggulan',
   stat4n:'∞',    stat4l:'Pendampingan pasca lulus',
-  brandSize1:'16', brandSize2:'11', hideBrand:'0'
+  brandSize1:'16', brandSize2:'11'
 };
 var SETTINGS = {};
 try { SETTINGS = JSON.parse(localStorage.getItem('bodhi_settings') || '{}'); } catch(e){}
@@ -1335,7 +1315,6 @@ function applySettings() {
   if (tl) tl.textContent = SETTINGS.trustLbl || 'Dipercaya ratusan alumni';
   // Brand name (nav + footer)
   applyBrandName(SETTINGS.brand || 'BODHI | CREATIVE + DESIGN');
-  document.body.classList.toggle('hide-brand-name', SETTINGS.hideBrand === '1');
   // Stats card
   var ids = {
     'stat-year': SETTINGS.statsYear||'2011',
@@ -1398,7 +1377,6 @@ function showSettings() {
   document.getElementById('s-wa').value = SETTINGS.wa || '';
   document.getElementById('s-rating').value = SETTINGS.rating || '4.9';
   document.getElementById('s-brand').value = SETTINGS.brand || 'BODHI | CREATIVE + DESIGN';
-  var hb = document.getElementById('s-hide-brand'); if(hb) hb.checked = SETTINGS.hideBrand === '1';
   document.getElementById('s-trust').value = SETTINGS.trust || '';
   document.getElementById('s-trust-lbl').value = SETTINGS.trustLbl || '';
   document.getElementById('s-year').value = SETTINGS.statsYear || '2011';
@@ -1441,7 +1419,6 @@ function saveSettings() {
   SETTINGS.wa        = document.getElementById('s-wa').value.trim()       || SETTINGS.wa;
   SETTINGS.rating    = document.getElementById('s-rating').value.trim()    || SETTINGS.rating;
   SETTINGS.brand     = document.getElementById('s-brand').value.trim()     || SETTINGS.brand;
-  var hb = document.getElementById('s-hide-brand'); if(hb) SETTINGS.hideBrand = hb.checked ? '1' : '0';
   SETTINGS.trust     = document.getElementById('s-trust').value.trim()     || SETTINGS.trust;
   SETTINGS.trustLbl  = document.getElementById('s-trust-lbl').value.trim() || SETTINGS.trustLbl;
   // Stats
@@ -1612,7 +1589,9 @@ function goto(id) {
    Isi API_KEY sesuai yang kamu set di install.php
    ========================================================= */
 var API_URL = 'api.php';   // jangan diubah
-var API_KEY='bodhi-local-2026';          // ← isi dengan API Key kamu setelah install.phpvar _serverAvailable = false;
+var API_KEY='bodhi-local-2026';          // ← isi dengan API Key kamu setelah install.php
+
+var _serverAvailable = false;
 var _syncQueue = {};
 var _syncTimer  = null;
 
@@ -1724,16 +1703,11 @@ var CAREER = [];
 try { CAREER = JSON.parse(localStorage.getItem('bodhi_career') || 'null') || DEF_CAREER.slice(); } catch(e) { CAREER = DEF_CAREER.slice(); }
 
 var SEC_BG_DEFS = [
-  {id:'hero',         label:'Hero / Banner',     secId:'hero'},
-  {id:'about',        label:'Tentang BODHI',      secId:'about'},
-  {id:'for-who',      label:'Target Peserta',     secId:'for-who'},
-  {id:'founder',      label:'Pengajar',           secId:'founder'},
-  {id:'programs',     label:'Program Studi',      secId:'programs'},
-  {id:'outcomes',     label:'Target Hasil',       secId:'outcomes'},
-  {id:'schedule',     label:'Jadwal Belajar',     secId:'schedule'},
-  {id:'testimonials', label:'Testimoni Alumni',   secId:'testimonials'},
-  {id:'cta',          label:'Form Pendaftaran',   secId:'cta'},
-  {id:'faq',          label:'FAQ',                secId:'faq'},
+  {id:'about',        label:'Tentang BODHI',    secId:'about'},
+  {id:'founder',      label:'Pengajar',          secId:'founder'},
+  {id:'programs',     label:'Program Studi',     secId:'programs'},
+  {id:'schedule',     label:'Jadwal Belajar',    secId:'schedule'},
+  {id:'testimonials', label:'Testimoni Alumni',  secId:'testimonials'},
 ];
 var SEC_BGS = {};
 try { SEC_BGS = JSON.parse(localStorage.getItem('bodhi_secbgs') || '{}'); } catch(e) {}
@@ -1775,51 +1749,12 @@ function exitAdmin() {
   document.getElementById('edit-btn').textContent='✏️ Edit Teks'; document.getElementById('edit-btn').style.color='';
   document.querySelectorAll('[contenteditable]').forEach(function(el){ el.removeAttribute('contenteditable'); });
 }
-var TEXT_SEL = [
-  'h1','h2','h3','h4',
-  'p','li',
-  '.sec-title','.section-title','.section-sub','.section-tag',
-  '.hero-sub','.hero-card-num','.hero-card-lbl','.hero-badge-txt',
-  '.about-lead','.vm-text','.vm-title',
-  '.about-year-lbl','.astat-lbl','.astat-num',
-  '.fw-card h3','.fw-card p',
-  '.founder-tag-line','.fd-txt','.fd-yr',
-  '.founder-name','.founder-title',
-  '.prog-name','.prog-desc','.prog-lbl',
-  '.prog-mi span',
-  '.mod-title','.mod-desc',
-  '.stu-nm','.stu-tl',
-  '.oc-card h3','.oc-card p',
-  '.sched-body','.sched-title',
-  '.testi-name','.testi-prog','.testi-quote',
-  '.faq-q','.faq-a',
-  '.footer-about','.footer-copy',
-  '.cta-title','.cta-sub',
-  '.hf-val','.hf-lbl',
-  '.nav-cta','.reg-btn',
-  '.prog-cta',
-  '.section-title',
-  '.hero-title em',
-].join(',');
-
-function assignTextKeys() {
-  var counters = {};
-  document.querySelectorAll(TEXT_SEL).forEach(function(el) {
-    if (el.closest('.nav-links') || el.closest('#admin-bar') || el.closest('#rte-toolbar')) return;
-    if (el.getAttribute('data-text-key')) return;
-    var tag = el.tagName.toLowerCase();
-    var cls = (el.className && typeof el.className === 'string') ? el.className.trim().split(/\s+/)[0] : '';
-    var base = cls || tag;
-    counters[base] = (counters[base] || 0) + 1;
-    el.setAttribute('data-text-key', base + '_' + counters[base]);
-  });
-}
+var TEXT_SEL = 'h1,h2,h3,h4,p,.hero-sub,.about-lead,.vm-text,.fw-card p,.founder-tag-line,.prog-desc,.oc-card p,.sched-body,.fd-txt,.testi-name,.testi-prog,.testi-quote,.faq-a,.mod-desc,.footer-about';
 
 function saveTexts() {
-  assignTextKeys();
   var texts = {};
-  document.querySelectorAll('[data-text-key]').forEach(function(el) {
-    texts[el.getAttribute('data-text-key')] = el.innerHTML;
+  document.querySelectorAll(TEXT_SEL).forEach(function(el, i) {
+    texts['t' + i] = el.innerHTML;
   });
   try { localStorage.setItem('bodhi_texts', JSON.stringify(texts)); } catch(e){}
 }
@@ -1828,16 +1763,9 @@ function loadTexts() {
   try {
     var saved = JSON.parse(localStorage.getItem('bodhi_texts') || 'null');
     if (!saved) return;
-    // Check if saved uses old index format (t0, t1...) — discard if so
-    var keys = Object.keys(saved);
-    if (keys.length > 0 && keys[0].match(/^t\d+$/)) {
-      localStorage.removeItem('bodhi_texts');
-      return;
-    }
-    assignTextKeys();
-    document.querySelectorAll('[data-text-key]').forEach(function(el) {
-      var k = el.getAttribute('data-text-key');
-      if (saved[k] !== undefined) el.innerHTML = saved[k];
+    document.querySelectorAll(TEXT_SEL).forEach(function(el, i) {
+      var key = 't' + i;
+      if (saved[key] !== undefined) el.innerHTML = saved[key];
     });
   } catch(e){}
 }
@@ -1884,12 +1812,12 @@ function _showRteBar(e) {
   setTimeout(function() {
     var sel = window.getSelection();
     if (!sel || sel.isCollapsed || !sel.toString().trim()) { tb.classList.remove('show'); return; }
-    rteSaveSelection();
+    rteSaveSelection();  // ← simpan seleksi sebelum toolbar muncul
     var r = sel.getRangeAt(0).getBoundingClientRect();
-    var tx = r.left + (r.width/2) - 200;
-    var ty = r.top - 58;
+    var tx = r.left + window.scrollX + (r.width/2) - 200;
+    var ty = r.top + window.scrollY - 58;
     tx = Math.max(8, Math.min(tx, window.innerWidth - 420));
-    if (ty < 10) ty = r.bottom + 8;
+    ty = ty < 60 ? r.bottom + window.scrollY + 8 : ty;
     tb.style.left = tx + 'px';
     tb.style.top  = ty + 'px';
     tb.classList.add('show');
@@ -1908,55 +1836,25 @@ function toggleEdit() {
   var btn=document.getElementById('edit-btn');
   if (editOn) {
     btn.textContent='✓ Edit Aktif'; btn.style.color='var(--acc)';
-    assignTextKeys();
     document.querySelectorAll(TEXT_SEL).forEach(function(el){
-      // Skip nav links and admin bar elements
-      if (el.closest('.nav-links') || el.closest('#admin-bar') || el.closest('#rte-toolbar')) return;
       el.setAttribute('contenteditable','true');
+      el.addEventListener('mouseup', _showRteBar);
+      el.addEventListener('keyup', _showRteBar);
+      el.addEventListener('blur', _hideRteBar);
     });
-    // Use selectionchange — fires on document, cannot be blocked by child elements
-    document.addEventListener('selectionchange', _globalRteCheck);
-    showToast('💡 Seleksi/blok teks → toolbar format muncul');
+    showToast('💡 Pilih/seleksi teks untuk format — Bold, Italic, Warna, Ukuran');
   } else {
     btn.textContent='✏️ Edit Teks'; btn.style.color='';
     document.querySelectorAll('[contenteditable]').forEach(function(el){
       el.removeAttribute('contenteditable');
+      el.removeEventListener('mouseup', _showRteBar);
+      el.removeEventListener('keyup', _showRteBar);
+      el.removeEventListener('blur', _hideRteBar);
     });
-    document.removeEventListener('selectionchange', _globalRteCheck);
     document.getElementById('rte-toolbar').classList.remove('show');
     saveTexts();
     showToast('✅ Teks tersimpan!');
   }
-}
-
-function _globalRteCheck() {
-  var tb = document.getElementById('rte-toolbar');
-  if (!tb) return;
-  var sel = window.getSelection();
-  if (!sel || sel.isCollapsed || !sel.toString().trim()) {
-    tb.classList.remove('show');
-    return;
-  }
-  // Check anchor node is inside contenteditable
-  var anchor = sel.anchorNode;
-  var el = anchor ? (anchor.nodeType === 3 ? anchor.parentElement : anchor) : null;
-  if (!el || !el.closest('[contenteditable="true"]')) {
-    tb.classList.remove('show');
-    return;
-  }
-  rteSaveSelection();
-  // position:fixed uses VIEWPORT coords — do NOT add scrollX/Y
-  try {
-    var r = sel.getRangeAt(0).getBoundingClientRect();
-    if (!r || r.width === 0) return;
-    var tx = r.left + (r.width / 2) - 200;
-    var ty = r.top - 62;
-    tx = Math.max(8, Math.min(tx, window.innerWidth - 440));
-    if (ty < 10) ty = r.bottom + 8;
-    tb.style.left = tx + 'px';
-    tb.style.top  = ty + 'px';
-    tb.classList.add('show');
-  } catch(e) {}
 }
 function hideSection(btn) { var w=btn.closest('.sw'); var h=w.classList.toggle('sec-hidden'); btn.textContent=h?'👁 Tampilkan':'👁 Sembunyikan'; saveState(); }
 function delSection(btn) { var w=btn.closest('.sw'); if (confirm('Hapus "'+w.dataset.name+'"?\n\nBisa dikembalikan via tombol Reset.')) { w.classList.add('sec-deleted'); saveState(); } }
@@ -2018,16 +1916,11 @@ function handleImgFile(event) {
   if (!file.type.startsWith('image/')) { alert('Pilih file gambar (JPG, PNG, dll.)'); return; }
   resizeAndSave(file, 'bodhi_img_'+_imgTarget.key, function(data) {
     if (_imgTarget.mode === 'img') {
+      // src mode — show <img> element, hide placeholder
       var imgEl = document.getElementById(_imgTarget.elId);
       if (imgEl) { imgEl.src = data; imgEl.style.display = 'block'; }
       var ph = document.getElementById('about-img-placeholder');
       if (ph) ph.style.display = 'none';
-    } else if (_imgTarget.mode === 'emoji' || _imgTarget.mode === 'emoji-lg') {
-      var el = document.getElementById(_imgTarget.elId);
-      if (el) {
-        var sz = _imgTarget.mode === 'emoji-lg' ? '48px' : '100%';
-        el.innerHTML = '<img src="'+data+'" style="width:'+sz+';height:'+sz+';object-fit:contain;display:block;border-radius:6px">';
-      }
     } else {
       applyBgImg(_imgTarget.elId, data);
     }
@@ -2083,27 +1976,6 @@ function loadStoredImages() {
     var ph = document.getElementById('about-img-placeholder');
     if (ph) ph.style.display='none';
   }
-  // Prog-mic icons (small meta items)
-  ['prog1_ic1','prog1_ic2','prog1_ic3','prog1_ic4','prog2_ic1','prog2_ic2','prog2_ic3','prog2_ic4'].forEach(function(key) {
-    var d = localStorage.getItem('bodhi_img_'+key);
-    var el = document.getElementById(key.replace('_','-'));
-    if (d && el) el.innerHTML = '<img src="'+d+'" style="width:100%;height:100%;object-fit:cover;border-radius:6px">';
-  });
-  // Prog-icon and stu-ic
-  ['prog1_main_icon','prog2_main_icon','stu_p1_1','stu_p1_2','stu_p1_3'].forEach(function(key) {
-    var d = localStorage.getItem('bodhi_img_'+key);
-    var elId = key.replace(/_/g,'-').replace('prog-','prog').replace('stu-','stu-');
-    // map key to element id
-    var idMap = {'prog1-main-icon':'prog1-main-icon','prog2-main-icon':'prog2-main-icon','stu-p1-1':'stu-p1-1','stu-p1-2':'stu-p1-2','stu-p1-3':'stu-p1-3'};
-    var mappedId = key.replace(/_/g,'-').replace('prog1-main-icon','prog1-main-icon').replace('prog2-main-icon','prog2-main-icon');
-    var el = document.getElementById(key.replace(/_/g,function(c,i){ return i===4?'-':'-'; }).replace(/([a-z0-9]+)_([a-z0-9]+)_([a-z0-9]+)/,function(m,a,b,c){return a+'-'+b+'-'+c;}));
-    if (!el) {
-      // try direct mapping
-      var directMap = {'prog1_main_icon':'prog1-main-icon','prog2_main_icon':'prog2-main-icon','stu_p1_1':'stu-p1-1','stu_p1_2':'stu-p1-2','stu_p1_3':'stu-p1-3'};
-      el = document.getElementById(directMap[key]);
-    }
-    if (d && el) { var sz = key.indexOf('stu')===0?'28px':'48px'; el.innerHTML = '<img src="'+d+'" style="width:'+sz+';height:'+sz+';object-fit:contain;display:block;border-radius:6px">'; }
-  });
   // Section backgrounds
   applySectionBgs();
 }
@@ -2540,7 +2412,7 @@ function applyTypo() {
 
   function sz(key, def) { return (TYPO[key] || DEF_TYPO[key] || def) + 'px'; }
 
-  var headSel = 'h1,h2,h3,h4,.hero-title,.sec-title,.section-title,.prog-name,.faq-q,.mod-title,.founder-name,.fd-blk h3,.cta-title,.astat-num,.vm-title,.cormorant,.brand-name,.hero-card-num';
+  var headSel = 'h1,h2,h3,h4,.hero-title,.sec-title,.section-title,.prog-name,.faq-q,.mod-title,.about-year,.founder-name,.fd-blk h3,.cta-title,.astat-num,.about-year,.vm-title,.cormorant,.brand-name,.hero-card-num';
   var bodySel = 'body,p,span:not(.bn-l1):not(.bn-l2),a,li,button,input,textarea,select,label,.nav-links a,.nav-cta,.mbtn,.abtn,.finput,.hero-sub,.about-lead,.vm-text,.founder-tag-line,.prog-desc,.oc-card p,.sched-body,.testi-quote,.faq-a,.footer-about,.hint,.chat-msg,.fd-txt,.astat-lbl,.mitem,.hf-lbl,.hf-val,.section-tag,.prog-lbl';
 
   var css = [
@@ -2558,8 +2430,7 @@ function applyTypo() {
 
   var el = document.getElementById('bodhi-typo-style');
   if (!el) { el = document.createElement('style'); el.id = 'bodhi-typo-style'; document.head.appendChild(el); }
-  // Always force Arial on .about-year to prevent ligature "II" from Cormorant
-  el.textContent = css + '\n.about-year{font-family:Arial,Helvetica,sans-serif!important;font-variant-numeric:normal!important;font-feature-settings:"liga" 0,"calt" 0!important}';
+  el.textContent = css;
 }
 
 function buildFontCard(f, type, selected) {
@@ -2735,7 +2606,7 @@ function showSecBg() {
   SEC_BG_DEFS.forEach(function(def) {
     var cfg = SEC_BGS[def.id] || {};
     var card = document.createElement('div');
-    card.style.cssText = 'border:1px solid var(--bdr);border-radius:14px;background:#fff;margin-bottom:2px';
+    card.style.cssText = 'border:1px solid var(--bdr);border-radius:14px;overflow:hidden';
     var imgThumb = cfg.img ? '<img src="' + cfg.img + '" style="width:60px;height:60px;object-fit:cover;border-radius:8px;flex-shrink:0">' : '<div style="width:60px;height:60px;background:var(--bg2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🖼</div>';
     card.innerHTML = '<div style="padding:14px 16px;display:flex;align-items:center;gap:14px">'
       + imgThumb
