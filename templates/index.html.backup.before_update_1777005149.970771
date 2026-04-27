@@ -197,7 +197,7 @@ body.edit-on [contenteditable="true"]:focus{outline:2px solid var(--acc);backgro
 .hero-card-num{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:700;color:var(--acc);line-height:1}
 .hero-card-lbl{font-size:14px;color:var(--textsoft);margin-top:4px}
 .hfloat{position:absolute;background:var(--bgcard);border:1px solid var(--bdrdk);border-radius:14px;padding:14px 18px;box-shadow:0 8px 28px var(--shdlg)}
-.hf1{display:none}
+.hf1{top:20px;left:16px;display:flex;align-items:center;gap:12px}
 .hf-ic{width:38px;height:38px;border-radius:10px;background:var(--acclt);display:flex;align-items:center;justify-content:center;font-size:18px}
 .hf-lbl{font-size:12px;color:var(--muted);margin-bottom:2px}
 .hf-val{font-size:14px;font-weight:700}
@@ -803,13 +803,13 @@ footer{border-top:1px solid var(--bdr);background:var(--bg);padding:60px 0 36px}
 <button id="admin-fab" onclick="openAdminModal()" title="Admin Panel">⚙</button>
 
 <!-- ========== RICH TEXT TOOLBAR ========== -->
-<div id="rte-toolbar">
-  <button class="rte-btn" id="rte-bold"   onmousedown="event.preventDefault()" onclick="rteCmd('bold')"          title="Bold"><b>B</b></button>
-  <button class="rte-btn" id="rte-italic" onmousedown="event.preventDefault()" onclick="rteCmd('italic')"        title="Italic"><i>I</i></button>
-  <button class="rte-btn" id="rte-under"  onmousedown="event.preventDefault()" onclick="rteCmd('underline')"     title="Underline"><u>U</u></button>
-  <button class="rte-btn" id="rte-strike" onmousedown="event.preventDefault()" onclick="rteCmd('strikeThrough')" title="Strikethrough"><s>S</s></button>
+<div id="rte-toolbar" onmousedown="event.preventDefault()">
+  <button class="rte-btn" id="rte-bold"   onclick="rteCmd('bold')"        title="Bold"><b>B</b></button>
+  <button class="rte-btn" id="rte-italic" onclick="rteCmd('italic')"      title="Italic"><i>I</i></button>
+  <button class="rte-btn" id="rte-under"  onclick="rteCmd('underline')"   title="Underline"><u>U</u></button>
+  <button class="rte-btn" id="rte-strike" onclick="rteCmd('strikeThrough')" title="Strikethrough"><s>S</s></button>
   <div class="rte-sep"></div>
-  <select id="rte-size" onmousedown="rteSaveSelection()" onchange="rteSetSize(this.value)" title="Ukuran Font"
+  <select id="rte-size" onchange="rteSetSize(this.value)" title="Ukuran Font"
     style="background:#2e2820;color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:4px 6px;font-size:12px;cursor:pointer;font-family:inherit">
     <option value="">Ukuran</option>
     <option value="11px">11px</option>
@@ -827,15 +827,15 @@ footer{border-top:1px solid var(--bdr);background:var(--bg);padding:60px 0 36px}
   </select>
   <div class="rte-sep"></div>
   <div class="rte-color-row">
-    <div class="rte-color" style="background:#1e1810" onmousedown="event.preventDefault()" onclick="rteColor('#1e1810')" title="Hitam"></div>
-    <div class="rte-color" style="background:#C85B2A" onmousedown="event.preventDefault()" onclick="rteColor('#C85B2A')" title="Aksen"></div>
-    <div class="rte-color" style="background:#4B7B58" onmousedown="event.preventDefault()" onclick="rteColor('#4B7B58')" title="Hijau"></div>
-    <div class="rte-color" style="background:#9A8E82" onmousedown="event.preventDefault()" onclick="rteColor('#9A8E82')" title="Abu"></div>
-    <div class="rte-color" style="background:#ffffff;border:1px solid rgba(255,255,255,.3)" onmousedown="event.preventDefault()" onclick="rteColor('#ffffff')" title="Putih"></div>
+    <div class="rte-color" style="background:#1e1810" onclick="rteColor('#1e1810')" title="Hitam"></div>
+    <div class="rte-color" style="background:#C85B2A" onclick="rteColor('#C85B2A')" title="Aksen"></div>
+    <div class="rte-color" style="background:#4B7B58" onclick="rteColor('#4B7B58')" title="Hijau"></div>
+    <div class="rte-color" style="background:#9A8E82" onclick="rteColor('#9A8E82')" title="Abu"></div>
+    <div class="rte-color" style="background:#ffffff;border:1px solid rgba(255,255,255,.3)" onclick="rteColor('#ffffff')" title="Putih"></div>
   </div>
   <div class="rte-sep"></div>
-  <button class="rte-btn" onmousedown="event.preventDefault()" onclick="rteItalicStyle()" title="Italic aksen"><em style="color:#C85B2A;font-style:italic">em</em></button>
-  <button class="rte-btn" onmousedown="event.preventDefault()" onclick="document.execCommand('removeFormat');document.getElementById('rte-size').value=''" title="Hapus Format">&#x2715;</button>
+  <button class="rte-btn" onclick="rteItalicStyle()" title="Italic aksen (seperti judul hero)"><em style="color:#C85B2A;font-style:italic">em</em></button>
+  <button class="rte-btn" onclick="document.execCommand('removeFormat');document.getElementById('rte-size').value=''" title="Hapus Format">✕</button>
 </div>
 
 <!-- ========== CHATBOT ========== -->
@@ -1589,7 +1589,7 @@ function goto(id) {
    Isi API_KEY sesuai yang kamu set di install.php
    ========================================================= */
 var API_URL = 'api.php';   // jangan diubah
-var API_KEY='bodhi-local-2026';          // ← isi dengan API Key kamu setelah install.php
+var API_KEY = 'bodhi-local-2026'; // API key untuk sync ke server lokal
 
 var _serverAvailable = false;
 var _syncQueue = {};

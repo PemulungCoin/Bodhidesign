@@ -189,3 +189,17 @@ API_KEY: bodhi-local-2026
 127.0.0.1 - - [27/Apr/2026 13:35:24] "GET /favicon.ico HTTP/1.1" 404 -
 127.0.0.1 - - [27/Apr/2026 13:35:28] "POST /api.php HTTP/1.1" 200 -
 127.0.0.1 - - [27/Apr/2026 13:45:52] "POST /api.php HTTP/1.1" 200 -
+Starting BodhiFinal on port 5002
+API_KEY: bodhi-local-2026
+ * Serving Flask app 'app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.100.149:5002
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 506-399-007
+127.0.0.1 - - [27/Apr/2026 14:05:40] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [27/Apr/2026 14:05:48] "GET /api.php?action=load&k=bodhi-local-2026 HTTP/1.1" 200 -
