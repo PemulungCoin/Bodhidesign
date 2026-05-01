@@ -259,49 +259,6 @@ body.edit-on [contenteditable="true"]:focus{outline:2px solid var(--acc);backgro
 /* ── FOUNDER ── */
 #founder{padding:100px 0;background:var(--bg2)}
 .founder-grid{display:grid;grid-template-columns:340px 1fr;gap:60px;align-items:start;margin-top:52px}
-/* Instructor Carousel */
-.instr-carousel-wrap{position:relative;margin-top:44px;overflow:hidden}
-.instr-slides{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
-.instr-slide{min-width:100%;display:grid;grid-template-columns:280px 1fr;gap:52px;align-items:start;padding:0 64px}
-.instr-photo-box{border-radius:20px;overflow:hidden;width:280px;height:340px;background:linear-gradient(150deg,var(--bg2),#e8ddd0);position:relative;border:1px solid var(--bdrdk);flex-shrink:0}
-.instr-photo-box img{width:100%;height:100%;object-fit:cover;display:block}
-.instr-photo-box .instr-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:80px;color:var(--muted)}
-.instr-info{display:flex;flex-direction:column;gap:20px;padding-top:8px}
-.instr-info .founder-role{font-size:12px;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:.8px}
-.instr-info .founder-name{font-size:30px;font-weight:700;color:var(--text);margin:4px 0}
-.instr-info .founder-tag-line{font-size:15px;color:var(--textsoft);line-height:1.7}
-.instr-career{background:var(--bgwarm);border:1px solid var(--bdr);border-radius:16px;padding:24px 28px}
-.instr-career h4{font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text)}
-.instr-career .fd-timeline{display:flex;flex-direction:column;gap:10px}
-/* Nav buttons */
-.instr-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--bdrdk);font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px var(--shd);transition:var(--tr);z-index:10;color:var(--text);line-height:1}
-.instr-nav:hover{background:var(--acc);color:#fff;border-color:var(--acc);transform:translateY(-50%) scale(1.08)}
-.instr-prev{left:4px}
-.instr-next{right:4px}
-.instr-nav:disabled{opacity:.3;pointer-events:none}
-/* Dots */
-.instr-dots{display:flex;justify-content:center;gap:8px;margin-top:24px}
-.instr-dot{width:8px;height:8px;border-radius:50%;background:var(--bdrdk);cursor:pointer;transition:var(--tr);border:none;padding:0}
-.instr-dot.active{background:var(--acc);width:24px;border-radius:20px}
-/* Admin edit/delete overlay on slide */
-.instr-slide-admin{display:none;position:absolute;top:8px;right:72px;gap:6px;z-index:20}
-body.admin-on .instr-slide-admin{display:flex}
-@media(max-width:768px){.instr-slide{grid-template-columns:1fr;padding:0 48px}.instr-photo-box{aspect-ratio:1}}
-/* Additional instructor cards */
-.instr-card{background:var(--bgcard);border:1px solid var(--bdr);border-radius:18px;overflow:hidden;box-shadow:0 4px 16px var(--shd);transition:var(--tr);position:relative}
-.instr-card:hover{transform:translateY(-4px);box-shadow:0 8px 28px var(--shdlg)}
-.instr-photo{width:100%;height:200px;background:linear-gradient(150deg,var(--bg2),#e8ddd0);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:60px;color:var(--muted)}
-.instr-photo img{width:100%;height:100%;object-fit:cover;display:block}
-.instr-body{padding:20px}
-.instr-role{font-size:11px;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
-.instr-name{font-size:18px;font-weight:700;margin-bottom:6px;color:var(--text)}
-.instr-bio{font-size:13px;color:var(--textsoft);line-height:1.6;margin-bottom:12px}
-.instr-tags{display:flex;flex-wrap:wrap;gap:6px}
-.instr-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--acclt);color:var(--acc);font-weight:600}
-.instr-admin-btns{display:none;position:absolute;top:10px;right:10px;gap:6px}
-body.admin-on .instr-card:hover .instr-admin-btns{display:flex}
-.instr-admin-btn{padding:5px 10px;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
-@media(max-width:768px){#instructors-grid{grid-template-columns:1fr 1fr}}
 .founder-card{background:var(--bgcard);border:1px solid var(--bdrdk);border-radius:20px;overflow:hidden;box-shadow:0 12px 40px var(--shdlg);position:sticky;top:90px}
 .founder-photo-wrap{width:100%;height:280px;position:relative}
 .founder-photo-ph{width:100%;height:100%;background:linear-gradient(150deg,var(--bg2),#e8ddd0);display:flex;align-items:center;justify-content:center;font-size:80px}
@@ -584,11 +541,6 @@ footer{border-top:1px solid var(--bdr);background:var(--bg);padding:60px 0 36px}
           <span class="hint">Username Instagram, contoh: @bodhidesign</span>
         </div>
         <div class="sfield">
-          <label>✉️ Email</label>
-          <input type="email" id="s-email" placeholder="info@bodhidesign.com">
-          <span class="hint">Email yang tampil di footer website</span>
-        </div>
-        <div class="sfield">
           <label>⭐ Rating Kursus (di hero)</label>
           <input type="number" id="s-rating" min="1" max="5" step="0.1" placeholder="4.9">
           <span class="hint">Angka 1.0 – 5.0</span>
@@ -737,66 +689,6 @@ footer{border-top:1px solid var(--bdr);background:var(--bg);padding:60px 0 36px}
     </div>
     <div class="mscroll" id="member-table-wrap">
       <p style="color:var(--muted);text-align:center;padding:40px;font-size:14px">Belum ada pendaftar.</p>
-    </div>
-  </div>
-</div>
-
-<!-- ========== MODAL: Tambah/Edit Pengajar ========== -->
-<div id="modal-instructor" class="modal-ov">
-  <div class="mbox" style="width:560px">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
-      <div><div class="mtitle" id="instr-modal-title">👤 Tambah Pengajar</div><div class="msub">Isi detail pengajar baru</div></div>
-      <button onclick="closeModal('modal-instructor')" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted)">×</button>
-    </div>
-    <div style="overflow-y:auto;max-height:65vh;display:flex;flex-direction:column;gap:14px;padding-right:4px">
-
-      <!-- Photo upload -->
-      <div>
-        <label style="font-size:12px;font-weight:700;color:var(--textsoft);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Foto Pengajar</label>
-        <div id="instr-photo-preview" onclick="instrPickPhoto()"
-          style="width:100px;height:100px;border-radius:14px;background:var(--bg2);border:2px dashed var(--bdr);cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:36px;position:relative;transition:.2s"
-          title="Klik untuk upload foto">
-          👤
-          <div style="position:absolute;inset:0;background:rgba(200,91,42,.7);display:none;align-items:center;justify-content:center;font-size:20px;color:#fff;border-radius:12px" id="instr-photo-ov">📷</div>
-        </div>
-        <input type="file" id="instr-photo-input" accept="image/*" style="display:none" onchange="instrHandlePhoto(event)">
-        <div style="font-size:11px;color:var(--muted);margin-top:6px">Klik foto untuk upload · JPG/PNG</div>
-      </div>
-
-      <div class="settings-grid">
-        <div>
-          <label style="font-size:12px;font-weight:700;color:var(--textsoft);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px">Nama Lengkap *</label>
-          <input type="text" id="instr-name" class="minput" placeholder="Contoh: Budi Santoso, S.Ds">
-        </div>
-        <div>
-          <label style="font-size:12px;font-weight:700;color:var(--textsoft);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px">Jabatan / Role *</label>
-          <input type="text" id="instr-role" class="minput" placeholder="Contoh: Pengajar Studio Komputer">
-        </div>
-      </div>
-
-      <div>
-        <label style="font-size:12px;font-weight:700;color:var(--textsoft);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px">Bio Singkat</label>
-        <textarea id="instr-bio" class="minput" rows="3" placeholder="Latar belakang dan keahlian pengajar..." style="resize:vertical;font-family:inherit"></textarea>
-      </div>
-
-      <div>
-        <label style="font-size:12px;font-weight:700;color:var(--textsoft);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px">Tag Keahlian <span style="font-weight:400;text-transform:none;letter-spacing:0">(pisahkan dengan koma)</span></label>
-        <input type="text" id="instr-tags" class="minput" placeholder="AutoCAD, SketchUp, 3DS Max">
-      </div>
-
-      <div>
-        <label style="font-size:12px;font-weight:700;color:var(--textsoft);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Perjalanan Karier</label>
-        <div id="instr-career-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px"></div>
-        <button onclick="instrAddCareerRow()" type="button" style="width:100%;padding:8px;border:1.5px dashed var(--bdr);background:transparent;border-radius:8px;cursor:pointer;color:var(--acc);font-weight:600;font-size:13px;font-family:inherit">+ Tambah Karier</button>
-      </div>
-    </div>
-
-    <input type="hidden" id="instr-edit-idx" value="">
-    <input type="hidden" id="instr-photo-data" value="">
-
-    <div class="mbtns" style="margin-top:16px;border-top:1px solid var(--bdr);padding-top:16px">
-      <button class="mbtn mbtn-cancel" onclick="closeModal('modal-instructor')">Batal</button>
-      <button class="mbtn mbtn-ok" onclick="saveInstructor()">💾 Simpan Pengajar</button>
     </div>
   </div>
 </div>
@@ -1176,27 +1068,27 @@ footer{border-top:1px solid var(--bdr);background:var(--bg);padding:60px 0 36px}
     <div class="container">
       <div class="section-tag">Pengajar & Pendiri</div>
       <h2 class="sec-title">Belajar dari yang <em>telah terbukti</em></h2>
-
-      <!-- Carousel wrapper -->
-      <div class="instr-carousel-wrap">
-        <!-- Prev button -->
-        <button class="instr-nav instr-prev" id="instr-prev" onclick="instrNav(-1)" onmouseenter="instrStartAuto(-1)" onmouseleave="instrStopAuto()">&#8249;</button>
-
-        <!-- Slides -->
-        <div class="instr-slides" id="instr-slides"></div>
-
-        <!-- Next button -->
-        <button class="instr-nav instr-next" id="instr-next" onclick="instrNav(1)" onmouseenter="instrStartAuto(1)" onmouseleave="instrStopAuto()">&#8250;</button>
+      <div class="founder-grid">
+        <div class="founder-card fade-up">
+          <div class="founder-photo-wrap img-wrap">
+            <div class="founder-photo-ph"><div class="fpgrid"></div>🏛️</div>
+            <div class="founder-photo-actual" id="founder-photo-img"></div>
+            <div class="img-upload-ov" onclick="triggerImgUpload('founder_photo','founder-photo-img','bg')"><span class="cam">📷</span><span>Ganti Foto</span></div>
+          </div>
+          <div class="founder-body">
+            <div class="founder-role">Pendiri & Pengajar Utama</div>
+            <h3 class="founder-name">Jamry, S.T., M.Psi</h3>
+            <p class="founder-tag-line">Arsitek, Praktisi Psikologi, Konsultan Perencana & Kontraktor Building sejak 1999. Founder BODHI Creative + Design.</p>
+            <div class="ftags"><span class="ftag">S.T. Arsitektur</span><span class="ftag">M.Psi Industri</span><span class="ftag">Lions Club</span><span class="ftag">APSDA</span><span class="ftag">HDII</span></div>
+          </div>
+        </div>
+        <div class="founder-detail">
+          <div class="fd-blk fade-up"><h3>Latar Belakang</h3><p>Alumni Arsitektur Institut Sains & Teknologi TD. Pardede Medan tahun 1999, dan meraih gelar Magister Psikologi Industri dan Organisasi dengan fokus riset ilmu design terhadap perkembangan perilaku manusia serta pengaruhnya terhadap bisnis.<br><br>Sejak 1999 aktif sebagai Konsultan Perencana dan Kontraktor Building. Mendirikan Intrash-design, karya daur ulang (upcycling) untuk produk design. Saat ini juga Dosen Arsitektur di Institute Modern of Architecture and Technology Medan.</p></div>
+          <div class="fd-blk fade-up"><h3>Perjalanan Karier</h3>
+            <div class="fd-timeline" id="career-timeline"></div>
+          </div>
+        </div>
       </div>
-
-      <!-- Dots -->
-      <div class="instr-dots" id="instr-dots"></div>
-
-      <!-- Admin: add button -->
-      <button id="instructor-add-btn" onclick="openInstructorModal(null)"
-        style="display:none;width:100%;margin-top:16px;padding:13px;border:2px dashed var(--bdr);background:transparent;border-radius:12px;cursor:pointer;color:var(--acc);font-weight:700;font-size:14px;font-family:inherit">
-        + Tambah Pengajar
-      </button>
     </div>
   </section>
 </div>
@@ -1216,22 +1108,22 @@ footer{border-top:1px solid var(--bdr);background:var(--bg);padding:60px 0 36px}
       <div class="prog-content on" id="p1">
         <div class="prog-layout">
           <div class="prog-info-card">
-            <div class="prog-icon img-wrap" id="prog1-main-icon" onclick="triggerImgUpload('prog1_main_icon','prog1-main-icon','emoji-lg')"><svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="14" fill="#F7E8DF"/><path d="M10 34V22l14-10 14 10v12H10z" stroke="#C85B2A" stroke-width="2" stroke-linejoin="round" fill="#fff"/><path d="M20 34v-8h8v8" stroke="#C85B2A" stroke-width="2" stroke-linejoin="round"/><path d="M24 12l-14 10" stroke="#C85B2A" stroke-width="2" stroke-linecap="round"/><path d="M24 12l14 10" stroke="#C85B2A" stroke-width="2" stroke-linecap="round"/><rect x="28" y="20" width="4" height="4" rx="1" fill="#C85B2A" opacity=".4"/><rect x="16" y="20" width="4" height="4" rx="1" fill="#C85B2A" opacity=".4"/><line x1="14" y1="34" x2="34" y2="34" stroke="#C85B2A" stroke-width="2" stroke-linecap="round"/></svg></div><div class="prog-lbl">Program Unggulan</div>
+            <div class="prog-icon img-wrap" id="prog1-main-icon" onclick="triggerImgUpload('prog1_main_icon','prog1-main-icon','emoji-lg')">🏠</div><div class="prog-lbl">Program Unggulan</div>
             <h3 class="prog-name">Profesional Eksklusif <em>(Interior)</em></h3>
             <p class="prog-desc">Program intensif untuk mencetak designer dan kontraktor interior profesional secara singkat, jelas, dan padat melalui kurikulum sistematis yang dinamis.</p>
             <div class="prog-meta">
-              <div class="prog-mi"><div class="prog-mic img-wrap" id="prog1-ic1" onclick="triggerImgUpload('prog1_ic1','prog1-ic1','emoji')"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="7" fill="#F7E8DF"/><rect x="7" y="6" width="14" height="16" rx="2" stroke="#C85B2A" stroke-width="1.5"/><path d="M10 10h8M10 13h8M10 16h5" stroke="#C85B2A" stroke-width="1.5" stroke-linecap="round"/></svg></div><span>Durasi: <strong>50 Pertemuan Intensif</strong></span></div>
-              <div class="prog-mi"><div class="prog-mic img-wrap" id="prog1-ic2" onclick="triggerImgUpload('prog1_ic2','prog1-ic2','emoji')"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="7" fill="#F7E8DF"/><rect x="6" y="8" width="16" height="14" rx="2" stroke="#C85B2A" stroke-width="1.5"/><path d="M10 8V6M18 8V6" stroke="#C85B2A" stroke-width="1.5" stroke-linecap="round"/><path d="M6 12h16" stroke="#C85B2A" stroke-width="1.5"/><rect x="9" y="15" width="3" height="3" rx="1" fill="#C85B2A" opacity=".5"/></svg></div><span>Jadwal: <strong>Senin – Sabtu</strong></span></div>
-              <div class="prog-mi"><div class="prog-mic img-wrap" id="prog1-ic3" onclick="triggerImgUpload('prog1_ic3','prog1-ic3','emoji')"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="7" fill="#F7E8DF"/><rect x="5" y="9" width="12" height="10" rx="2" stroke="#C85B2A" stroke-width="1.5"/><path d="M17 12l5-3v10l-5-3" stroke="#C85B2A" stroke-width="1.5" stroke-linejoin="round"/></svg></div><span>Mode: <strong>Online & Offline</strong></span></div>
-              <div class="prog-mi"><div class="prog-mic img-wrap" id="prog1-ic4" onclick="triggerImgUpload('prog1_ic4','prog1-ic4','emoji')"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="7" fill="#F7E8DF"/><circle cx="14" cy="12" r="4" stroke="#C85B2A" stroke-width="1.5"/><path d="M6 22c0-4 3.6-6 8-6s8 2 8 6" stroke="#C85B2A" stroke-width="1.5" stroke-linecap="round"/></svg></div><span>Untuk: <strong>Semua usia & latar belakang</strong></span></div>
+              <div class="prog-mi"><div class="prog-mic img-wrap" id="prog1-ic1" onclick="triggerImgUpload('prog1_ic1','prog1-ic1','emoji')">📅</div><span>Durasi: <strong>50 Pertemuan Intensif</strong></span></div>
+              <div class="prog-mi"><div class="prog-mic img-wrap" id="prog1-ic2" onclick="triggerImgUpload('prog1_ic2','prog1-ic2','emoji')">📆</div><span>Jadwal: <strong>Senin – Sabtu</strong></span></div>
+              <div class="prog-mi"><div class="prog-mic img-wrap" id="prog1-ic3" onclick="triggerImgUpload('prog1_ic3','prog1-ic3','emoji')">💻</div><span>Mode: <strong>Online & Offline</strong></span></div>
+              <div class="prog-mi"><div class="prog-mic img-wrap" id="prog1-ic4" onclick="triggerImgUpload('prog1_ic4','prog1-ic4','emoji')">🎯</div><span>Untuk: <strong>Semua usia & latar belakang</strong></span></div>
             </div>
             <button class="prog-cta" onclick="goto('cta')">Daftar Program Ini →</button>
           </div>
           <div>
             <div class="studios-grid">
-              <div class="studio-card"><div class="stu-ic img-wrap" id="stu-p1-1" onclick="triggerImgUpload('stu_p1_1','stu-p1-1','emoji-lg')"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="7" fill="#F7E8DF"/><rect x="5" y="8" width="18" height="13" rx="2" stroke="#C85B2A" stroke-width="1.5" fill="#fff"/><path d="M9 11h10M9 14h6" stroke="#C85B2A" stroke-width="1.5" stroke-linecap="round"/><circle cx="19" cy="14" r="2" stroke="#C85B2A" stroke-width="1.5" fill="none"/></svg></div><div class="stu-nm">Studio Komputer</div><div class="stu-tl">AutoCAD 2D · SketchUp + 3Max 3D · Enscape Rendering</div></div>
-              <div class="studio-card"><div class="stu-ic img-wrap" id="stu-p1-2" onclick="triggerImgUpload('stu_p1_2','stu-p1-2','emoji-lg')"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="7" fill="#F7E8DF"/><path d="M7 21l4-8 4 5 3-4 3 7" stroke="#C85B2A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 7h16M6 10h10" stroke="#C85B2A" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="stu-nm">Studio Perancangan</div><div class="stu-tl">Proses perancangan project design dari awal hingga akhir</div></div>
-              <div class="studio-card"><div class="stu-ic img-wrap" id="stu-p1-3" onclick="triggerImgUpload('stu_p1_3','stu-p1-3','emoji-lg')"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="7" fill="#F7E8DF"/><path d="M8 20h12M10 20v-5h8v5" stroke="#C85B2A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 9l-6 6h12l-6-6z" stroke="#C85B2A" stroke-width="1.5" stroke-linejoin="round" fill="#F7E8DF"/></svg></div><div class="stu-nm">Studio Konstruksi</div><div class="stu-tl">Workshop gambar kerja ke konstruksi interior & furniture</div></div>
+              <div class="studio-card"><div class="stu-ic img-wrap" id="stu-p1-1" onclick="triggerImgUpload('stu_p1_1','stu-p1-1','emoji-lg')">🖥️</div><div class="stu-nm">Studio Komputer</div><div class="stu-tl">AutoCAD 2D · SketchUp + 3Max 3D · Enscape Rendering</div></div>
+              <div class="studio-card"><div class="stu-ic img-wrap" id="stu-p1-2" onclick="triggerImgUpload('stu_p1_2','stu-p1-2','emoji-lg')">📐</div><div class="stu-nm">Studio Perancangan</div><div class="stu-tl">Proses perancangan project design dari awal hingga akhir</div></div>
+              <div class="studio-card"><div class="stu-ic img-wrap" id="stu-p1-3" onclick="triggerImgUpload('stu_p1_3','stu-p1-3','emoji-lg')">🔨</div><div class="stu-nm">Studio Konstruksi</div><div class="stu-tl">Workshop gambar kerja ke konstruksi interior & furniture</div></div>
             </div>
             <div class="mod-list">
               <div class="mod-item open"><div class="mod-hdr" onclick="toggleMod(this)"><div class="mod-num">01</div><span class="mod-title">Dasar-Dasar Pemodelan & Bentuk</span><span class="mod-arr">▶</span></div><div class="mod-body"><p class="mod-desc">Pengetahuan dan pelatihan dasar sumber seluruh konsep bentuk dan model dalam menghasilkan satu bentuk hingga menjadi suatu fungsi. Focus pada teknis yang terarah dan jelas, mudah diterapkan pada pedesignan.</p></div></div>
@@ -1251,7 +1143,7 @@ footer{border-top:1px solid var(--bdr);background:var(--bg);padding:60px 0 36px}
       <div class="prog-content" id="p2">
         <div class="prog-layout">
           <div class="prog-info-card">
-            <div class="prog-icon img-wrap" id="prog2-main-icon" onclick="triggerImgUpload('prog2_main_icon','prog2-main-icon','emoji-lg')"><svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="14" fill="#F7E8DF"/><path d="M24 14l16 7-16 7-16-7 16-7z" stroke="#C85B2A" stroke-width="2" stroke-linejoin="round" fill="#fff"/><path d="M16 25v7c0 2 3.6 4 8 4s8-2 8-4v-7" stroke="#C85B2A" stroke-width="2" stroke-linecap="round"/><path d="M38 21v8" stroke="#C85B2A" stroke-width="2" stroke-linecap="round"/><circle cx="38" cy="30" r="2" fill="#C85B2A" opacity=".6"/></svg></div><div class="prog-lbl">Program Khusus Pelajar</div>
+            <div class="prog-icon img-wrap" id="prog2-main-icon" onclick="triggerImgUpload('prog2_main_icon','prog2-main-icon','emoji-lg')">🎓</div><div class="prog-lbl">Program Khusus Pelajar</div>
             <h3 class="prog-name">Arsitektur Interior <em>SMU/SMK/SLTA</em></h3>
             <p class="prog-desc">Program khusus pelajar untuk mempersiapkan portofolio masuk perguruan tinggi dalam/luar negeri dan meraih beasiswa perkuliahan di bidang desain.</p>
             <div class="prog-meta">
@@ -1456,10 +1348,9 @@ footer{border-top:1px solid var(--bdr);background:var(--bg);padding:60px 0 36px}
           </div>
           <p class="footer-about">Wadah pendidikan desain interior profesional di Medan. Mencetak designer dan kontraktor interior sejak 2011.</p>
           <div class="footer-contact">
-            <span data-text-key="footer_alamat">📍 Jl. Pelita I No.74D, Kel. Sidorame Timur, Kec. Medan Perjuangan, Kota Medan, Sumatera Utara 20233</span>
-            <span data-text-key="footer_jadwal">📅 Senin – Sabtu · 15.00–16.30 dan 18.00–19.30 WIB</span>
-            <span data-text-key="footer_email"><svg viewBox="0 0 24 24" width="16" height="16" style="vertical-align:middle;margin-right:6px;flex-shrink:0" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="16" rx="3" stroke="var(--acc)" stroke-width="1.8" fill="none"/><path d="M2 8l10 7 10-7" stroke="var(--acc)" stroke-width="1.8" stroke-linecap="round"/></svg><a id="footer-email-link" href="mailto:info@bodhidesign.com" style="color:var(--textsoft);text-decoration:none;transition:.2s" onmouseover="this.style.color='var(--acc)'" onmouseout="this.style.color='var(--textsoft)'">info@bodhidesign.com</a></span>
-            <span id="footer-ig-wrap" data-text-key="footer_ig" style="display:flex;align-items:center;gap:8px">
+            <span>📍 Jl. Pelita I No.74D, Kel. Sidorame Timur, Kec. Medan Perjuangan, Kota Medan, Sumatera Utara 20233</span>
+            <span>📅 Senin – Sabtu · 15.00–16.30 dan 18.00–19.30 WIB</span>
+            <span id="footer-ig-wrap" style="display:flex;align-items:center;gap:8px">
               <span style="width:20px;height:20px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <defs><linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#f09433"/><stop offset="25%" style="stop-color:#e6683c"/><stop offset="50%" style="stop-color:#dc2743"/><stop offset="75%" style="stop-color:#cc2366"/><stop offset="100%" style="stop-color:#bc1888"/></linearGradient></defs>
@@ -1472,9 +1363,9 @@ footer{border-top:1px solid var(--bdr);background:var(--bg);padding:60px 0 36px}
             </span>
           </div>
         </div>
-        <div class="fcol"><h4 data-text-key="footer_h4_program">Program</h4><ul><li><a onclick="goto('programs')">Profesional Eksklusif</a></li><li><a onclick="goto('programs')">Arsitektur Interior SMU/SMK</a></li><li><a onclick="goto('schedule')">Jadwal Kelas</a></li><li><a onclick="goto('testimonials')">Testimoni</a></li></ul></div>
-        <div class="fcol"><h4 data-text-key="footer_h4_tentang">Tentang</h4><ul><li><a onclick="goto('about')">Tentang BODHI</a></li><li><a onclick="goto('founder')">Pendiri</a></li><li><a onclick="goto('outcomes')">Target Hasil</a></li><li><a onclick="goto('faq')">FAQ</a></li></ul></div>
-        <div class="fcol"><h4 data-text-key="footer_h4_kontak">Kontak</h4><ul><li><a onclick="goto('cta')">Daftar Konsultasi</a></li><li><a onclick="goto('cta')">Hubungi via WhatsApp</a></li><li><a onclick="toggleChat()">Chat dengan Bot</a></li></ul></div>
+        <div class="fcol"><h4>Program</h4><ul><li><a onclick="goto('programs')">Profesional Eksklusif</a></li><li><a onclick="goto('programs')">Arsitektur Interior SMU/SMK</a></li><li><a onclick="goto('schedule')">Jadwal Kelas</a></li><li><a onclick="goto('testimonials')">Testimoni</a></li></ul></div>
+        <div class="fcol"><h4>Tentang</h4><ul><li><a onclick="goto('about')">Tentang BODHI</a></li><li><a onclick="goto('founder')">Pendiri</a></li><li><a onclick="goto('outcomes')">Target Hasil</a></li><li><a onclick="goto('faq')">FAQ</a></li></ul></div>
+        <div class="fcol"><h4>Kontak</h4><ul><li><a onclick="goto('cta')">Daftar Konsultasi</a></li><li><a onclick="goto('cta')">Hubungi via WhatsApp</a></li><li><a onclick="toggleChat()">Chat dengan Bot</a></li></ul></div>
       </div>
       <div class="footer-bottom">
         <p class="footer-copy">© 2011–2026 BODHI Creative + Design. Jl. Pelita I No.74D, Medan, Sumatera Utara.</p>
@@ -1492,7 +1383,7 @@ footer{border-top:1px solid var(--bdr);background:var(--bg);padding:60px 0 36px}
    SETTINGS — editable via admin panel
    ========================================================= */
 var DEF_SETTINGS = {
-  wa:'6281234567890', rating:'4.9', brand:'BODHI | CREATIVE + DESIGN', instagram:'@bodhidesign', email:'info@bodhidesign.com',
+  wa:'6281234567890', rating:'4.9', brand:'BODHI | CREATIVE + DESIGN', instagram:'@bodhidesign',
   trust:'Ahmad, Siti, Rizky, Dewi', trustLbl:'Dipercaya ratusan alumni',
   statsYear:'2011', statsYearLbl:'Tahun berdiri BODHI Creative + Design',
   stat1n:'100+', stat1l:'Alumni berkarir',
@@ -1518,18 +1409,10 @@ function applySettings() {
   applyBrandName(SETTINGS.brand || 'BODHI | CREATIVE + DESIGN');
   // Instagram footer link
   var igLink = document.getElementById('footer-ig-link');
-  if (igLink) {
-    var igVal = SETTINGS.instagram || DEF_SETTINGS.instagram || '@bodhidesign';
-    var handle = igVal.replace('@','');
-    igLink.textContent = igVal.startsWith('@') ? igVal : '@'+handle;
+  if (igLink && SETTINGS.instagram) {
+    var handle = SETTINGS.instagram.replace('@','');
+    igLink.textContent = SETTINGS.instagram.startsWith('@') ? SETTINGS.instagram : '@'+handle;
     igLink.href = 'https://instagram.com/' + handle;
-  }
-  // Email footer link
-  var emLink = document.getElementById('footer-email-link');
-  if (emLink) {
-    var emailVal = SETTINGS.email || DEF_SETTINGS.email || 'info@bodhidesign.com';
-    emLink.textContent = emailVal;
-    emLink.href = 'mailto:' + emailVal;
   }
   document.body.classList.toggle('hide-brand-name', SETTINGS.hideBrand === '1');
   // Stats card
@@ -1593,7 +1476,6 @@ function renderTrustDots() {
 function showSettings() {
   document.getElementById('s-wa').value = SETTINGS.wa || '';
   var sigEl = document.getElementById('s-instagram'); if(sigEl) sigEl.value = SETTINGS.instagram || '@bodhidesign';
-  var semEl = document.getElementById('s-email'); if(semEl) semEl.value = SETTINGS.email || 'info@bodhidesign.com';
   document.getElementById('s-rating').value = SETTINGS.rating || '4.9';
   document.getElementById('s-brand').value = SETTINGS.brand || 'BODHI | CREATIVE + DESIGN';
   var hb = document.getElementById('s-hide-brand'); if(hb) hb.checked = SETTINGS.hideBrand === '1';
@@ -1637,8 +1519,7 @@ function previewBrand() {
 
 function saveSettings() {
   SETTINGS.wa        = document.getElementById('s-wa').value.trim()       || SETTINGS.wa;
-  var sigSave = document.getElementById('s-instagram'); if(sigSave && sigSave.value.trim()) SETTINGS.instagram = sigSave.value.trim();
-  var semSave = document.getElementById('s-email');     if(semSave && semSave.value.trim()) SETTINGS.email     = semSave.value.trim();
+  var sigSave = document.getElementById('s-instagram'); if(sigSave) SETTINGS.instagram = sigSave.value.trim() || SETTINGS.instagram;
   SETTINGS.rating    = document.getElementById('s-rating').value.trim()    || SETTINGS.rating;
   SETTINGS.brand     = document.getElementById('s-brand').value.trim()     || SETTINGS.brand;
   var hb = document.getElementById('s-hide-brand'); if(hb) SETTINGS.hideBrand = hb.checked ? '1' : '0';
@@ -1970,7 +1851,7 @@ function checkPass() {
 }
 document.getElementById('admin-pass').addEventListener('keydown', function(e){ if(e.key==='Enter') checkPass(); if(e.key==='Escape') closeModal('modal-admin'); });
 
-function enterAdmin() { adminOn=true; document.body.classList.add('admin-on'); document.getElementById('admin-fab').textContent='✕'; document.getElementById('admin-fab').title='Keluar Admin'; refreshGalleryAdminBtns(); renderInstructors(); }
+function enterAdmin() { adminOn=true; document.body.classList.add('admin-on'); document.getElementById('admin-fab').textContent='✕'; document.getElementById('admin-fab').title='Keluar Admin'; refreshGalleryAdminBtns(); }
 function exitAdmin() {
   if (editOn) saveTexts();
   adminOn=false; editOn=false;
@@ -1979,7 +1860,6 @@ function exitAdmin() {
   document.getElementById('edit-btn').textContent='✏️ Edit Teks'; document.getElementById('edit-btn').style.color='';
   document.querySelectorAll('[contenteditable]').forEach(function(el){ el.removeAttribute('contenteditable'); });
   refreshGalleryAdminBtns();
-  renderInstructors();
 }
 var TEXT_SEL = [
   'h1','h2','h3','h4',
@@ -1999,7 +1879,7 @@ var TEXT_SEL = [
   '.sched-body','.sched-title',
   '.testi-name','.testi-prog','.testi-quote',
   '.faq-q','.faq-a',
-  '.footer-about','.footer-copy',
+  '.footer-about','.footer-copy','.footer-contact span',
   '.cta-title','.cta-sub','.cta-desc',
   '.cci span','.urg-tag',
   '.hf-val','.hf-lbl',
@@ -2035,18 +1915,16 @@ function loadTexts() {
   try {
     var saved = JSON.parse(localStorage.getItem('bodhi_texts') || 'null');
     if (!saved) return;
-    // Discard old index-format data
+    // Check if saved uses old index format (t0, t1...) — discard if so
     var keys = Object.keys(saved);
     if (keys.length > 0 && keys[0].match(/^t\d+$/)) {
-      localStorage.removeItem('bodhi_texts'); return;
+      localStorage.removeItem('bodhi_texts');
+      return;
     }
     assignTextKeys();
     document.querySelectorAll('[data-text-key]').forEach(function(el) {
       var k = el.getAttribute('data-text-key');
-      if (saved[k] === undefined) return;
-      // Skip elements containing SVG or links — restoring innerHTML would corrupt them
-      if (el.querySelector('svg') || el.querySelector('a') || el.querySelector('img')) return;
-      el.innerHTML = saved[k];
+      if (saved[k] !== undefined) el.innerHTML = saved[k];
     });
   } catch(e){}
 }
@@ -2180,8 +2058,7 @@ function resetAll() {
     try { localStorage.removeItem('bodhi_typo'); } catch(e){}
     try { localStorage.removeItem('bodhi_career'); } catch(e){}
     try { localStorage.removeItem('bodhi_galleries'); } catch(e){}
-    try { localStorage.removeItem('bodhi_instructors'); } catch(e){}
-    GALLERIES = {ekskursi:[], intrash:[]}; INSTRUCTORS = [];
+    GALLERIES = {ekskursi:[], intrash:[]};
     try { localStorage.removeItem('bodhi_secbgs_cfg'); } catch(e){}
     SEC_BG_DEFS.forEach(function(d){ try { localStorage.removeItem('bodhi_secbg_' + d.id); } catch(e){} });
     TYPO = {}; ST = {}; CAREER = DEF_CAREER.slice(); SEC_BGS = {};
@@ -2196,13 +2073,11 @@ function resetAll() {
 var _imgTarget = null;
 
 function triggerImgUpload(key, elId, mode) {
-  if (!adminOn) return;  // ← block if not in admin mode
   _imgTarget = {key:key, elId:elId, mode:mode||'bg'};
   var inp = document.getElementById('img-file-input');
   inp.value=''; inp.click();
 }
 function triggerLogoUpload() {
-  if (!adminOn) return;  // ← block if not in admin mode
   document.getElementById('logo-file-input').value='';
   document.getElementById('logo-file-input').click();
 }
@@ -3189,265 +3064,52 @@ function refreshGalleryAdminBtns() {
 }
 
 /* =========================================================
-   INSTRUCTOR CAROUSEL
-   ========================================================= */
-var INSTRUCTORS = [];
-try { INSTRUCTORS = JSON.parse(localStorage.getItem('bodhi_instructors') || '[]'); } catch(e){}
-
-var _instrIdx = 0;
-var _instrAutoTimer = null;
-
-function saveInstructors() {
-  try { localStorage.setItem('bodhi_instructors', JSON.stringify(INSTRUCTORS)); } catch(e){}
-}
-
-function buildJamrySlide() {
-  // Build Jamry's career timeline HTML
-  var timelineHtml = '';
-  if (typeof CAREER !== 'undefined' && CAREER.length) {
-    timelineHtml = CAREER.map(function(item) {
-      return '<div class="fd-item"><span class="fd-yr">'+item.yr+'</span><span class="fd-txt">'+item.txt+'</span></div>';
-    }).join('');
-  }
-  var bgStyle = '';
-  var founderImg = localStorage.getItem('bodhi_img_founder_photo');
-  var photoContent = founderImg
-    ? '<div id="founder-photo-img" style="width:100%;height:100%;background-size:cover;background-position:center;background-image:url('+founderImg+')"></div>'
-    : '<div class="instr-ph">🏛️</div><div id="founder-photo-img" style="display:none"></div>';
-
-  return '<div class="instr-slide" data-idx="main" style="position:relative">'
-    + '<div class="instr-photo-box img-wrap">'
-    + photoContent
-    + '<div class="img-upload-ov" onclick="triggerImgUpload(\'founder_photo\',\'founder-photo-img\',\'bg\')"><span class="cam">📷</span><span>Ganti Foto</span></div>'
-    + '</div>'
-    + '<div class="instr-info">'
-    + '<div class="founder-role">Pendiri & Pengajar Utama</div>'
-    + '<h3 class="founder-name">Jamry, S.T., M.Psi</h3>'
-    + '<p class="founder-tag-line">Arsitek, Praktisi Psikologi, Konsultan Perencana & Kontraktor Building sejak 1999. Founder BODHI Creative + Design.</p>'
-    + '<div class="ftags"><span class="ftag">S.T. Arsitektur</span><span class="ftag">M.Psi Industri</span><span class="ftag">Lions Club</span><span class="ftag">APSDA</span><span class="ftag">HDII</span></div>'
-    + '<div class="instr-career"><h4>Perjalanan Karier</h4><div class="fd-timeline" id="career-timeline">'+timelineHtml+'</div></div>'
-    + '</div>'
-    + '</div>';
-}
-
-function buildInstrSlide(instr, idx) {
-  var photoContent = instr.photo
-    ? '<img src="'+instr.photo+'" alt="'+instr.name+'">'
-    : '<div class="instr-ph">👤</div>';
-  var tagsHtml = (instr.tags||[]).map(function(t){ return '<span class="ftag">'+t+'</span>'; }).join('');
-  var bioHtml = instr.bio ? '<p class="founder-tag-line">'+instr.bio+'</p>' : '';
-  var careerHtml = (instr.career||[]).length
-    ? '<div class="instr-career"><h4>Perjalanan Karier</h4><div class="fd-timeline">'
-      + instr.career.map(function(c){ return '<div class="fd-item"><span class="fd-yr">'+c.yr+'</span><span class="fd-txt">'+c.txt+'</span></div>'; }).join('')
-      + '</div></div>' : '';
-
-  return '<div class="instr-slide" data-idx="'+idx+'" style="position:relative">'
-    + '<div class="instr-photo-box">'+photoContent+'</div>'
-    + '<div class="instr-info">'
-    + '<div class="founder-role">'+(instr.role||'Pengajar')+'</div>'
-    + '<h3 class="founder-name">'+instr.name+'</h3>'
-    + bioHtml
-    + (tagsHtml ? '<div class="ftags">'+tagsHtml+'</div>' : '')
-    + careerHtml
-    + '</div>'
-    + '<div class="instr-slide-admin">'
-    + '<button class="instr-admin-btn" style="background:var(--acclt);color:var(--acc);border:none;padding:6px 12px;border-radius:8px;cursor:pointer;font-weight:700;font-family:inherit" onclick="openInstructorModal('+idx+')">✏️ Edit</button>'
-    + '<button class="instr-admin-btn" style="background:#fdeaea;color:#c03030;border:none;padding:6px 12px;border-radius:8px;cursor:pointer;font-weight:700;font-family:inherit" onclick="deleteInstructor('+idx+')">🗑 Hapus</button>'
-    + '</div>'
-    + '</div>';
-}
-
-function renderInstructors() {
-  var slides = document.getElementById('instr-slides');
-  var dots   = document.getElementById('instr-dots');
-  var addBtn = document.getElementById('instructor-add-btn');
-  if (!slides) return;
-
-  var total = 1 + INSTRUCTORS.length; // Jamry + others
-
-  // Build slides HTML
-  slides.innerHTML = buildJamrySlide();
-  INSTRUCTORS.forEach(function(instr, idx) {
-    slides.innerHTML += buildInstrSlide(instr, idx);
-  });
-
-  // Restore founder photo
-  var founderImg = localStorage.getItem('bodhi_img_founder_photo');
-  if (founderImg) {
-    var fp = document.getElementById('founder-photo-img');
-    if (fp) { fp.style.display='block'; fp.style.backgroundImage='url('+founderImg+')'; fp.style.backgroundSize='cover'; fp.style.backgroundPosition='center'; fp.style.width='100%'; fp.style.height='100%'; }
-  }
-
-  // Build dots
-  dots.innerHTML = '';
-  for (var i = 0; i < total; i++) {
-    var dot = document.createElement('button');
-    dot.className = 'instr-dot' + (i===_instrIdx?' active':'');
-    dot.setAttribute('data-i', i);
-    dot.onclick = (function(ii){ return function(){ instrGoTo(ii); }; })(i);
-    dots.appendChild(dot);
-  }
-
-  instrGoTo(_instrIdx < total ? _instrIdx : 0);
-  if (addBtn) addBtn.style.display = document.body.classList.contains('admin-on') ? 'block' : 'none';
-}
-
-function instrGoTo(idx) {
-  var slides = document.getElementById('instr-slides');
-  var dots   = document.getElementById('instr-dots');
-  if (!slides) return;
-  var total = 1 + INSTRUCTORS.length;
-  _instrIdx = Math.max(0, Math.min(idx, total-1));
-  slides.style.transform = 'translateX(-' + (_instrIdx * 100) + '%)';
-  // Update dots
-  if (dots) dots.querySelectorAll('.instr-dot').forEach(function(d,i){ d.classList.toggle('active', i===_instrIdx); });
-  // Update nav buttons
-  var prev = document.getElementById('instr-prev');
-  var next = document.getElementById('instr-next');
-  if (prev) prev.disabled = _instrIdx === 0;
-  if (next) next.disabled = _instrIdx === total-1;
-}
-
-function instrNav(dir) {
-  instrGoTo(_instrIdx + dir);
-}
-
-function instrStartAuto(dir) {
-  instrStopAuto();
-  _instrAutoTimer = setInterval(function() { instrNav(dir); }, 600);
-}
-
-function instrStopAuto() {
-  clearInterval(_instrAutoTimer);
-  _instrAutoTimer = null;
-}
-
-function openInstructorModal(idx) {
-  var isEdit = idx !== null && idx !== undefined;
-  document.getElementById('instr-modal-title').textContent = isEdit ? '✏️ Edit Pengajar' : '👤 Tambah Pengajar';
-  document.getElementById('instr-edit-idx').value = isEdit ? idx : '';
-  document.getElementById('instr-photo-data').value = '';
-
-  var instr = isEdit ? INSTRUCTORS[idx] : {};
-  document.getElementById('instr-name').value = instr.name || '';
-  document.getElementById('instr-role').value = instr.role || '';
-  document.getElementById('instr-bio').value  = instr.bio  || '';
-  document.getElementById('instr-tags').value = (instr.tags||[]).join(', ');
-
-  // Load career rows
-  var cl = document.getElementById('instr-career-list');
-  cl.innerHTML = '';
-  (instr.career||[]).forEach(function(c) { instrAddCareerRow(c.yr, c.txt); });
-
-  var prev = document.getElementById('instr-photo-preview');
-  if (instr.photo) {
-    prev.innerHTML = '<img src="'+instr.photo+'" style="width:100%;height:100%;object-fit:cover">'
-      +'<div id="instr-photo-ov" style="position:absolute;inset:0;background:rgba(200,91,42,.7);display:none;align-items:center;justify-content:center;font-size:20px;color:#fff;border-radius:12px">📷</div>';
-    document.getElementById('instr-photo-data').value = instr.photo;
-  } else {
-    prev.innerHTML = '👤<div id="instr-photo-ov" style="position:absolute;inset:0;background:rgba(200,91,42,.7);display:none;align-items:center;justify-content:center;font-size:20px;color:#fff;border-radius:12px">📷</div>';
-  }
-  openModal('modal-instructor');
-}
-
-function instrPickPhoto() {
-  document.getElementById('instr-photo-input').click();
-}
-
-function instrHandlePhoto(e) {
-  var file = e.target.files[0]; if (!file) return;
-  resizeForGallery(file, function(data) {
-    document.getElementById('instr-photo-data').value = data;
-    var prev = document.getElementById('instr-photo-preview');
-    prev.innerHTML = '<img src="'+data+'" style="width:100%;height:100%;object-fit:cover">'
-      +'<div id="instr-photo-ov" style="position:absolute;inset:0;background:rgba(200,91,42,.7);display:none;align-items:center;justify-content:center;font-size:20px;color:#fff;border-radius:12px">📷</div>';
-  });
-}
-
-function saveInstructor() {
-  var name = document.getElementById('instr-name').value.trim();
-  if (!name) { alert('Nama pengajar wajib diisi!'); return; }
-
-  var instr = {
-    name:  name,
-    role:  document.getElementById('instr-role').value.trim(),
-    bio:   document.getElementById('instr-bio').value.trim(),
-    tags:  document.getElementById('instr-tags').value.split(',').map(function(t){ return t.trim(); }).filter(Boolean),
-    photo: document.getElementById('instr-photo-data').value || '',
-    career: []
-  };
-  // Collect career rows
-  document.getElementById('instr-career-list').querySelectorAll('.instr-career-row').forEach(function(row) {
-    var yr  = row.querySelector('.icr-yr').value.trim();
-    var txt = row.querySelector('.icr-txt').value.trim();
-    if (yr || txt) instr.career.push({yr:yr, txt:txt});
-  });
-
-  var editIdx = document.getElementById('instr-edit-idx').value;
-  if (editIdx !== '') {
-    INSTRUCTORS[parseInt(editIdx)] = instr;
-  } else {
-    INSTRUCTORS.push(instr);
-  }
-
-  saveInstructors();
-  renderInstructors();
-  closeModal('modal-instructor');
-  showToast('✅ Pengajar berhasil disimpan!');
-}
-
-function instrAddCareerRow(yr, txt) {
-  var list = document.getElementById('instr-career-list');
-  if (!list) return;
-  var row = document.createElement('div');
-  row.className = 'instr-career-row';
-  row.style.cssText = 'display:grid;grid-template-columns:90px 1fr 32px;gap:8px;align-items:center';
-  row.innerHTML = '<input class="minput icr-yr" placeholder="Tahun" value="'+(yr||'')+'" style="padding:8px 10px;font-size:13px">'
-    + '<input class="minput icr-txt" placeholder="Keterangan karier" value="'+(txt||'')+'" style="padding:8px 10px;font-size:13px">'
-    + '<button onclick="this.closest(\'.instr-career-row\').remove()" type="button" style="width:32px;height:32px;border:none;background:#fdeaea;color:#c03030;border-radius:6px;cursor:pointer;font-size:16px;line-height:1">×</button>';
-  list.appendChild(row);
-}
-
-function deleteInstructor(idx) {
-  if (confirm('Hapus pengajar ini?')) {
-    INSTRUCTORS.splice(idx, 1);
-    saveInstructors();
-    renderInstructors();
-  }
-}
-
-/* =========================================================
    INIT
    ========================================================= */
 function initApp() {
   try { applySettings(); }       catch(e){ console.warn('applySettings error',e); }
   try { applyTypo(); }           catch(e){ console.warn('applyTypo error',e); }
   try { renderCareerTimeline(); }catch(e){ console.warn('career error',e); }
-  try { renderInstructors(); }   catch(e){ console.warn('instructor error',e); }
   try { renderGallery('ekskursi'); renderGallery('intrash'); } catch(e){ console.warn('gallery error',e); }
   try { loadSectionBgImages(); } catch(e){ console.warn('secbg error',e); }
   try { loadStoredImages(); }    catch(e){ console.warn('images error',e); }
   try { loadTexts(); }           catch(e){ console.warn('loadTexts error',e); }
-  // Re-apply settings AFTER loadTexts so email/IG links are always correct
-  try {
-    var emLink = document.getElementById('footer-email-link');
-    if (emLink) { var ev = SETTINGS.email||'info@bodhidesign.com'; emLink.textContent=ev; emLink.href='mailto:'+ev; }
-    var igLink = document.getElementById('footer-ig-link');
-    if (igLink) { var iv = SETTINGS.instagram||'@bodhidesign'; var ih=iv.replace('@',''); igLink.textContent=iv.startsWith('@')?iv:'@'+ih; igLink.href='https://instagram.com/'+ih; }
-    // Clean corrupt footer span data from bodhi_texts if it contains SVG
-    try {
-      var bt = JSON.parse(localStorage.getItem('bodhi_texts')||'{}');
-      var dirty = false;
-      ['footer_alamat','footer_jadwal','footer_email','footer_ig'].forEach(function(k){
-        if (bt[k] && bt[k].indexOf('<svg') !== -1) { delete bt[k]; dirty=true; }
-      });
-      if (dirty) localStorage.setItem('bodhi_texts', JSON.stringify(bt));
-    } catch(e){}
-  } catch(e){}
 }
 
 // Load dari server dulu, baru init — overlay hilang setelah selesai
 document.addEventListener('DOMContentLoaded', function() {
+  // Auto-seed images dari server jika localStorage kosong
+  // Auto-seed images + galleries dari server jika localStorage kosong
+  if (!localStorage.getItem('bodhi_data_seeded')) {
+    Promise.all([
+      fetch('/api/images').then(function(r) { return r.json(); }),
+      fetch('/api/galleries').then(function(r) { return r.json(); })
+    ]).then(function(data) {
+      var images = data[0]; var galleries = data[1];
+      for (const [key, value] of Object.entries(images)) {
+        localStorage.setItem(key, value);
+      }
+      localStorage.setItem('bodhi_galleries', JSON.stringify(galleries));
+      localStorage.setItem('bodhi_data_seeded', 'true');
+      console.log('✅ Seeded:', Object.keys(images).length, 'images +', 
+                  Object.keys(galleries).length, 'galleries');
+      location.reload();
+    }).catch(function(err) {
+      console.warn('⚠️ Auto-seed failed:', err);
+    });
+  }
+  // Ensure galleries are seeded (for existing users with old seed flag)
+  if (!localStorage.getItem('bodhi_galleries')) {
+    fetch('/api/galleries')
+      .then(function(r) { return r.json(); })
+      .then(function(galleries) {
+        localStorage.setItem('bodhi_galleries', JSON.stringify(galleries));
+        console.log('✅ Galleries auto-seeded (post-initial)');
+      })
+      .catch(function(err) {
+        console.warn('⚠️ Galleries auto-seed failed:', err);
+      });
+  }
   var ov = document.getElementById('server-loading-ov');
   function finish() {
     try { initApp(); } catch(e) { console.warn('initApp error', e); }
